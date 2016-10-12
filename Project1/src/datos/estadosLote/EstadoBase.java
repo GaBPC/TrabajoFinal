@@ -1,4 +1,4 @@
-package datos.estados;
+package datos.estadosLote;
 
 import datos.Lote;
 

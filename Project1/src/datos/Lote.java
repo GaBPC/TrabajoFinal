@@ -1,8 +1,8 @@
 package datos;
 
-import datos.estados.Estado;
+import datos.estadosLote.Estado;
 
-import datos.estados.Iniciado;
+import datos.estadosLote.Iniciado;
 
 import java.util.Calendar;
 import java.util.TreeSet;
