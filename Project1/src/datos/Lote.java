@@ -5,7 +5,6 @@ import datos.estados.Estado;
 import datos.estados.Iniciado;
 
 import java.util.Calendar;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Lote {
