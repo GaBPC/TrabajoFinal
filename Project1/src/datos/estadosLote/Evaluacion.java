@@ -3,13 +3,11 @@ package datos.estadosLote;
 import datos.Lote;
 import datos.Observacion;
 
+import exceptions.StateException;
+
 public class Evaluacion extends EstadoBase {
     public Evaluacion(Lote lote) {
         super(lote);
-    }
-    
-    private boolean verificaTexto(String texto) {
-        return (texto.length() <= 500);
     }
     
     @Override
@@ -19,10 +17,10 @@ public class Evaluacion extends EstadoBase {
 
     @Override
     public void agregarObservacion(Observacion obs) throws Exception {
-        if (obs.getTema() != null && obs.getFechaObservacion() != null && obs.getLegajoEmpleado() != null && this.verificaTexto(obs.getTexto()))
+        if (obs.verificacion())
             this.lote.getListaObservaciones().add(obs);
         else
-            throw new Exception("Observacion invalida");
+            throw new StateException("Observacion invalida");
     }
 
     @Override

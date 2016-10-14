@@ -3,6 +3,7 @@ package datos;
 import exceptions.LengthException;
 
 public class Material {
+  
     private String codigo = null;
     private String descripcion = null;
     private float cantidad = 0.0f;
@@ -10,9 +11,38 @@ public class Material {
     public Material() {
         super();
     }
+    
+    private boolean verificaCodigo(String codigo)
+    {
+      boolean ret = false;
+      String aux = codigo.substring(0, 3);
+      if (aux.compareTo("MAT") == 0)
+      {
+        int num = Integer.parseInt(codigo.substring(3).trim());
+        if (num >= 0 && num <= 999999)
+          ret = true;
+      }
+      return ret;
+    }
+    
+    private boolean verificaDescripcion(String descripcion) throws LengthException
+  {
+      boolean ret = false;
+      if (descripcion.length() <= 100)
+        ret = true;
+      else
+        throw new LengthException(descripcion,"El texto tiene mas de 100 caracteres");
+      return ret;
+    }
+    
+    private boolean verificaCantidad(float cantidad)
+    {
+      return (cantidad > 0.0 && cantidad <= 999.9999);
+    }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        if(this.verificaCodigo(codigo))
+          this.codigo = codigo;
     }
 
     public String getCodigo() {
@@ -20,10 +50,8 @@ public class Material {
     }
 
     public void setDescripcion(String descripcion) throws LengthException {
-        if(descripcion.length() <= 100)
+        if(this.verificaDescripcion(descripcion))
             this.descripcion = descripcion;
-        else
-            throw new LengthException(descripcion,"El texto tiene mas de 100 caracteres");
     }
 
     public String getDescripcion() {
@@ -31,6 +59,7 @@ public class Material {
     }
 
     public void setCantidad(float cantidad) {
+      if(this.verificaCantidad(cantidad))
         this.cantidad = cantidad;
     }
 

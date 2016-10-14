@@ -3,6 +3,8 @@ package datos.estadosLote;
 import datos.Lote;
 import datos.Observacion;
 
+import exceptions.StateException;
+
 public class Iniciado extends EstadoBase{
     
     public Iniciado(Lote lote) {
@@ -22,6 +24,6 @@ public class Iniciado extends EstadoBase{
 
     @Override
     public void aceptarLote() throws Exception{
-        throw new Exception("Lote aun sin evaluar");
+        throw new StateException("Lote aun sin evaluar");
     }
 }

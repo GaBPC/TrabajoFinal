@@ -3,6 +3,8 @@ package datos.estadosLote;
 import datos.Lote;
 import datos.Observacion;
 
+import exceptions.StateException;
+
 public class Aceptado extends EstadoBase{
     public Aceptado(Lote lote) {
         super(lote);
@@ -10,11 +12,11 @@ public class Aceptado extends EstadoBase{
 
     @Override
     public void agregarObservacion(Observacion obs) throws Exception {
-        throw new Exception("Imposible agregar, lote ya aceptado");
+        throw new StateException("Imposible agregar, lote ya aceptado");
     }
 
     @Override
     public void aceptarLote() throws Exception{
-        throw new Exception("Imposible aceptar, lote ya aceptado");
+        throw new StateException("Imposible aceptar, lote ya aceptado");
     }
 }

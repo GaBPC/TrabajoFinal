@@ -8,24 +8,22 @@ public class Observacion {
     private String legajoEmpleado = null;
     private String texto;
     
-    public Observacion() {
+    public Observacion(String tema,Calendar fechaObservacion,String legajoEmpleado,String texto) {
         super();
+        this.tema = tema;
+        this.fechaObservacion = fechaObservacion;
+        this.legajoEmpleado = legajoEmpleado;
+        if(this.verificaTexto(texto))
+          this.texto = texto;
     }
 
-
-    public String getTema() {
-        return tema;
+    private boolean verificaTexto(String texto)
+    {
+      return (texto.length() <= 500);
     }
-
-    public Calendar getFechaObservacion() {
-        return fechaObservacion;
-    }
-
-    public String getLegajoEmpleado() {
-        return legajoEmpleado;
-    }
-
-    public String getTexto() {
-        return texto;
+    
+    public boolean verificacion()
+    {
+      return (this.tema != null && this.fechaObservacion != null && this.legajoEmpleado != null && this.texto != null);
     }
 }
