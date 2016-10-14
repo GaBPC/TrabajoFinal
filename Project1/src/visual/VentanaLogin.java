@@ -34,8 +34,11 @@ public class VentanaLogin extends VentanaBase {
         Container cp = this.getContentPane();
 
 
+        //Se crea un JTextArea donde se mostraran los datos del empleado encontrado. Empieza vacio
         JTextArea datos = new JTextArea("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
+        //Se impide que se pueda modificar manualmente los datos
         datos.setEditable(false);
+        //Se añade al ContentPane de la ventana
         cp.add(datos, BorderLayout.CENTER);
 
         //Se crea un panel donde estaran todos los elementos que permiten buscar un empleado
@@ -51,6 +54,10 @@ public class VentanaLogin extends VentanaBase {
         buscar.addActionListener(new ActionListener() {
 
             @Override
+            /* Se busca el empleado que corresponda al legajo ingresado
+             * Si se encuentra se muestran sus datos por pantalla y se guarda la referencia en 
+             * el atributo empleadoLogeado de la VentanaLogin
+             * Si no se encuentra se avisa del error por pantalla*/
             public void actionPerformed(ActionEvent actionEvent) {
                 String ingresado = legajo.getText();
                 String leg = "LEG";
@@ -73,6 +80,9 @@ public class VentanaLogin extends VentanaBase {
         //Se agrega el boton que permite ingresar al sistema
         JButton ingresar = new JButton("Ingresar");
 
+        //TODO agregar la accion correspondiente al empleado que intenta ingresar al sistema
+        
+        //Se añade al ContentPane de la ventana
         cp.add(ingresar, BorderLayout.SOUTH);
     }
 }
