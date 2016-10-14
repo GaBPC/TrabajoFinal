@@ -37,4 +37,16 @@ public class Empleado {
     {
       return (sector != null);
     }
+
+    public String getLegajo() {
+        return legajo;
+    }
+
+    public String getNya() {
+        return nya;
+    }
+
+    public String getSector() {
+        return sector;
+    }
 }
