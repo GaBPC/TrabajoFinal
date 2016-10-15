@@ -5,9 +5,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public abstract class VentanaBase extends JFrame {
-    public VentanaBase(String nombreVentana, int accionCerrar, Dimension size) {
+    protected Controlador control;
+    
+    public VentanaBase(Controlador control, String nombreVentana, int accionCerrar, Dimension size) {
         super(nombreVentana);
-
+        this.control = control;
         //Setea lo que ocurre al cerrar la ventana
         this.setDefaultCloseOperation(accionCerrar);
         //Se obtienen las dimensiones de la pantalla donde se esta ejecutando el programa

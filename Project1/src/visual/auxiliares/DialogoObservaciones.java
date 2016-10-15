@@ -6,6 +6,7 @@ import datos.Observacion;
 
 import java.awt.BorderLayout;
 
+import java.awt.Component;
 import java.awt.Container;
 
 
@@ -30,15 +31,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import visual.Controlador;
+
 public class DialogoObservaciones extends JDialog {
 
-    private Lote lote;
-    private String legajo;
 
-    public DialogoObservaciones(Lote lote, String legajo) {
+    private Controlador control;
+
+    public DialogoObservaciones(Controlador control, Component relativeTo) {
         super();
-        this.lote = lote;
-        this.legajo = legajo;
+        this.setLocationRelativeTo(relativeTo);
+        this.control = control;
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
@@ -49,7 +52,7 @@ public class DialogoObservaciones extends JDialog {
 
     private void initComponents() {
         Container cp = this.getContentPane();
-        
+
         /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
         DefaultListModel listModel = new DefaultListModel();
         /* JList donde se veran todas las observaciones que ya tiene el lote*/
@@ -65,7 +68,6 @@ public class DialogoObservaciones extends JDialog {
          * a un lote*/
         JPanel panelSouth = new JPanel();
         panelSouth.setLayout(new GridLayout(0, 2));
-
 
         panelSouth.add(new JLabel("Tema: "));
         JTextField tema = new JTextField();
@@ -85,11 +87,12 @@ public class DialogoObservaciones extends JDialog {
                 String observacionIngresada = observacion.getText();
 
                 Observacion nueva =
-                    new Observacion(temaIngresado, GregorianCalendar.getInstance(), DialogoObservaciones.this.legajo,
+                    new Observacion(temaIngresado, GregorianCalendar.getInstance(),
+                                    DialogoObservaciones.this.control.getEmpeladoActual().getLegajo(),
                                     observacionIngresada);
 
                 try {
-                    DialogoObservaciones.this.lote.agregarObservacion(nueva);
+                    DialogoObservaciones.this.control.getLoteActual().agregarObservacion(nueva);
                     DialogoObservaciones.this.actualizarLista(listModel);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
@@ -107,8 +110,8 @@ public class DialogoObservaciones extends JDialog {
     private void actualizarLista(DefaultListModel modelo) {
         modelo.removeAllElements();
 
-        Iterator<Observacion> it = this.lote.getListaObservaciones().iterator();
-        while(it.hasNext())
+        Iterator<Observacion> it = this.control.getLoteActual().getListaObservaciones().iterator();
+        while (it.hasNext())
             modelo.addElement(it.next().toString());
     }
 }

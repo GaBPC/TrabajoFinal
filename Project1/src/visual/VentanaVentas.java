@@ -29,10 +29,9 @@ import visual.auxiliares.PanelFechas;
 public class VentanaVentas extends VentanaBase {
 
     private String legajo;
-    
-    public VentanaVentas(String legajoEmpleado) {
-        super("Ventas", JFrame.EXIT_ON_CLOSE, new Dimension(500, 500));
-        this.legajo = legajoEmpleado;
+
+    public VentanaVentas(Controlador control) {
+        super(control, "Ventas", JFrame.EXIT_ON_CLOSE, new Dimension(500, 500));
     }
 
     @Override
@@ -62,9 +61,8 @@ public class VentanaVentas extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotes.getSelectedIndex();
-                Lote aux = (Lote) listModel.getElementAt(seleccionado);
-                System.out.println(aux);
-                new DialogoObservaciones(aux, VentanaVentas.this.legajo);
+                VentanaVentas.this.control.setLoteActual((Lote) listModel.getElementAt(seleccionado));
+                new DialogoObservaciones(VentanaVentas.this.control, VentanaVentas.this);
             }
         });
         panelRevision.add(verObservaciones, BorderLayout.SOUTH);
@@ -141,9 +139,9 @@ public class VentanaVentas extends VentanaBase {
                     Calendar calendarFechaVentas =
                         new GregorianCalendar(fechaVentas.getYear(), fechaVentas.getMes(), fechaVentas.getDia() + 1);
 
-                    Controlador.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
-                                               calendarFechaVentas);
-                    
+                    VentanaVentas.this.control.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
+                                                              calendarFechaVentas);
+
                     /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
                      * con los datos del lote recien agregado*/
                     VentanaVentas.this.actualizarLista(listModel);
@@ -164,7 +162,7 @@ public class VentanaVentas extends VentanaBase {
 
     private void actualizarLista(DefaultListModel modelo) {
         modelo.removeAllElements();
-        Iterator it = Controlador.getLotesNoAceptados();
+        Iterator<Lote> it = this.control.getLotesNoAceptados();
         while (it.hasNext())
             modelo.addElement(it.next());
     }

@@ -22,10 +22,10 @@ public class VentanaLogin extends VentanaBase {
 
     private Empleado empleadoLogeado = null;
 
-    public VentanaLogin() {
+    public VentanaLogin(Controlador control) {
         /*Crea la ventana con el titulo Login y con la
          *accion de terminar el programa al cerrar laventana*/
-        super("Login", JFrame.EXIT_ON_CLOSE, new Dimension(400, 250));
+        super(control, "Login", JFrame.EXIT_ON_CLOSE, new Dimension(400, 250));
         this.setResizable(false);
     }
 
@@ -61,7 +61,7 @@ public class VentanaLogin extends VentanaBase {
                 String ingresado = legajo.getText();
                 String leg = "LEG";
                 leg += ingresado;
-                Empleado empleado = Controlador.buscarEmpleado(leg);
+                Empleado empleado = VentanaLogin.this.control.buscarEmpleado(leg);
                 if (empleado == null) {
                     VentanaLogin.this.empleadoLogeado = null;
                     datos.setText("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
@@ -88,7 +88,8 @@ public class VentanaLogin extends VentanaBase {
                 String sector = VentanaLogin.this.empleadoLogeado.getSector().toUpperCase();
 
                 if (sector.compareTo(Controlador.VENTAS.toUpperCase()) == 0) {
-                    new VentanaVentas(VentanaLogin.this.empleadoLogeado.getLegajo());
+                    control.setEmpeladoActual(VentanaLogin.this.empleadoLogeado);
+                    new VentanaVentas(VentanaLogin.this.control);
                     VentanaLogin.this.dispose();
                 } else if (sector.compareTo(Controlador.PRODUCCION.toUpperCase()) == 0) {
                     //VentanaProduccion
