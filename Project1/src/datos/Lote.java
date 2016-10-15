@@ -6,6 +6,8 @@ import datos.estadosLote.Iniciado;
 
 import exceptions.ArgumentoIlegalException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.TreeSet;
 import java.util.ArrayList;
@@ -24,7 +26,8 @@ public class Lote {
         super();
     }
 
-    public Lote(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina, int cantProduccion) throws ArgumentoIlegalException {
+    public Lote(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina,
+                int cantProduccion) throws ArgumentoIlegalException {
         if (this.verificaNumeroPedido(numeroPedido))
             this.numeroPedido = numeroPedido;
         if (tipoMaquina != null)
@@ -68,10 +71,9 @@ public class Lote {
             throw new ArgumentoIlegalException("El numero de lote no contiene \"LOT\"", numeroLote);
         return ret;
     }
-    
-    public boolean verificaNull()
-    {
-      return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.numeroLote != null);
+
+    public boolean verificaNull() {
+        return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.numeroLote != null);
     } //FALTA FECHA DEFINITIVA
 
     private boolean verificaCantProduccion(int cantProduccion) {
@@ -96,5 +98,11 @@ public class Lote {
 
     public TreeSet<Observacion> getListaObservaciones() {
         return listaObservaciones;
+    }
+
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        String ret = this.numeroPedido + " - " + sdf.format(this.fechaPedido.getTime()) + " - " + this.tipoMaquina;
+        return ret;
     }
 }

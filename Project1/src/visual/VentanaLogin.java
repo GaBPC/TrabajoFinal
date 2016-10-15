@@ -88,7 +88,7 @@ public class VentanaLogin extends VentanaBase {
                 String sector = VentanaLogin.this.empleadoLogeado.getSector().toUpperCase();
 
                 if (sector.compareTo(Controlador.VENTAS.toUpperCase()) == 0) {
-                    new VentanaVentas();
+                    new VentanaVentas(VentanaLogin.this.empleadoLogeado.getLegajo());
                     VentanaLogin.this.dispose();
                 } else if (sector.compareTo(Controlador.PRODUCCION.toUpperCase()) == 0) {
                     //VentanaProduccion

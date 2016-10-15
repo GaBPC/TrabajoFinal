@@ -32,6 +32,9 @@ public abstract class Controlador {
         empleados.put("LEG888888", new Empleado("LEG888888", "Khun Franco", INSPECCION));
     }
 
+
+    private static ArrayList<Lote> lotes = new ArrayList();
+
     /**Metodo para buscar un empleado por su numero de legajo
      * @param legajo es el legajo del empleado buscado
      * @return una referencia al empleado si es encontrado, null en caso contrario
@@ -50,10 +53,11 @@ public abstract class Controlador {
     public static void crearNuevoLote(String numeroPedido, Calendar fechaPedido, String tipoMaquina, int cantProducir,
                                       Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
 
-        Lote nuevo = new Lote(numeroPedido,fechaPedido,fechaSolicitadaVentas,tipoMaquina,cantProducir);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+        Lote nuevo = new Lote(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
         System.out.println(numeroPedido + "\n" + sdf.format(fechaPedido.getTime()) + "\n" + tipoMaquina + "\n" +
-                           cantProducir + "\n" + sdf.format(fechaSolicitadaVentas.getTime()));
+                           cantProducir + "\n" + sdf.format(fechaSolicitadaVentas.getTime()));*/
+        lotes.add(nuevo);
 
     }
 
@@ -61,31 +65,6 @@ public abstract class Controlador {
      * @return iterator con los lotes
      */
     public static Iterator getLotesNoAceptados() {
-        //TODO crear array list con los lotes y devolverlo. Lo que esta es de ejemplo
-        ArrayList<String> array = new ArrayList();
-        array.add("Lote 1");
-        array.add("Lote 2");
-        array.add("Lote 3");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        array.add("Lote 4");
-        return array.iterator();
+        return lotes.iterator();
     }
 }

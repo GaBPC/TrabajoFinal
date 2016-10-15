@@ -23,18 +23,21 @@ import java.util.Iterator;
 
 import javax.swing.*;
 
+import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.PanelFechas;
 
 public class VentanaVentas extends VentanaBase {
 
-    public VentanaVentas() {
+    private String legajo;
+    
+    public VentanaVentas(String legajoEmpleado) {
         super("Ventas", JFrame.EXIT_ON_CLOSE, new Dimension(500, 500));
+        this.legajo = legajoEmpleado;
     }
 
     @Override
     protected void IniciarComponentes() {
         Container cp = this.getContentPane();
-
 
         /* Crea un panel donde se encuentra todo lo relacionado a
          * ver y agregar observaciones a pedidos en etapa de revision*/
@@ -53,23 +56,23 @@ public class VentanaVentas extends VentanaBase {
         panelRevision.add(scrollLotes, BorderLayout.CENTER);
 
         /* Crea un boton que permite agregar una observacion sobre el elemento de la lista seleccionado*/
-        JButton agregarObservacion = new JButton("Agregar nueva observacion");
+        JButton verObservaciones = new JButton("Ver observacion");
         //TODO hacer que se agrege la observacion
-        agregarObservacion.addActionListener(new ActionListener() {
+        verObservaciones.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotes.getSelectedIndex();
-                String aux = (String) listModel.getElementAt(seleccionado);
+                Lote aux = (Lote) listModel.getElementAt(seleccionado);
                 System.out.println(aux);
+                new DialogoObservaciones(aux, VentanaVentas.this.legajo);
             }
         });
-        panelRevision.add(agregarObservacion, BorderLayout.SOUTH);
+        panelRevision.add(verObservaciones, BorderLayout.SOUTH);
 
         /* Agrega un titulo al panel de revisiones*/
         JLabel tituloRevision = new JLabel("Lista con todos los lotes que estan en revision");
         tituloRevision.setFont(new Font("Arial", 0, 15));
         panelRevision.add(tituloRevision, BorderLayout.NORTH);
-
 
         cp.add(panelRevision, BorderLayout.CENTER);
 
@@ -140,6 +143,10 @@ public class VentanaVentas extends VentanaBase {
 
                     Controlador.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
                                                calendarFechaVentas);
+                    
+                    /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
+                     * con los datos del lote recien agregado*/
+                    VentanaVentas.this.actualizarLista(listModel);
                 } catch (ArgumentoIlegalException e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
                 } catch (NumberFormatException e) {
@@ -147,7 +154,6 @@ public class VentanaVentas extends VentanaBase {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, "Falta completar algun campo");
                 }
-
             }
         });
         panelSouth.add(nuevoPedido, BorderLayout.SOUTH);
@@ -157,6 +163,7 @@ public class VentanaVentas extends VentanaBase {
     }
 
     private void actualizarLista(DefaultListModel modelo) {
+        modelo.removeAllElements();
         Iterator it = Controlador.getLotesNoAceptados();
         while (it.hasNext())
             modelo.addElement(it.next());
