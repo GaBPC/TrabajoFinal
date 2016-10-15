@@ -4,7 +4,10 @@ import datos.Lote;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import java.util.Iterator;
 
 import personal.Empleado;
 
@@ -41,5 +44,37 @@ public class Controlador {
         System.out.println(numeroPedido + "\n" + sdf.format(fechaPedido.getTime()) + "\n" + tipoMaquina + "\n" +
                            cantProducir + "\n" + sdf.format(fechaSolicitadaVentas.getTime()));
 
+    }
+
+    /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
+     * @return iterator con los lotes
+     */
+    public static Iterator getLotesNoAceptados() {
+        //TODO crear array list con los lotes y devolverlo. Lo que esta es de ejemplo
+        ArrayList<String> array = new ArrayList();
+        array.add("Lote 1");
+        array.add("Lote 2");
+        array.add("Lote 3");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        array.add("Lote 4");
+        return array.iterator();
     }
 }

@@ -66,4 +66,8 @@ public class Material {
     public float getCantidad() {
         return cantidad;
     }
+    
+    public String toString() {
+        return this.codigo;
+    }
 }
