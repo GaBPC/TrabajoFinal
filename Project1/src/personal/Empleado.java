@@ -11,7 +11,7 @@ public class Empleado {
           this.legajo = legajo;
         if(this.verificaNombreyApellido(nya))
           this.nya = nya;
-        if(this.verificaSector(sector))
+        if(sector != null)
           this.sector = sector;
     }
     
@@ -31,11 +31,6 @@ public class Empleado {
     private boolean verificaNombreyApellido(String nya)
     {
       return (nya.length() <= 100);
-    }
-    
-    private boolean verificaSector(String sector)
-    {
-      return (sector != null);
     }
 
     public String getLegajo() {

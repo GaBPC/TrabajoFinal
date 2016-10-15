@@ -27,7 +27,7 @@ public class Lote {
     public Lote(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina, int cantProduccion) throws ArgumentoIlegalException {
         if (this.verificaNumeroPedido(numeroPedido))
             this.numeroPedido = numeroPedido;
-        if (this.verficaTipoMaquina(tipoMaquina))
+        if (tipoMaquina != null)
             this.tipoMaquina = tipoMaquina;
         if (this.verificaCantProduccion(cantProduccion))
             this.cantProduccion = cantProduccion;
@@ -73,10 +73,6 @@ public class Lote {
     {
       return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.numeroLote != null);
     } //FALTA FECHA DEFINITIVA
-
-    private boolean verficaTipoMaquina(String tipoMaquina) {
-        return (tipoMaquina != null);
-    }
 
     private boolean verificaCantProduccion(int cantProduccion) {
         return (cantProduccion > 0 && cantProduccion < 999);

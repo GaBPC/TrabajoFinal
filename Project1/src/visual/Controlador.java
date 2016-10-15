@@ -7,27 +7,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import personal.Empleado;
 
-public class Controlador {
-    public Controlador() {
-        super();
-    }
+public abstract class Controlador {
+
+    public static final String VENTAS = "Ventas";
+    public static final String PRODUCCION = "Produccion";
+    public static final String CONTABILIDAD = "Contabilidad";
+    public static final String INSPECCION = "Inspeccion y Calidad";
+  
+    private static HashMap<String,Empleado> empleados = new HashMap<>();
+    
+static
+{
+  empleados.put("LEG123456",new Empleado("LEG123456", "Prieto Gabriel", VENTAS));
+  empleados.put("LEG000000",new Empleado("LEG000000", "Cassanelli Rodrigo", VENTAS));
+  empleados.put("LEG456789",new Empleado("LEG456789", "Colautti Bruno", PRODUCCION));
+  empleados.put("LEG111111",new Empleado("LEG111111", "Coppes Lucia", PRODUCCION));
+  empleados.put("LEG333333",new Empleado("LEG333333", "Ruiz Gonzalo", CONTABILIDAD));
+  empleados.put("LEG888888",new Empleado("LEG888888", "Khun Franco", INSPECCION));
+}
 
     /**Metodo para buscar un empleado por su numero de legajo
      * @param legajo es el legajo del empleado buscado
-     * @return una referencia al empleado si es encontrado, null encaso contrario
+     * @return una referencia al empleado si es encontrado, null en caso contrario
      */
     public static Empleado buscarEmpleado(String legajo) {
-        Empleado encontrado = new Empleado("LEG00", "Prieto Gabriel", "Compras");
-
-        if (encontrado.getLegajo().compareTo(legajo) == 0)
-
-            return encontrado;
-        else
-            return null;
+        return empleados.get(legajo);
     }
 
     /**Metodo para crear un nuevo lote desde el sector de ventas.
