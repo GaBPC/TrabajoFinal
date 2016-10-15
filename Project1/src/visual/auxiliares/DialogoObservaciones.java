@@ -2,6 +2,8 @@ package visual.auxiliares;
 
 import datos.Observacion;
 
+import exceptions.ArgumentoIlegalException;
+
 import java.awt.BorderLayout;
 
 import java.awt.Component;
@@ -82,15 +84,16 @@ public class DialogoObservaciones extends JDialog {
             public void actionPerformed(ActionEvent actionEvent) {
                 String temaIngresado = tema.getText();
                 String observacionIngresada = observacion.getText();
-
-                Observacion nueva =
-                    new Observacion(temaIngresado, GregorianCalendar.getInstance(),
-                                    DialogoObservaciones.this.control.getEmpeladoActual().getLegajo(),
-                                    observacionIngresada);
-
+                Observacion nueva;
                 try {
+                    nueva =
+                        new Observacion(temaIngresado, GregorianCalendar.getInstance(),
+                                        DialogoObservaciones.this.control.getEmpeladoActual().getLegajo(),
+                                        observacionIngresada);
                     DialogoObservaciones.this.control.getLoteActual().agregarObservacion(nueva);
                     DialogoObservaciones.this.actualizarLista(listModel);
+                } catch (ArgumentoIlegalException e) {
+                    JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
                 }

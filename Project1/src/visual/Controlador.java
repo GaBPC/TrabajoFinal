@@ -13,7 +13,7 @@ import java.util.Iterator;
 import personal.Empleado;
 
 /** Clase utilizada para controlar todas las acciones que una ventana tiene permitido realizar.
- *  Cada ventana recibe una instancia de un controlador, la cual contiene todos los datos del 
+ *  Cada ventana recibe una instancia de un controlador, la cual contiene todos los datos del
  *  sistema que permiten realizar las acciones soportadas.
  */
 public class Controlador {
@@ -25,36 +25,41 @@ public class Controlador {
 
     private HashMap<String, Empleado> empleados = new HashMap<>();
     {
-        empleados.put("LEG123456", new Empleado("LEG123456", "Prieto Gabriel", VENTAS));
-        empleados.put("LEG000000", new Empleado("LEG000000", "Cassanelli Rodrigo", VENTAS));
-        empleados.put("LEG456789", new Empleado("LEG456789", "Colautti Bruno", PRODUCCION));
-        empleados.put("LEG111111", new Empleado("LEG111111", "Coppes Lucia", PRODUCCION));
-        empleados.put("LEG333333", new Empleado("LEG333333", "Ruiz Gonzalo", CONTABILIDAD));
-        empleados.put("LEG888888", new Empleado("LEG888888", "Khun Franco", INSPECCION));
+        try {
+            empleados.put("LEG123456", new Empleado("LEG123456", "Prieto Gabriel", VENTAS));
+            empleados.put("LEG000000", new Empleado("LEG000000", "Cassanelli Rodrigo", VENTAS));
+            empleados.put("LEG456789", new Empleado("LEG456789", "Colautti Bruno", PRODUCCION));
+            empleados.put("LEG111111", new Empleado("LEG111111", "Coppes Lucia", PRODUCCION));
+            empleados.put("LEG333333", new Empleado("LEG333333", "Ruiz Gonzalo", CONTABILIDAD));
+            empleados.put("LEG888888", new Empleado("LEG888888", "Khun Franco", INSPECCION));
+        } catch (ArgumentoIlegalException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private ListaLotes lotes = ListaLotes.getInstance();
-    
+
     private Empleado empleadoActual = null;
     private Lote loteActual = null;
-    
-    public Controlador(){
+
+    public Controlador() {
         super();
     }
-    
-    public void setEmpeladoActual(Empleado actual){
+
+    public void setEmpeladoActual(Empleado actual) {
         this.empleadoActual = actual;
     }
-    
-    public Empleado getEmpeladoActual(){
+
+    public Empleado getEmpeladoActual() {
         return this.empleadoActual;
     }
-    
-    public void setLoteActual(Lote lote){
+
+    public void setLoteActual(Lote lote) {
         this.loteActual = lote;
     }
-    
-    public Lote getLoteActual(){
+
+    public Lote getLoteActual() {
         return this.loteActual;
     }
 

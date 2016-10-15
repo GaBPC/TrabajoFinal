@@ -126,6 +126,8 @@ public class VentanaVentas extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
+
+                    /* Obtiene los datos del nuevo pedido de los campos de ingreso*/
                     String pedido = "PED";
                     pedido += nPedido.getText();
 
@@ -139,12 +141,15 @@ public class VentanaVentas extends VentanaBase {
                     Calendar calendarFechaVentas =
                         new GregorianCalendar(fechaVentas.getYear(), fechaVentas.getMes(), fechaVentas.getDia() + 1);
 
+                    /* Agrega el nuevo lote a la lista mediante el controlador*/
                     VentanaVentas.this.control.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
                                                               calendarFechaVentas);
-
                     /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
                      * con los datos del lote recien agregado*/
                     VentanaVentas.this.actualizarLista(listModel);
+                    /* Pone el blanco todos los campos de ingreso nuevamente*/
+                    nPedido.setText("");
+                    cantProducir.setText("");
                 } catch (ArgumentoIlegalException e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
                 } catch (NumberFormatException e) {
