@@ -20,9 +20,9 @@ public class PanelFechas extends JPanel {
         super();
         this.initComponents();
         this.setLayout(new BorderLayout());
-        this.add(dia, BorderLayout.WEST);
+        this.add(year, BorderLayout.WEST);
         this.add(mes, BorderLayout.CENTER);
-        this.add(year, BorderLayout.EAST);
+        this.add(dia, BorderLayout.EAST);
     }
 
     private void initComponents() {
