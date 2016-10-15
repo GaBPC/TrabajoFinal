@@ -19,6 +19,8 @@ public abstract class VentanaBase extends JFrame {
         this.setLayout(new BorderLayout());
         //Inicia todas las componentes que contrendra la ventana
         this.IniciarComponentes();
+        //Hace que la ventana aparezca en el centro de la pantalla
+        this.setLocationRelativeTo(null);
         //Hace que la ventana sea visible
         this.setVisible(true);
     }

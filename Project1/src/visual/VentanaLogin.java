@@ -54,7 +54,7 @@ public class VentanaLogin extends VentanaBase {
 
             @Override
             /* Se busca el empleado que corresponda al legajo ingresado
-             * Si se encuentra se muestran sus datos por pantalla y se guarda la referencia en 
+             * Si se encuentra se muestran sus datos por pantalla y se guarda la referencia en
              * el atributo empleadoLogeado de la VentanaLogin
              * Si no se encuentra se avisa del error por pantalla*/
             public void actionPerformed(ActionEvent actionEvent) {
@@ -62,10 +62,12 @@ public class VentanaLogin extends VentanaBase {
                 String leg = "LEG";
                 leg += ingresado;
                 Empleado empleado = Controlador.buscarEmpleado(leg);
-                if (empleado == null)
+                if (empleado == null) {
+                    VentanaLogin.this.empleadoLogeado = null;
+                    datos.setText("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
                     JOptionPane.showMessageDialog(VentanaLogin.this,
                                                   "No existe un empleado que coincida con dicho legajo");
-                else {
+                } else {
                     VentanaLogin.this.empleadoLogeado = empleado;
                     datos.setText("Legajo: " + empleado.getLegajo() + "\n\n\nApellido y nombre: " + empleado.getNya() +
                                   "\n\n\nSector: " + empleado.getSector() + "\n\n\n");
@@ -79,19 +81,25 @@ public class VentanaLogin extends VentanaBase {
         //Se agrega el boton que permite ingresar al sistema
         JButton ingresar = new JButton("Ingresar al sistema");
         //TODO agregar la accion correspondiente al empleado que intenta ingresar al sistema
-        ingresar.addActionListener(new ActionListener(){
+        ingresar.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String sector = VentanaLogin.this.empleadoLogeado.getSector();
-                if (sector.toUpperCase().compareTo("VENTAS") == 0) {
+                String sector = VentanaLogin.this.empleadoLogeado.getSector().toUpperCase();
+
+                if (sector.compareTo(Controlador.VENTAS.toUpperCase()) == 0) {
                     new VentanaVentas();
                     VentanaLogin.this.dispose();
-                }
+                } else if (sector.compareTo(Controlador.PRODUCCION.toUpperCase()) == 0) {
+                    //VentanaProduccion
+                    VentanaLogin.this.dispose();
+                } else
+                    JOptionPane.showMessageDialog(VentanaLogin.this,
+                                                  "No hay acceso para un empleado de dicha categoria");
             }
         });
-        
-        
+
+
         //Se añade al ContentPane de la ventana
         cp.add(ingresar, BorderLayout.SOUTH);
     }

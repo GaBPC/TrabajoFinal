@@ -16,7 +16,7 @@ public class Evaluacion extends EstadoBase {
     }
 
     @Override
-    public void agregarObservacion(Observacion obs) throws Exception {
+    public void agregarObservacion(Observacion obs) throws StateException {
         if (obs.verificacion())
             this.lote.getListaObservaciones().add(obs);
         else

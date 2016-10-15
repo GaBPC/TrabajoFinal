@@ -64,7 +64,7 @@ public class VentanaVentas extends VentanaBase {
             }
         });
         panelRevision.add(agregarObservacion, BorderLayout.SOUTH);
-        
+
         /* Agrega un titulo al panel de revisiones*/
         JLabel tituloRevision = new JLabel("Lista con todos los lotes que estan en revision");
         tituloRevision.setFont(new Font("Arial", 0, 15));
@@ -128,7 +128,6 @@ public class VentanaVentas extends VentanaBase {
                     String pedido = "PED";
                     pedido += nPedido.getText();
 
-
                     Calendar calendarFechaPedido =
                         new GregorianCalendar(fechaPedido.getYear(), fechaPedido.getMes(), fechaPedido.getDia() + 1);
 
@@ -139,9 +138,10 @@ public class VentanaVentas extends VentanaBase {
                     Calendar calendarFechaVentas =
                         new GregorianCalendar(fechaVentas.getYear(), fechaVentas.getMes(), fechaVentas.getDia() + 1);
 
-
                     Controlador.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
                                                calendarFechaVentas);
+                } catch (ArgumentoIlegalException e) {
+                    JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, "Cantidad a producir solo puede ser un numero");
                 } catch (Exception e) {
