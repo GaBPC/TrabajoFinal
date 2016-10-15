@@ -77,8 +77,18 @@ public class VentanaLogin extends VentanaBase {
         cp.add(panelIngreso, BorderLayout.NORTH);
 
         //Se agrega el boton que permite ingresar al sistema
-        JButton ingresar = new JButton("Ingresar");
+        JButton ingresar = new JButton("Ingresar al sistema");
+        ingresar.addActionListener(new ActionListener(){
 
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String sector = VentanaLogin.this.empleadoLogeado.getSector();
+                if (sector.toUpperCase().compareTo("VENTAS") == 0) {
+                    new VentanaVentas();
+                    VentanaLogin.this.dispose();
+                }
+            }
+        });
         //TODO agregar la accion correspondiente al empleado que intenta ingresar al sistema
         
         //Se añade al ContentPane de la ventana

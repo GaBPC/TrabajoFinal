@@ -10,6 +10,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.Calendar;
+
+import java.util.GregorianCalendar;
+
 import javax.swing.*;
 
 import visual.auxiliares.PanelFechas;
@@ -85,6 +89,8 @@ public class VentanaVentas extends VentanaBase {
                 int mesPedido = fechaPedido.getMes();
                 int yearPedido = fechaPedido.getYear();
 
+                Calendar calendarFechaPedido = new GregorianCalendar(yearPedido, mesPedido, diaPedido);
+
                 String maquina = (String) maquinasSoportadas.getSelectedItem();
 
                 int cantidadProducir = Integer.parseInt(cantProducir.getText());
@@ -93,8 +99,11 @@ public class VentanaVentas extends VentanaBase {
                 int mesVentas = fechaVentas.getMes();
                 int yearVentas = fechaVentas.getYear();
 
-                System.out.println(pedido + "\n" + diaPedido + "-" + mesPedido + "-" + yearPedido + "\n" + maquina +
-                                   "\n" + cantidadProducir);
+                Calendar calendarFechaVentas = new GregorianCalendar(yearVentas, mesVentas, diaVentas);
+
+
+                Controlador.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir, calendarFechaVentas);
+
             }
         });
         panelSouth.add(nuevoPedido, BorderLayout.SOUTH);
