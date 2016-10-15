@@ -33,7 +33,6 @@ public class VentanaLogin extends VentanaBase {
     protected void IniciarComponentes() {
         Container cp = this.getContentPane();
 
-
         //Se crea un JTextArea donde se mostraran los datos del empleado encontrado. Empieza vacio
         JTextArea datos = new JTextArea("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
         //Se impide que se pueda modificar manualmente los datos

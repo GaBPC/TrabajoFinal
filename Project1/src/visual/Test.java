@@ -14,6 +14,6 @@ public class Test {
         } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException |
                  ClassNotFoundException e) {
         }
-        new VentanaLogin();
+        new VentanaVentas();
     }
 }
