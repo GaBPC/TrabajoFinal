@@ -1,7 +1,5 @@
 package visual.auxiliares;
 
-import datos.Lote;
-
 import datos.Observacion;
 
 import java.awt.BorderLayout;
@@ -34,7 +32,6 @@ import javax.swing.JTextField;
 import visual.Controlador;
 
 public class DialogoObservaciones extends JDialog {
-
 
     private Controlador control;
 

@@ -5,9 +5,6 @@ import datos.Lote;
 
 import exceptions.ArgumentoIlegalException;
 
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.HashMap;
@@ -15,6 +12,10 @@ import java.util.Iterator;
 
 import personal.Empleado;
 
+/** Clase utilizada para controlar todas las acciones que una ventana tiene permitido realizar.
+ *  Cada ventana recibe una instancia de un controlador, la cual contiene todos los datos del 
+ *  sistema que permiten realizar las acciones soportadas.
+ */
 public class Controlador {
 
     public static final String VENTAS = "Ventas";
