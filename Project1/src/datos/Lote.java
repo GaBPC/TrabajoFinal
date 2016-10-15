@@ -24,22 +24,15 @@ public class Lote {
         super();
     }
 
-    public Lote(String numeroPedido, String numeroLote, Calendar fechaPedido, Calendar fechaEntregaVentas,
-                Calendar fechaPropuestaProduccion, Calendar fechaDefinitiva, Calendar fechaPedidoAceptado,
-                String tipoMaquina, int cantProduccion) throws ArgumentoIlegalException {
+    public Lote(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina, int cantProduccion) throws ArgumentoIlegalException {
         if (this.verificaNumeroPedido(numeroPedido))
             this.numeroPedido = numeroPedido;
-        if (this.verificaNumeroLote(numeroLote))
-            this.numeroLote = numeroLote;
         if (this.verficaTipoMaquina(tipoMaquina))
             this.tipoMaquina = tipoMaquina;
         if (this.verificaCantProduccion(cantProduccion))
             this.cantProduccion = cantProduccion;
         this.fechaPedido = fechaPedido;
         this.fechaEntregaVentas = fechaEntregaVentas;
-        this.fechaPropuestaProduccion = fechaPropuestaProduccion;
-        this.fechaDefinitiva = fechaDefinitiva;
-        this.fechaPedidoAceptado = fechaPedidoAceptado;
 
         this.listaObservaciones = new TreeSet<>();
 
@@ -75,6 +68,11 @@ public class Lote {
             throw new ArgumentoIlegalException("El numero de lote no contiene \"LOT\"", numeroLote);
         return ret;
     }
+    
+    public boolean verificaNull()
+    {
+      return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.numeroLote != null);
+    } //FALTA FECHA DEFINITIVA
 
     private boolean verficaTipoMaquina(String tipoMaquina) {
         return (tipoMaquina != null);

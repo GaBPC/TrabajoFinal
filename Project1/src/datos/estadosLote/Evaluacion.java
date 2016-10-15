@@ -25,6 +25,7 @@ public class Evaluacion extends EstadoBase {
 
     @Override
     public void aceptarLote() throws Exception{
-        this.lote.setEstadoActual(new Aceptado(this.lote));
+        if(this.lote.verificaNull())
+          this.lote.setEstadoActual(new Aceptado(this.lote));
     }
 }
