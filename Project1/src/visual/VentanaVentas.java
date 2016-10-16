@@ -28,10 +28,8 @@ import visual.auxiliares.PanelFechas;
 
 public class VentanaVentas extends VentanaBase {
 
-    private String legajo;
-
     public VentanaVentas(Controlador control) {
-        super(control, "Ventas", JFrame.EXIT_ON_CLOSE, new Dimension(500, 500));
+        super(control, "Ventas", JFrame.DISPOSE_ON_CLOSE, new Dimension(500, 500));
     }
 
     @Override
