@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 
 import visual.auxiliares.DialogoAceptacion;
 import visual.auxiliares.DialogoObservaciones;
+import visual.auxiliares.MyList;
 
 public class VentanaProduccion extends VentanaBase {
     public VentanaProduccion(Controlador control) {
@@ -56,8 +57,8 @@ public class VentanaProduccion extends VentanaBase {
         DefaultListModel listModelAc = new DefaultListModel();
         /* Crea la lista donde se veran todos los lotes que no han sido aun aceptados y sobre
          * los cuales se pueden agregar observaciones*/
-        JList lotesEv = new JList(listModelEv);
-        JList lotesAc = new JList(listModelAc);
+        MyList lotesEv = new MyList(listModelEv);
+        MyList lotesAc = new MyList(listModelAc);
         /* Agrega un JScrollPane que permite subir y bajar en la lista*/
         JScrollPane scrollLotesEv = new JScrollPane(lotesEv);
         JScrollPane scrollLotesAc = new JScrollPane(lotesAc);

@@ -170,8 +170,7 @@ public class Lote {
     }
 
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
-        String ret = this.numeroPedido + " - " + sdf.format(this.fechaPedido.getTime()) + " - " + this.tipoMaquina;
+        String ret = this.numeroPedido + ": " + this.tipoMaquina + " "+ this.cantProduccion + "u." ;
         return ret;
     }
 
@@ -182,7 +181,8 @@ public class Lote {
 
         try {
             ret += "Numero de pedido: " + ((this.verificaNumeroPedido(this.numeroPedido)) ? this.numeroPedido : " - ");
-            ret += "\nFecha de pedido: " + ((this.fechaPedido != null) ? sdf.format(this.fechaPedido.getTime()) : " - ");
+            ret +=
+                "\nFecha de pedido: " + ((this.fechaPedido != null) ? sdf.format(this.fechaPedido.getTime()) : " - ");
             ret += "\nTipo de maquina: " + ((this.tipoMaquina != null) ? this.tipoMaquina : " - ");
             ret +=
                 "\nCantidad a producir: " +

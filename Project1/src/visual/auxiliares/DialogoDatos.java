@@ -24,9 +24,8 @@ public class DialogoDatos extends JDialog{
     
     private void initComponents(){
         Container cp = this.getContentPane();
-        
         JTextArea datos = new JTextArea(this.datos);
-        
+        datos.setEditable(false);
         cp.add(datos, BorderLayout.CENTER);
     }
 }
