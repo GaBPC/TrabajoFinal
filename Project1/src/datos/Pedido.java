@@ -18,7 +18,7 @@ import java.util.Observable;
 
 /**Clase que contiene todos los datos correspondiente a un lote.
  */
-public class Pedido extends Observable implements ResumenClase{
+public class Pedido extends Observable implements ResumenClase {
     private String numeroPedido = null;
     private Calendar fechaPedido = null, fechaEntregaVentas = null, fechaPropuestaProduccion = null, fechaDefinitiva =
         null, fechaPedidoAceptado = null;
@@ -41,7 +41,7 @@ public class Pedido extends Observable implements ResumenClase{
      * @throws ArgumentoIlegalException Si algun parametro no cumple con alguna restriccion, es informado mediante esta excepcion
      */
     public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina,
-                int cantProduccion) throws ArgumentoIlegalException {
+                  int cantProduccion) throws ArgumentoIlegalException {
         if (this.verificaNumeroPedido(numeroPedido))
             this.numeroPedido = numeroPedido;
         if (tipoMaquina != null)
@@ -101,8 +101,11 @@ public class Pedido extends Observable implements ResumenClase{
      * @param cantProduccion
      * @return
      */
-    private boolean verificaCantProduccion(int cantProduccion) {
-        return (cantProduccion > 0 && cantProduccion < 999);
+    private boolean verificaCantProduccion(int cantProduccion) throws ArgumentoIlegalException {
+        if (cantProduccion > 0 && cantProduccion < 999)
+            return true;
+        else
+            throw new ArgumentoIlegalException("La cantidad a producir debe ser 0 < cant < 999", cantProduccion);       
     }
 
     /**Metodo que permite cambiar los estados del lote, mediante el patron State
@@ -132,8 +135,7 @@ public class Pedido extends Observable implements ResumenClase{
     /**Metodo que utilizaran los empleados de produccion para aceptar el lote
      * @throws Exception si el lote aun no esta listo para ser aceptado se produce la exception
      */
-    public void aceptarPedido(Calendar fechaProduccion) throws ArgumentoIlegalException,
-                                                                                StateException {
+    public void aceptarPedido(Calendar fechaProduccion) throws ArgumentoIlegalException, StateException {
 
         this.fechaPedidoAceptado = GregorianCalendar.getInstance();
         this.fechaPropuestaProduccion = fechaProduccion;
@@ -152,7 +154,7 @@ public class Pedido extends Observable implements ResumenClase{
     }
 
     public String toString() {
-        String ret = this.numeroPedido + ": " + this.tipoMaquina + " "+ this.cantProduccion + "u." ;
+        String ret = this.numeroPedido + ": " + this.tipoMaquina + " " + this.cantProduccion + "u.";
         return ret;
     }
 
