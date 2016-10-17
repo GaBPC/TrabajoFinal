@@ -16,8 +16,8 @@ public class Test {
         }
         Controlador controlUsuario1 = new Controlador();
         new VentanaLogin(controlUsuario1);
-        
-        /*Controlador controlUsuario2 = new Controlador();
-        new VentanaLogin(controlUsuario2);*/
+
+        Controlador controlUsuario2 = new Controlador();
+        new VentanaLogin(controlUsuario2);
     }
 }

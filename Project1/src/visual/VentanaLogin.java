@@ -93,7 +93,8 @@ public class VentanaLogin extends VentanaBase {
                     new VentanaVentas(VentanaLogin.this.control);
                     VentanaLogin.this.dispose();
                 } else if (sector.compareTo(Controlador.PRODUCCION.toUpperCase()) == 0) {
-                    //VentanaProduccion
+                    control.setEmpeladoActual(VentanaLogin.this.empleadoLogeado);
+                    new VentanaProduccion(VentanaLogin.this.control);
                     VentanaLogin.this.dispose();
                 } else
                     JOptionPane.showMessageDialog(VentanaLogin.this,

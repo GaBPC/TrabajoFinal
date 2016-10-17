@@ -120,7 +120,26 @@ public class Controlador {
       return it;
     }
     
+    public Iterator<Lote> getLotesAceptados() 
+    {
+      Iterator<Lote> it = this.lotes.getIterator();
+      ArrayList<Lote> lotesAc = new ArrayList<>();
+      while(it.hasNext())
+      {
+        Lote lot = (Lote) it.next();
+        if(lot.isAceptado())
+          lotesAc.add(lot);
+      }
+      it = lotesAc.iterator();
+      return it;
+    }
+    
     public void cambiarAEvaluacion() throws StateException {
       this.loteActual.evaluarLote();
+    }
+    
+    public void cambiarAAceptado(String numeroLote, Calendar fechaProduccion) throws ArgumentoIlegalException,
+                                                                                     StateException {
+        this.loteActual.aceptarLote(numeroLote, fechaProduccion);
     }
 }

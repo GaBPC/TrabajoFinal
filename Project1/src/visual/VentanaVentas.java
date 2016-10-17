@@ -26,6 +26,7 @@ import java.util.Iterator;
 import javax.swing.*;
 
 import visual.auxiliares.DialogoObservaciones;
+import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
 
 public class VentanaVentas extends VentanaBase {
@@ -58,8 +59,8 @@ public class VentanaVentas extends VentanaBase {
         DefaultListModel listModelIn = new DefaultListModel();
         /* Crea la lista donde se veran todos los lotes que no han sido aun aceptados y sobre
          * los cuales se pueden agregar observaciones*/
-        JList lotesEv = new JList(listModelEv);
-        JList lotesIn = new JList(listModelIn);
+        MyList lotesEv = new MyList(listModelEv);
+        MyList lotesIn = new MyList(listModelIn);
         /* Agrega un JScrollPane que permite subir y bajar en la lista*/
         JScrollPane scrollLotesEv = new JScrollPane(lotesEv);
         JScrollPane scrollLotesIn = new JScrollPane(lotesIn);

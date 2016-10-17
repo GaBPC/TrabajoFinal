@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**Clase que contiene todos los datos correspondiente a un lote.
  */
@@ -94,11 +95,15 @@ public class Lote {
      */
     private boolean verificaNumeroLote(String numeroLote) throws ArgumentoIlegalException {
         boolean ret = false;
-        String aux = numeroLote.substring(0, 3);
-        if (aux.compareTo("LOT") == 0)
-            ret = verifica(numeroLote);
-        else
-            throw new ArgumentoIlegalException("El numero de lote no contiene \"LOT\"", numeroLote);
+        if (numeroLote == null)
+            ret = false;
+        else {
+            String aux = numeroLote.substring(0, 3);
+            if (aux.compareTo("LOT") == 0)
+                ret = verifica(numeroLote);
+            else
+                throw new ArgumentoIlegalException("El numero de lote no contiene \"LOT\"", numeroLote);
+        }
         return ret;
     }
 
@@ -144,7 +149,12 @@ public class Lote {
     /**Metodo que utilizaran los empleados de produccion para aceptar el lote
      * @throws Exception si el lote aun no esta listo para ser aceptado se produce la exception
      */
-    public void aceptarLote() throws Exception {
+    public void aceptarLote(String numeroLote, Calendar fechaProduccion) throws ArgumentoIlegalException,
+                                                                                StateException {
+        if (this.verificaNumeroLote(numeroLote))
+            this.numeroLote = numeroLote;
+        this.fechaPedidoAceptado = GregorianCalendar.getInstance();
+        this.fechaPropuestaProduccion = fechaProduccion;
         this.estadoActual.aceptarLote();
     }
 
@@ -165,6 +175,35 @@ public class Lote {
         return ret;
     }
 
+    public String detalles() {
+        String ret = "";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
+
+        try {
+            ret += "Numero de pedido: " + ((this.verificaNumeroPedido(this.numeroPedido)) ? this.numeroPedido : " - ");
+            ret += "\nFecha de pedido: " + ((this.fechaPedido != null) ? sdf.format(this.fechaPedido.getTime()) : " - ");
+            ret += "\nTipo de maquina: " + ((this.tipoMaquina != null) ? this.tipoMaquina : " - ");
+            ret +=
+                "\nCantidad a producir: " +
+                ((this.verificaCantProduccion(this.cantProduccion)) ? this.cantProduccion : " - ");
+            ret +=
+                "\nFecha de entrega solicitada por ventas: " +
+                ((this.fechaEntregaVentas != null) ? sdf.format(this.fechaEntregaVentas.getTime()) : " - ");
+            ret +=
+                "\nFecha propuesta por produccion: " +
+                ((this.fechaPropuestaProduccion != null) ? sdf.format(this.fechaPropuestaProduccion.getTime()) : " - ");
+            ret +=
+                "\nFecha definitiva: " +
+                ((this.fechaDefinitiva != null) ? sdf.format(this.fechaDefinitiva.getTime()) : " - ");
+            ret +=
+                "\nFecha de pedido aceptado: " +
+                ((this.fechaPedidoAceptado != null) ? sdf.format(this.fechaPedidoAceptado.getTime()) : " - ");
+            ret += "\nNumero de lote: " + ((this.verificaNumeroLote(this.numeroLote)) ? this.numeroLote : " - ");
+        } catch (ArgumentoIlegalException e) {
+        }
+        return ret;
+    }
 
     public boolean isIniciado() {
         return this.estadoActual.isIniciado();

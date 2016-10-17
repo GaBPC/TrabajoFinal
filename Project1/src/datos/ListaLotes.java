@@ -1,6 +1,9 @@
 package datos;
 
+import exceptions.ArgumentoIlegalException;
+
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 /**Clase donde se almacenan todos los lotes que se van creando.
@@ -15,6 +18,11 @@ public class ListaLotes {
     private ListaLotes() {
         super();
         this.lista = new ArrayList<Lote>();
+        try {
+            this.lista.add(new Lote("PED123456", GregorianCalendar.getInstance(), GregorianCalendar.getInstance(),
+                                    "Flipper", 90));
+        } catch (ArgumentoIlegalException e) {
+        }
     }
 
     /**Metodo que devuelve la referencia a la unica instancia posible de la lista de lotes
