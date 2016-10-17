@@ -64,6 +64,7 @@ public class VentanaLogin extends VentanaBase {
                 Empleado empleado = VentanaLogin.this.control.buscarEmpleado(leg);
                 if (empleado == null) {
                     VentanaLogin.this.empleadoLogeado = null;
+                    legajo.setText("");
                     datos.setText("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
                     JOptionPane.showMessageDialog(VentanaLogin.this,
                                                   "No existe un empleado que coincida con dicho legajo");

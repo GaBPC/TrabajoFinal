@@ -66,7 +66,7 @@ public class Lote {
             else
                 throw new ArgumentoIlegalException("El numero esta fuera de rango", num);
         } else
-            throw new ArgumentoIlegalException("El numero debe tener 9 digitos", str);
+            throw new ArgumentoIlegalException("El numero debe tener 6 digitos", str);
         return ret;
     }
 
