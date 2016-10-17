@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.Observable;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -105,5 +107,10 @@ public class VentanaLogin extends VentanaBase {
 
         //Se añade al ContentPane de la ventana
         cp.add(ingresar, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void update(Observable observable, Object object) {
+        // DO NOTHING
     }
 }

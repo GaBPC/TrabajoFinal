@@ -55,7 +55,7 @@ public class Lote implements ResumenClase {
     }
 
     public String toString() {
-        return this.pedido.toString();
+        return this.numeroLote + " - " + this.pedido.toString();
     }
 
     public String detalles() {

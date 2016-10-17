@@ -14,10 +14,11 @@ import java.util.Calendar;
 import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Observable;
 
 /**Clase que contiene todos los datos correspondiente a un lote.
  */
-public class Pedido implements ResumenClase{
+public class Pedido extends Observable implements ResumenClase{
     private String numeroPedido = null;
     private Calendar fechaPedido = null, fechaEntregaVentas = null, fechaPropuestaProduccion = null, fechaDefinitiva =
         null, fechaPedidoAceptado = null;
@@ -109,6 +110,8 @@ public class Pedido implements ResumenClase{
      */
     public void setEstadoActual(Estado estadoActual) {
         this.estadoActual = estadoActual;
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**Metodo que devuelve el estado actual del lote, mediante el patron State

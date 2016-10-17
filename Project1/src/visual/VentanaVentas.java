@@ -23,6 +23,8 @@ import java.util.GregorianCalendar;
 
 import java.util.Iterator;
 
+import java.util.Observable;
+
 import javax.swing.*;
 
 import visual.auxiliares.DialogoObservaciones;
@@ -30,6 +32,9 @@ import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
 
 public class VentanaVentas extends VentanaBase {
+
+    private DefaultListModel listModelEv;
+    private DefaultListModel listModelIn;
 
     public VentanaVentas(Controlador control) {
         super(control, "Ventas", JFrame.DISPOSE_ON_CLOSE, new Dimension(700, 700));
@@ -55,8 +60,8 @@ public class VentanaVentas extends VentanaBase {
         tit2.setFont(new Font("Arial", 0, 15));
         titulos.add(tit2);
         /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
-        DefaultListModel listModelEv = new DefaultListModel();
-        DefaultListModel listModelIn = new DefaultListModel();
+        this.listModelEv = new DefaultListModel();
+        this.listModelIn = new DefaultListModel();
         /* Crea la lista donde se veran todos los lotes que no han sido aun aceptados y sobre
          * los cuales se pueden agregar observaciones*/
         MyList lotesEv = new MyList(listModelEv);
@@ -91,7 +96,7 @@ public class VentanaVentas extends VentanaBase {
         evaluar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                
+
                 try {
                     int seleccionado = lotesIn.getSelectedIndex();
                     VentanaVentas.this.control.setLoteActual((Pedido) listModelIn.getElementAt(seleccionado));
@@ -101,7 +106,7 @@ public class VentanaVentas extends VentanaBase {
                 } catch (StateException e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
                 }
-                
+
             }
         });
         aux1.add(evaluar, BorderLayout.SOUTH);
@@ -219,5 +224,14 @@ public class VentanaVentas extends VentanaBase {
         while (it.hasNext()) {
             modelo.addElement(it.next());
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object object) {
+        if (this.observados.contains(observable)) {
+            this.actualizarListaEv(this.listModelEv);
+            this.actualizarListaIn(this.listModelIn);
+        } else
+            throw new IllegalArgumentException("Fatal error");
     }
 }

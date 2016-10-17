@@ -120,19 +120,7 @@ public class Controlador {
         it = lotesEv.iterator();
         return it;
     }
-
-    public Iterator<Pedido> getPedidosAceptados() {
-        Iterator<Pedido> it = this.pedidos.getIterator();
-        ArrayList<Pedido> lotesAc = new ArrayList<>();
-        while (it.hasNext()) {
-            Pedido lot = (Pedido) it.next();
-            if (lot.isAceptado())
-                lotesAc.add(lot);
-        }
-        it = lotesAc.iterator();
-        return it;
-    }
-
+    
     public Iterator<Lote> getLotes() {
         Iterator<Lote> it = this.lotes.getIterator();
         ArrayList<Lote> lotes = new ArrayList<>();

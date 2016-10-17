@@ -39,7 +39,7 @@ public class DialogoAceptacion extends JDialog {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
-        this.setMinimumSize(new Dimension(200, 200));
+        this.setMinimumSize(new Dimension(400, 100));
         this.initComponents();
         this.setVisible(true);
     }

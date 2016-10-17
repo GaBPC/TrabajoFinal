@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 
 import java.util.Iterator;
 
+import java.util.Observable;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +32,9 @@ import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.MyList;
 
 public class VentanaProduccion extends VentanaBase {
+    private DefaultListModel listModelEv;
+    private DefaultListModel listModelAc;
+    
     public VentanaProduccion(Controlador control) {
         super(control, "Produccion", JFrame.DISPOSE_ON_CLOSE, new Dimension(700, 700));
     }
@@ -54,8 +59,8 @@ public class VentanaProduccion extends VentanaBase {
         tit2.setFont(new Font("Arial", 0, 15));
         titulos.add(tit2);
         /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
-        DefaultListModel listModelEv = new DefaultListModel();
-        DefaultListModel listModelAc = new DefaultListModel();
+        this.listModelEv = new DefaultListModel();
+        this.listModelAc = new DefaultListModel();
         /* Crea la lista donde se veran todos los lotes que no han sido aun aceptados y sobre
          * los cuales se pueden agregar observaciones*/
         MyList lotesEv = new MyList(listModelEv);
@@ -132,5 +137,14 @@ public class VentanaProduccion extends VentanaBase {
         while (it.hasNext()) {
             modelo.addElement(it.next());
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object object) {
+        if (this.observados.contains(observable)){
+            this.actualizarListaAc(this.listModelAc);
+            this.actualizarListaEv(this.listModelEv);
+        } else
+            throw new IllegalArgumentException("Fatal error");
     }
 }

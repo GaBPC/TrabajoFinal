@@ -4,8 +4,9 @@ import datos.Lote;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class ListaLotes {
+public class ListaLotes extends Observable{
     private static ListaLotes _instance = null;
     
     private ArrayList<Lote> lista;

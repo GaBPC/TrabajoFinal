@@ -14,7 +14,7 @@ public class PanelFechas extends JPanel
   private JComboBox mes;
   private JComboBox year;
 
-  private final int añoMinimo = 2010;
+  private final int añoMinimo = 2016;
   private final int añoMaximo = 2050;
 
   public PanelFechas()

@@ -2,10 +2,18 @@ package visual;
 
 import java.awt.*;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.*;
 
-public abstract class VentanaBase extends JFrame {
+import listas.ListaLotes;
+import listas.ListaPedidos;
+
+public abstract class VentanaBase extends JFrame implements Observer{
     protected Controlador control;
+    protected ArrayList<Observable> observados;
     
     public VentanaBase(Controlador control, String nombreVentana, int accionCerrar, Dimension size) {
         super(nombreVentana);
@@ -25,7 +33,19 @@ public abstract class VentanaBase extends JFrame {
         this.setLocationRelativeTo(null);
         //Hace que la ventana sea visible
         this.setVisible(true);
+        
+        this.observados = new ArrayList<Observable>();
+        ListaLotes lotes = ListaLotes.getInstance();
+        lotes.addObserver(this);
+        this.observados.add(lotes);
+        
+        ListaPedidos pedidos = ListaPedidos.getInstance();
+        pedidos.addObserver(this);
+        this.observados.add(pedidos);
     }
 
     protected abstract void IniciarComponentes();
+    
+    @Override
+    public abstract void update(Observable observable, Object object);
 }
