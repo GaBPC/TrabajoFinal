@@ -86,7 +86,7 @@ public class VentanaVentas extends VentanaBase {
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotesEv.getSelectedIndex();
                 VentanaVentas.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
-                new DialogoObservaciones(VentanaVentas.this.control, VentanaVentas.this);
+                new DialogoObservaciones(VentanaVentas.this.control);
             }
         });
         aux2.add(verObservaciones, BorderLayout.SOUTH);
@@ -131,9 +131,9 @@ public class VentanaVentas extends VentanaBase {
         panelIngreso.add(nPedido);
 
         /* Area para ingresar la fecha del pedido*/
-        panelIngreso.add(new JLabel("Fecha de pedido: "));
+        /*panelIngreso.add(new JLabel("Fecha de pedido: "));
         PanelFechas fechaPedido = new PanelFechas();
-        panelIngreso.add(fechaPedido);
+        panelIngreso.add(fechaPedido);*/
 
         /* Area para ingresar el tipo de maquina*/
         JComboBox maquinasSoportadas = new JComboBox();
@@ -177,11 +177,8 @@ public class VentanaVentas extends VentanaBase {
                     String pedido = "PED";
                     pedido += nPedido.getText();
 
-                    Calendar calendarFechaPedido =
-                        new GregorianCalendar(fechaPedido.getYear(), fechaPedido.getMes(), fechaPedido.getDia() + 1);
-
+                    Calendar calendarFechaPedido = GregorianCalendar.getInstance();
                     String maquina = (String) maquinasSoportadas.getSelectedItem();
-
                     int cantidadProducir = Integer.parseInt(cantProducir.getText());
 
                     Calendar calendarFechaVentas =

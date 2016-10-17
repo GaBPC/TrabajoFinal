@@ -37,14 +37,14 @@ public class DialogoObservaciones extends JDialog {
 
     private Controlador control;
 
-    public DialogoObservaciones(Controlador control, Component relativeTo) {
+    public DialogoObservaciones(Controlador control) {
         super();
-        this.setLocationRelativeTo(relativeTo);
+        this.setLocationRelativeTo(null);
         this.control = control;
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);
-        this.setMinimumSize(new Dimension(400, 600));
+        this.setMinimumSize(new Dimension(400, 300));
         this.initComponents();
         this.setVisible(true);
     }

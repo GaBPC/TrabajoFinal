@@ -91,7 +91,7 @@ public class VentanaProduccion extends VentanaBase {
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotesEv.getSelectedIndex();
                 VentanaProduccion.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
-                new DialogoObservaciones(VentanaProduccion.this.control, VentanaProduccion.this);
+                new DialogoObservaciones(VentanaProduccion.this.control);
             }
         });
         aux1_botones.add(verObservaciones);
