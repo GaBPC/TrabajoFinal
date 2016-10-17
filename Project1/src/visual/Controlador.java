@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import listas.ListaEmpleados;
 import listas.ListaLotes;
 
 import personal.Empleado;
@@ -32,20 +33,8 @@ public class Controlador {
     public static final String CONTABILIDAD = "Contabilidad";
     public static final String INSPECCION = "Inspeccion y Calidad";
 
-    private HashMap<String, Empleado> empleados = new HashMap<>();
-    {
-        try {
-            empleados.put("LEG123456", new Empleado("LEG123456", "Prieto Gabriel", VENTAS));
-            empleados.put("LEG000000", new Empleado("LEG000000", "Cassanelli Rodrigo", VENTAS));
-            empleados.put("LEG456789", new Empleado("LEG456789", "Colautti Bruno", PRODUCCION));
-            empleados.put("LEG111111", new Empleado("LEG111111", "Coppes Lucia", PRODUCCION));
-            empleados.put("LEG333333", new Empleado("LEG333333", "Ruiz Gonzalo", CONTABILIDAD));
-            empleados.put("LEG888888", new Empleado("LEG888888", "Khun Franco", INSPECCION));
-        } catch (ArgumentoIlegalException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+    
+    private ListaEmpleados empleados = ListaEmpleados.getInstance();
     private ListaPedidos pedidos = ListaPedidos.getInstance();
     private ListaLotes lotes = ListaLotes.getInstance();
 
@@ -76,8 +65,8 @@ public class Controlador {
      * @param legajo es el legajo del empleado buscado
      * @return una referencia al empleado si es encontrado, null en caso contrario
      */
-    public Empleado buscarEmpleado(String legajo) {
-        return empleados.get(legajo);
+    public Empleado buscarEmpleado(String legajo) throws Exception {
+        return empleados.buscar(legajo);
     }
 
     /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados

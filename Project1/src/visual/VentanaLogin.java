@@ -63,17 +63,17 @@ public class VentanaLogin extends VentanaBase {
                 String ingresado = legajo.getText();
                 String leg = "LEG";
                 leg += ingresado;
-                Empleado empleado = VentanaLogin.this.control.buscarEmpleado(leg);
-                if (empleado == null) {
-                    VentanaLogin.this.empleadoLogeado = null;
-                    legajo.setText("");
-                    datos.setText("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
-                    JOptionPane.showMessageDialog(VentanaLogin.this,
-                                                  "No existe un empleado que coincida con dicho legajo");
-                } else {
+                Empleado empleado;
+                try {
+                    empleado = VentanaLogin.this.control.buscarEmpleado(leg);
                     VentanaLogin.this.empleadoLogeado = empleado;
                     datos.setText("Legajo: " + empleado.getLegajo() + "\n\n\nApellido y nombre: " + empleado.getNya() +
                                   "\n\n\nSector: " + empleado.getSector() + "\n\n\n");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(VentanaLogin.this, e.getMessage());
+                    VentanaLogin.this.empleadoLogeado = null;
+                    legajo.setText("");
+                    datos.setText("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
                 }
             }
         });
@@ -112,5 +112,8 @@ public class VentanaLogin extends VentanaBase {
     @Override
     public void update(Observable observable, Object object) {
         // DO NOTHING
+
+
+
     }
 }
