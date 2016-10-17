@@ -5,8 +5,8 @@ import datos.Observacion;
 
 import exceptions.StateException;
 
-public class Iniciado extends EstadoBase{
-    
+public class Iniciado extends EstadoBase {
+
     public Iniciado(Lote lote) {
         super(lote);
     }
@@ -17,12 +17,23 @@ public class Iniciado extends EstadoBase{
     }
     
     @Override
-    public void agregarObservacion(Observacion obs) throws Exception{
+    public boolean isIniciado() 
+    {
+      return true;
+    }
+
+    @Override
+    public void agregarObservacion(Observacion obs) throws StateException {
         throw new StateException("No se pueden realizar observaciones sobre este lote");
     }
 
     @Override
-    public void aceptarLote() throws Exception{
+    public void aceptarLote() throws StateException {
         throw new StateException("Lote aun sin evaluar");
+    }
+
+    @Override
+    public void evaluarLote() throws StateException {
+        this.lote.setEstadoActual(new Evaluacion(this.lote));
     }
 }

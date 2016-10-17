@@ -6,6 +6,8 @@ import datos.estadosLote.Iniciado;
 
 import exceptions.ArgumentoIlegalException;
 
+import exceptions.StateException;
+
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -146,6 +148,10 @@ public class Lote {
         this.estadoActual.aceptarLote();
     }
 
+    public void evaluarLote() throws StateException {
+        this.estadoActual.evaluarLote();
+    }
+
     /**Metodo que devuelve la coleccion que contiene todas las observaciones del lote
      * @return
      */
@@ -157,5 +163,18 @@ public class Lote {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
         String ret = this.numeroPedido + " - " + sdf.format(this.fechaPedido.getTime()) + " - " + this.tipoMaquina;
         return ret;
+    }
+
+
+    public boolean isIniciado() {
+        return this.estadoActual.isIniciado();
+    }
+
+    public boolean isEnEvaluacion() {
+        return this.estadoActual.isEnEvaluacion();
+    }
+
+    public boolean isAceptado() {
+        return this.estadoActual.isAceptado();
     }
 }

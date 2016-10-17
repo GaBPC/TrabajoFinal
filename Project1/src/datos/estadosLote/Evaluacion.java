@@ -14,6 +14,12 @@ public class Evaluacion extends EstadoBase {
     public boolean isModificable() {
         return true;
     }
+    
+    @Override 
+    public boolean isEnEvaluacion()
+    {
+      return true;
+    }
 
     @Override
     public void agregarObservacion(Observacion obs) throws StateException {
@@ -29,5 +35,10 @@ public class Evaluacion extends EstadoBase {
           this.lote.setEstadoActual(new Aceptado(this.lote));
         else
           throw new StateException("El lote no está listo para ser aceptado");
+    }
+    
+    @Override
+    public void evaluarLote() throws StateException {
+        throw new StateException("El lote ya esta en estado de evaluacion");
     }
 }

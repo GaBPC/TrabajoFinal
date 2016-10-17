@@ -2,6 +2,8 @@ package datos.estadosLote;
 
 import datos.Lote;
 
+import exceptions.StateException;
+
 public abstract class EstadoBase implements Estado{
     protected Lote lote;
     
@@ -28,7 +30,7 @@ public abstract class EstadoBase implements Estado{
     }
     
     @Override 
-    public boolean isEvaluado()
+    public boolean isEnEvaluacion()
     {
       return false;
     }

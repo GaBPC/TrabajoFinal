@@ -5,6 +5,8 @@ import datos.Material;
 
 import exceptions.ArgumentoIlegalException;
 
+import exceptions.StateException;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -41,14 +43,14 @@ public class VentanaVentas extends VentanaBase {
         JPanel panelRevision = new JPanel();
         panelRevision.setLayout(new BorderLayout());
         JPanel listas = new JPanel();
-        listas.setLayout(new GridLayout(0,2));
+        listas.setLayout(new GridLayout(0, 2));
         /*Crea los titulos de cada lista a aparecer*/
         JPanel titulos = new JPanel();
-        titulos.setLayout(new GridLayout(0,2));
+        titulos.setLayout(new GridLayout(0, 2));
         JLabel tit1 = new JLabel("Lista con todos los lotes que estan iniciados");
         tit1.setFont(new Font("Arial", 0, 15));
         titulos.add(tit1);
-        JLabel tit2 = new JLabel("Lista con todos los lotes que estan en evaluacion"); 
+        JLabel tit2 = new JLabel("Lista con todos los lotes que estan en evaluacion");
         tit2.setFont(new Font("Arial", 0, 15));
         titulos.add(tit2);
         /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
@@ -64,13 +66,11 @@ public class VentanaVentas extends VentanaBase {
         /* Carga por primera vez los datos de la lista*/
         this.actualizarListaEv(listModelEv);
         this.actualizarListaIn(listModelIn);
-        JPanel aux1 = new JPanel();
-        JPanel aux2 = new JPanel();
-        aux1.setLayout(new BorderLayout());
-        aux2.setLayout(new BorderLayout());
+        JPanel aux1 = new JPanel(new BorderLayout());
+        JPanel aux2 = new JPanel(new BorderLayout());
         /*Agrega las listas al panel de listas*/
-        aux1.add(scrollLotesIn,BorderLayout.CENTER);
-        aux2.add(scrollLotesEv,BorderLayout.CENTER);
+        aux1.add(scrollLotesIn, BorderLayout.CENTER);
+        aux2.add(scrollLotesEv, BorderLayout.CENTER);
 
         /* Crea un boton que permite agregar una observacion sobre el elemento de la lista seleccionado*/
         JButton verObservaciones = new JButton("Ver observacion");
@@ -84,22 +84,27 @@ public class VentanaVentas extends VentanaBase {
             }
         });
         aux2.add(verObservaciones, BorderLayout.SOUTH);
-        
+
         /*Crea un boton que permite cambiar el estado de un lote de iniciado a en evaluacion*/
         JButton evaluar = new JButton("Evaluar lote");
-        evaluar.addActionListener(new ActionListener() 
-        {
+        evaluar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent)
-            {
-              int seleccionado = lotesIn.getSelectedIndex();
-              VentanaVentas.this.control.setLoteActual((Lote) listModelIn.getElementAt(seleccionado));
-              VentanaVentas.this.control.cambiarAEvaluacion();
-              VentanaVentas.this.actualizarListaIn(listModelIn);
+            public void actionPerformed(ActionEvent actionEvent) {
+                
+                try {
+                    int seleccionado = lotesIn.getSelectedIndex();
+                    VentanaVentas.this.control.setLoteActual((Lote) listModelIn.getElementAt(seleccionado));
+                    VentanaVentas.this.control.cambiarAEvaluacion();
+                    VentanaVentas.this.actualizarListaIn(listModelIn);
+                    VentanaVentas.this.actualizarListaEv(listModelEv);
+                } catch (StateException e) {
+                    JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
+                }
+                
             }
         });
         aux1.add(evaluar, BorderLayout.SOUTH);
-        
+
         listas.add(aux1);
         listas.add(aux2);
         /* Agrega la lista al panel de revisiones*/
@@ -181,7 +186,7 @@ public class VentanaVentas extends VentanaBase {
                                                               calendarFechaVentas);
                     /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
                      * con los datos del lote recien agregado*/
-    
+                    VentanaVentas.this.actualizarListaIn(listModelIn);
                     /* Pone el blanco todos los campos de ingreso nuevamente*/
                     nPedido.setText("");
                     cantProducir.setText("");
@@ -206,12 +211,12 @@ public class VentanaVentas extends VentanaBase {
         while (it.hasNext())
             modelo.addElement(it.next());
     }
-    
-    private void actualizarListaIn(DefaultListModel modelo)
-    {
-      modelo.removeAllElements();
-      Iterator<Lote> it = this.control.getLotesIniciados();
-      while (it.hasNext())
-          modelo.addElement(it.next());
+
+    private void actualizarListaIn(DefaultListModel modelo) {
+        modelo.removeAllElements();
+        Iterator<Lote> it = this.control.getLotesIniciados();
+        while (it.hasNext()) {
+            modelo.addElement(it.next());
+        }
     }
 }

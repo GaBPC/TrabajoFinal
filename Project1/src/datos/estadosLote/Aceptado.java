@@ -11,12 +11,23 @@ public class Aceptado extends EstadoBase{
     }
 
     @Override
-    public void agregarObservacion(Observacion obs) throws Exception {
+    public boolean isAceptado()
+    {
+      return true;
+    }
+
+    @Override
+    public void agregarObservacion(Observacion obs) throws StateException {
         throw new StateException("Imposible agregar, lote ya aceptado");
     }
 
     @Override
-    public void aceptarLote() throws Exception{
+    public void aceptarLote() throws StateException{
         throw new StateException("Imposible aceptar, lote ya aceptado");
+    }
+    
+    @Override
+    public void evaluarLote() throws StateException {
+        throw new StateException("El lote ha sido aceptado");
     }
 }

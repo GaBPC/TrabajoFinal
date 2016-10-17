@@ -7,6 +7,8 @@ import datos.estadosLote.Evaluacion;
 
 import exceptions.ArgumentoIlegalException;
 
+import exceptions.StateException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -97,7 +99,7 @@ public class Controlador {
         while(it.hasNext())
         {
           Lote lot = (Lote) it.next();
-          if(lot.getEstadoActual().isEvaluado())
+          if(lot.isEnEvaluacion())
             lotesEv.add(lot);
         }
         it = lotesEv.iterator();
@@ -111,16 +113,14 @@ public class Controlador {
       while(it.hasNext())
       {
         Lote lot = (Lote) it.next();
-        if(lot.getEstadoActual().isIniciado())
+        if(lot.isIniciado())
           lotesEv.add(lot);
       }
       it = lotesEv.iterator();
       return it;
     }
     
-    public void cambiarAEvaluacion()
-    {
-      if(this.loteActual.verificaNull())
-        this.loteActual.setEstadoActual(new Evaluacion(this.loteActual));
+    public void cambiarAEvaluacion() throws StateException {
+      this.loteActual.evaluarLote();
     }
 }
