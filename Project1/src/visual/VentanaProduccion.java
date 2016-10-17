@@ -1,6 +1,7 @@
 package visual;
 
 import datos.Lote;
+import datos.Pedido;
 
 import exceptions.StateException;
 
@@ -46,7 +47,7 @@ public class VentanaProduccion extends VentanaBase {
         /*Crea los titulos de cada lista a aparecer*/
         JPanel titulos = new JPanel();
         titulos.setLayout(new GridLayout(0, 2));
-        JLabel tit1 = new JLabel("Lista con todos los lotes que estan en evaluacion");
+        JLabel tit1 = new JLabel("Lista con todos los pedidos que estan en evaluacion");
         tit1.setFont(new Font("Arial", 0, 15));
         titulos.add(tit1);
         JLabel tit2 = new JLabel("Lista con todos los lotes que estan aceptados");
@@ -84,20 +85,20 @@ public class VentanaProduccion extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotesEv.getSelectedIndex();
-                VentanaProduccion.this.control.setLoteActual((Lote) listModelEv.getElementAt(seleccionado));
+                VentanaProduccion.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
                 new DialogoObservaciones(VentanaProduccion.this.control, VentanaProduccion.this);
             }
         });
         aux1_botones.add(verObservaciones);
 
-        JButton aceptarLote = new JButton("Aceptar lote");
+        JButton aceptarLote = new JButton("Aceptar pedido");
         aceptarLote.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
                 int seleccionado = lotesEv.getSelectedIndex();
-                VentanaProduccion.this.control.setLoteActual((Lote) listModelEv.getElementAt(seleccionado));
+                VentanaProduccion.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
 
                 new DialogoAceptacion(VentanaProduccion.this.control, VentanaProduccion.this);
 
@@ -120,14 +121,14 @@ public class VentanaProduccion extends VentanaBase {
 
     private void actualizarListaEv(DefaultListModel modelo) {
         modelo.removeAllElements();
-        Iterator<Lote> it = this.control.getLotesEvaluacion();
+        Iterator<Pedido> it = this.control.getPedidosEvaluacion();
         while (it.hasNext())
             modelo.addElement(it.next());
     }
 
     private void actualizarListaAc(DefaultListModel modelo) {
         modelo.removeAllElements();
-        Iterator<Lote> it = this.control.getLotesAceptados();
+        Iterator<Lote> it = this.control.getLotes();
         while (it.hasNext()) {
             modelo.addElement(it.next());
         }

@@ -1,4 +1,6 @@
-package datos;
+package listas;
+
+import datos.Pedido;
 
 import exceptions.ArgumentoIlegalException;
 
@@ -10,16 +12,16 @@ import java.util.Iterator;
  * Es una clase singleton ya que "simula" ser una base de datos de los lotes, y todos los
  * cambios deben afectar sobre un solo conjunto de datos.
  */
-public class ListaLotes {
-    private static ListaLotes _instance = null;
+public class ListaPedidos {
+    private static ListaPedidos _instance = null;
     
-    private ArrayList<Lote> lista;
+    private ArrayList<Pedido> lista;
     
-    private ListaLotes() {
+    private ListaPedidos() {
         super();
-        this.lista = new ArrayList<Lote>();
+        this.lista = new ArrayList<Pedido>();
         try {
-            this.lista.add(new Lote("PED123456", GregorianCalendar.getInstance(), GregorianCalendar.getInstance(),
+            this.lista.add(new Pedido("PED123456", GregorianCalendar.getInstance(), GregorianCalendar.getInstance(),
                                     "Flipper", 90));
         } catch (ArgumentoIlegalException e) {
         }
@@ -28,24 +30,24 @@ public class ListaLotes {
     /**Metodo que devuelve la referencia a la unica instancia posible de la lista de lotes
      * @return
      */
-    public static ListaLotes getInstance(){
+    public static ListaPedidos getInstance(){
         if (_instance == null)
-            _instance = new ListaLotes();
+            _instance = new ListaPedidos();
         return _instance;
     }
 
     /**Metodo que agrega un nuevo lote a la lista
      * @param nuevo
      */
-    public void agregarNuevo(Lote nuevo) {
+    public void agregarNuevo(Pedido nuevo) {
         this.lista.add(nuevo);
     }
 
     /**Metodo que devuelve todos los lotes que estan presentes en la lista
      * @return
      */
-    public Iterator<Lote> getIterator(){
-        Iterator<Lote> it = this.lista.iterator();
+    public Iterator<Pedido> getIterator(){
+        Iterator<Pedido> it = this.lista.iterator();
         return it;
     }
 }

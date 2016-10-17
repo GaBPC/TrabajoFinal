@@ -1,6 +1,7 @@
 package visual.auxiliares;
 
-import datos.Lote;
+
+import datos.ResumenClase;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,8 +20,8 @@ public class MyList extends JList {
                 if (e.getClickCount() == 2) {
                     DefaultListModel model = (DefaultListModel) MyList.this.getModel();
                     int selected = MyList.this.getSelectedIndex();
-                    Lote lote = (Lote) model.getElementAt(selected);
-                    new DialogoDatos(lote.detalles());
+                    ResumenClase aux = (ResumenClase) model.getElementAt(selected);
+                    new DialogoDatos(aux.detalles());
                 }
             }
         };

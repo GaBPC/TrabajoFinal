@@ -1,5 +1,7 @@
 package visual.auxiliares;
 
+import datos.Lote;
+
 import exceptions.ArgumentoIlegalException;
 import exceptions.StateException;
 
@@ -67,7 +69,8 @@ public class DialogoAceptacion extends JDialog {
                                           fechaProduccion.getDia() + 1);
                 String numero = "LOT" + numeroLote.getText();
                 try {
-                    DialogoAceptacion.this.control.cambiarAAceptado(numero, calendarFechaProduccion);
+                    DialogoAceptacion.this.control.cambiarAAceptado(calendarFechaProduccion);
+                    DialogoAceptacion.this.control.generarLote(numero);
                     DialogoAceptacion.this.dispose();
                 } catch (StateException e) {
                     JOptionPane.showMessageDialog(DialogoAceptacion.this, e.getMessage());

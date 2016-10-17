@@ -1,15 +1,15 @@
-package datos.estadosLote;
+package datos.estadosPedido;
 
-import datos.Lote;
+import datos.Pedido;
 
 import exceptions.StateException;
 
 public abstract class EstadoBase implements Estado{
-    protected Lote lote;
+    protected Pedido pedido;
     
-    public EstadoBase(Lote lote) {
+    public EstadoBase(Pedido pedido) {
         super();
-        this.lote = lote;
+        this.pedido = pedido;
     }
 
     @Override

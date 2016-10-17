@@ -1,4 +1,6 @@
-package datos;
+package listas;
+
+import datos.Material;
 
 import java.util.HashMap;
 import java.util.Iterator;

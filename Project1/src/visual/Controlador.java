@@ -1,9 +1,11 @@
 package visual;
 
-import datos.ListaLotes;
-import datos.Lote;
+import listas.ListaPedidos;
 
-import datos.estadosLote.Evaluacion;
+import datos.Lote;
+import datos.Pedido;
+
+import datos.estadosPedido.Evaluacion;
 
 import exceptions.ArgumentoIlegalException;
 
@@ -14,6 +16,8 @@ import java.util.Calendar;
 
 import java.util.HashMap;
 import java.util.Iterator;
+
+import listas.ListaLotes;
 
 import personal.Empleado;
 
@@ -40,13 +44,13 @@ public class Controlador {
         } catch (ArgumentoIlegalException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
+    private ListaPedidos pedidos = ListaPedidos.getInstance();
     private ListaLotes lotes = ListaLotes.getInstance();
 
     private Empleado empleadoActual = null;
-    private Lote loteActual = null;
+    private Pedido pedidoActual = null;
 
     public Controlador() {
         super();
@@ -60,12 +64,12 @@ public class Controlador {
         return this.empleadoActual;
     }
 
-    public void setLoteActual(Lote lote) {
-        this.loteActual = lote;
+    public void setLoteActual(Pedido lote) {
+        this.pedidoActual = lote;
     }
 
-    public Lote getLoteActual() {
-        return this.loteActual;
+    public Pedido getLoteActual() {
+        return this.pedidoActual;
     }
 
 
@@ -86,60 +90,70 @@ public class Controlador {
      */
     public void crearNuevoLote(String numeroPedido, Calendar fechaPedido, String tipoMaquina, int cantProducir,
                                Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
-        Lote nuevo = new Lote(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
-        lotes.agregarNuevo(nuevo);
+        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
+        pedidos.agregarNuevo(nuevo);
     }
 
     /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
      * @return iterator con los lotes
      */
-    public Iterator<Lote> getLotesEvaluacion() {
-        Iterator<Lote> it = this.lotes.getIterator();
-        ArrayList<Lote> lotesEv = new ArrayList<>();
-        while(it.hasNext())
-        {
-          Lote lot = (Lote) it.next();
-          if(lot.isEnEvaluacion())
-            lotesEv.add(lot);
+    public Iterator<Pedido> getPedidosEvaluacion() {
+        Iterator<Pedido> it = this.pedidos.getIterator();
+        ArrayList<Pedido> lotesEv = new ArrayList<>();
+        while (it.hasNext()) {
+            Pedido lot = (Pedido) it.next();
+            if (lot.isEnEvaluacion())
+                lotesEv.add(lot);
         }
         it = lotesEv.iterator();
         return it;
     }
-    
-    public Iterator<Lote> getLotesIniciados() 
-    {
-      Iterator<Lote> it = this.lotes.getIterator();
-      ArrayList<Lote> lotesEv = new ArrayList<>();
-      while(it.hasNext())
-      {
-        Lote lot = (Lote) it.next();
-        if(lot.isIniciado())
-          lotesEv.add(lot);
-      }
-      it = lotesEv.iterator();
-      return it;
+
+    public Iterator<Pedido> getPedidosIniciados() {
+        Iterator<Pedido> it = this.pedidos.getIterator();
+        ArrayList<Pedido> lotesEv = new ArrayList<>();
+        while (it.hasNext()) {
+            Pedido lot = (Pedido) it.next();
+            if (lot.isIniciado())
+                lotesEv.add(lot);
+        }
+        it = lotesEv.iterator();
+        return it;
     }
-    
-    public Iterator<Lote> getLotesAceptados() 
-    {
-      Iterator<Lote> it = this.lotes.getIterator();
-      ArrayList<Lote> lotesAc = new ArrayList<>();
-      while(it.hasNext())
-      {
-        Lote lot = (Lote) it.next();
-        if(lot.isAceptado())
-          lotesAc.add(lot);
-      }
-      it = lotesAc.iterator();
-      return it;
+
+    public Iterator<Pedido> getPedidosAceptados() {
+        Iterator<Pedido> it = this.pedidos.getIterator();
+        ArrayList<Pedido> lotesAc = new ArrayList<>();
+        while (it.hasNext()) {
+            Pedido lot = (Pedido) it.next();
+            if (lot.isAceptado())
+                lotesAc.add(lot);
+        }
+        it = lotesAc.iterator();
+        return it;
     }
-    
+
+    public Iterator<Lote> getLotes() {
+        Iterator<Lote> it = this.lotes.getIterator();
+        ArrayList<Lote> lotes = new ArrayList<>();
+        while (it.hasNext()) {
+            Lote lot = (Lote) it.next();
+            lotes.add(lot);
+        }
+        it = lotes.iterator();
+        return it;
+    }
+
     public void cambiarAEvaluacion() throws StateException {
-      this.loteActual.evaluarLote();
+        this.pedidoActual.evaluarPedido();
     }
-    
-    public void cambiarAAceptado(String numeroLote, Calendar fechaProduccion) throws ArgumentoIlegalException,
-                                                                                     StateException {
-        this.loteActual.aceptarLote(numeroLote, fechaProduccion);
+
+    public void cambiarAAceptado(Calendar fechaProduccion) throws ArgumentoIlegalException, StateException {
+        this.pedidoActual.aceptarPedido(fechaProduccion);
+    }
+
+    public void generarLote(String numeroLote) throws ArgumentoIlegalException {
+        Lote lote = new Lote(this.pedidoActual, numeroLote);
+        this.lotes.agregarNuevo(lote);
     }
 }

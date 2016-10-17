@@ -1,13 +1,13 @@
-package datos.estadosLote;
+package datos.estadosPedido;
 
-import datos.Lote;
+import datos.Pedido;
 import datos.Observacion;
 
 import exceptions.StateException;
 
 public class Evaluacion extends EstadoBase {
-    public Evaluacion(Lote lote) {
-        super(lote);
+    public Evaluacion(Pedido pedido) {
+        super(pedido);
     }
     
     @Override
@@ -24,21 +24,21 @@ public class Evaluacion extends EstadoBase {
     @Override
     public void agregarObservacion(Observacion obs) throws StateException {
         if (obs.verificacion())
-            this.lote.getListaObservaciones().add(obs);
+            this.pedido.getListaObservaciones().add(obs);
         else
             throw new StateException("Observacion invalida");
     }
 
     @Override
-    public void aceptarLote() throws StateException{
-        if(this.lote.verificaNull())
-          this.lote.setEstadoActual(new Aceptado(this.lote));
+    public void aceptarPedido() throws StateException{
+        if(this.pedido.verificaNull())
+          this.pedido.setEstadoActual(new Aceptado(this.pedido));
         else
-          throw new StateException("El lote no está listo para ser aceptado");
+          throw new StateException("El pedido no está listo para ser aceptado");
     }
     
     @Override
-    public void evaluarLote() throws StateException {
-        throw new StateException("El lote ya esta en estado de evaluacion");
+    public void evaluarPedido() throws StateException {
+        throw new StateException("El pedido ya esta en estado de evaluacion");
     }
 }

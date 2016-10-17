@@ -1,6 +1,6 @@
 package visual;
 
-import datos.Lote;
+import datos.Pedido;
 import datos.Material;
 
 import exceptions.ArgumentoIlegalException;
@@ -48,10 +48,10 @@ public class VentanaVentas extends VentanaBase {
         /*Crea los titulos de cada lista a aparecer*/
         JPanel titulos = new JPanel();
         titulos.setLayout(new GridLayout(0, 2));
-        JLabel tit1 = new JLabel("Lista con todos los lotes que estan iniciados");
+        JLabel tit1 = new JLabel("Lista con todos los pedidos que estan iniciados");
         tit1.setFont(new Font("Arial", 0, 15));
         titulos.add(tit1);
-        JLabel tit2 = new JLabel("Lista con todos los lotes que estan en evaluacion");
+        JLabel tit2 = new JLabel("Lista con todos los pedidos que estan en evaluacion");
         tit2.setFont(new Font("Arial", 0, 15));
         titulos.add(tit2);
         /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
@@ -80,21 +80,21 @@ public class VentanaVentas extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotesEv.getSelectedIndex();
-                VentanaVentas.this.control.setLoteActual((Lote) listModelEv.getElementAt(seleccionado));
+                VentanaVentas.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
                 new DialogoObservaciones(VentanaVentas.this.control, VentanaVentas.this);
             }
         });
         aux2.add(verObservaciones, BorderLayout.SOUTH);
 
         /*Crea un boton que permite cambiar el estado de un lote de iniciado a en evaluacion*/
-        JButton evaluar = new JButton("Evaluar lote");
+        JButton evaluar = new JButton("Evaluar pedido");
         evaluar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 
                 try {
                     int seleccionado = lotesIn.getSelectedIndex();
-                    VentanaVentas.this.control.setLoteActual((Lote) listModelIn.getElementAt(seleccionado));
+                    VentanaVentas.this.control.setLoteActual((Pedido) listModelIn.getElementAt(seleccionado));
                     VentanaVentas.this.control.cambiarAEvaluacion();
                     VentanaVentas.this.actualizarListaIn(listModelIn);
                     VentanaVentas.this.actualizarListaEv(listModelEv);
@@ -208,14 +208,14 @@ public class VentanaVentas extends VentanaBase {
 
     private void actualizarListaEv(DefaultListModel modelo) {
         modelo.removeAllElements();
-        Iterator<Lote> it = this.control.getLotesEvaluacion();
+        Iterator<Pedido> it = this.control.getPedidosEvaluacion();
         while (it.hasNext())
             modelo.addElement(it.next());
     }
 
     private void actualizarListaIn(DefaultListModel modelo) {
         modelo.removeAllElements();
-        Iterator<Lote> it = this.control.getLotesIniciados();
+        Iterator<Pedido> it = this.control.getPedidosIniciados();
         while (it.hasNext()) {
             modelo.addElement(it.next());
         }
