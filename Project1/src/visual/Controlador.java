@@ -72,26 +72,12 @@ public class Controlador {
         return this.pedidoActual;
     }
 
-
     /**Metodo para buscar un empleado por su numero de legajo
      * @param legajo es el legajo del empleado buscado
      * @return una referencia al empleado si es encontrado, null en caso contrario
      */
     public Empleado buscarEmpleado(String legajo) {
         return empleados.get(legajo);
-    }
-
-    /**Metodo para crear un nuevo lote desde el sector de ventas.
-     * @param numeroPedido es el numero asignado al pedido que se esta creando
-     * @param fechaPedido es la fecha en la que se realiza el nuevo pedido
-     * @param tipoMaquina es el tipo de maquina que debera ser producida
-     * @param cantProducir es la cantidad de unidades a producir
-     * @param fechaSolicitadaVentas es la fecha que propone ventas para tener el pedido listo
-     */
-    public void crearNuevoLote(String numeroPedido, Calendar fechaPedido, String tipoMaquina, int cantProducir,
-                               Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
-        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
-        pedidos.agregarNuevo(nuevo);
     }
 
     /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
@@ -120,7 +106,7 @@ public class Controlador {
         it = lotesEv.iterator();
         return it;
     }
-    
+
     public Iterator<Lote> getLotes() {
         Iterator<Lote> it = this.lotes.getIterator();
         ArrayList<Lote> lotes = new ArrayList<>();
@@ -140,7 +126,32 @@ public class Controlador {
         this.pedidoActual.aceptarPedido(fechaProduccion);
     }
 
-    public void generarLote(String numeroLote) throws ArgumentoIlegalException {
+    /**Metodo para crear un nuevo lote desde el sector de ventas.
+     * @param numeroPedido es el numero asignado al pedido que se esta creando
+     * @param fechaPedido es la fecha en la que se realiza el nuevo pedido
+     * @param tipoMaquina es el tipo de maquina que debera ser producida
+     * @param cantProducir es la cantidad de unidades a producir
+     * @param fechaSolicitadaVentas es la fecha que propone ventas para tener el pedido listo
+     */
+    public void crearNuevoPedido(Calendar fechaPedido, String tipoMaquina, int cantProducir,
+                                 Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
+        String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
+        int longitud = aux.length();
+        String numeroPedido = "PED";
+        for (int i = 0; i < (6 - longitud); i++)
+            numeroPedido += "0";
+        numeroPedido += aux;
+        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
+        pedidos.agregarNuevo(nuevo);
+    }
+
+    public void generarLote() throws ArgumentoIlegalException {
+        String aux = Integer.toString(this.lotes.getProximoNumeroLote());
+        int longitud = aux.length();
+        String numeroLote = "LOT";
+        for (int i = 0; i < (6 - longitud); i++)
+            numeroLote += "0";
+        numeroLote += aux;
         Lote lote = new Lote(this.pedidoActual, numeroLote);
         this.lotes.agregarNuevo(lote);
     }

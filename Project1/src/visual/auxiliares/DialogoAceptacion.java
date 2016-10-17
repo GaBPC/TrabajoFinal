@@ -53,10 +53,6 @@ public class DialogoAceptacion extends JDialog {
         PanelFechas fechaProduccion = new PanelFechas();
         panelIngreso.add(fechaProduccion);
 
-        panelIngreso.add(new JLabel("Numero de lote: "));
-        JTextField numeroLote = new JTextField();
-        panelIngreso.add(numeroLote);
-
         cp.add(panelIngreso, BorderLayout.CENTER);
 
         JButton aceptarLote = new JButton("Aceptar lote");
@@ -67,10 +63,9 @@ public class DialogoAceptacion extends JDialog {
                 Calendar calendarFechaProduccion =
                     new GregorianCalendar(fechaProduccion.getYear(), fechaProduccion.getMes(),
                                           fechaProduccion.getDia() + 1);
-                String numero = "LOT" + numeroLote.getText();
                 try {
                     DialogoAceptacion.this.control.cambiarAAceptado(calendarFechaProduccion);
-                    DialogoAceptacion.this.control.generarLote(numero);
+                    DialogoAceptacion.this.control.generarLote();
                     DialogoAceptacion.this.dispose();
                 } catch (StateException e) {
                     JOptionPane.showMessageDialog(DialogoAceptacion.this, e.getMessage());

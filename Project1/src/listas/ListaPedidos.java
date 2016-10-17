@@ -20,6 +20,8 @@ public class ListaPedidos extends Observable implements Observer {
     private ArrayList<Pedido> lista;
 
     private ArrayList<Observable> pedidosObservados;
+    
+    private int numeroPedido = 0;
 
     private ListaPedidos() {
         super();
@@ -35,6 +37,10 @@ public class ListaPedidos extends Observable implements Observer {
             _instance = new ListaPedidos();
         return _instance;
     }
+    
+    public int getProximoNumeroPedido(){
+        return this.numeroPedido;
+    }
 
     /**Metodo que agrega un nuevo lote a la lista
      * @param nuevo
@@ -45,6 +51,7 @@ public class ListaPedidos extends Observable implements Observer {
         this.pedidosObservados.add(nuevo);
         this.setChanged();
         this.notifyObservers();
+        this.numeroPedido++;
     }
 
     /**Metodo que devuelve todos los lotes que estan presentes en la lista

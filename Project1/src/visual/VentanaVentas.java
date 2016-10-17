@@ -125,11 +125,6 @@ public class VentanaVentas extends VentanaBase {
         JPanel panelIngreso = new JPanel();
         panelIngreso.setLayout(new GridLayout(0, 2));
 
-        /* Area para ingresar el numero de pedido*/
-        panelIngreso.add(new JLabel("Numero de pedido: "));
-        JTextField nPedido = new JTextField();
-        panelIngreso.add(nPedido);
-
         /* Area para ingresar la fecha del pedido*/
         /*panelIngreso.add(new JLabel("Fecha de pedido: "));
         PanelFechas fechaPedido = new PanelFechas();
@@ -172,11 +167,6 @@ public class VentanaVentas extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-
-                    /* Obtiene los datos del nuevo pedido de los campos de ingreso*/
-                    String pedido = "PED";
-                    pedido += nPedido.getText();
-
                     Calendar calendarFechaPedido = GregorianCalendar.getInstance();
                     String maquina = (String) maquinasSoportadas.getSelectedItem();
                     int cantidadProducir = Integer.parseInt(cantProducir.getText());
@@ -185,13 +175,12 @@ public class VentanaVentas extends VentanaBase {
                         new GregorianCalendar(fechaVentas.getYear(), fechaVentas.getMes(), fechaVentas.getDia() + 1);
 
                     /* Agrega el nuevo lote a la lista mediante el controlador*/
-                    VentanaVentas.this.control.crearNuevoLote(pedido, calendarFechaPedido, maquina, cantidadProducir,
+                    VentanaVentas.this.control.crearNuevoPedido(calendarFechaPedido, maquina, cantidadProducir,
                                                               calendarFechaVentas);
                     /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
                      * con los datos del lote recien agregado*/
                     VentanaVentas.this.actualizarListaIn(listModelIn);
                     /* Pone el blanco todos los campos de ingreso nuevamente*/
-                    nPedido.setText("");
                     cantProducir.setText("");
                 } catch (ArgumentoIlegalException e) {
                     JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
