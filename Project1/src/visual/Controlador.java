@@ -3,8 +3,11 @@ package visual;
 import datos.ListaLotes;
 import datos.Lote;
 
+import datos.estadosLote.Evaluacion;
+
 import exceptions.ArgumentoIlegalException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.HashMap;
@@ -88,7 +91,36 @@ public class Controlador {
     /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
      * @return iterator con los lotes
      */
-    public Iterator<Lote> getLotesNoAceptados() {
-        return lotes.getIterator();
+    public Iterator<Lote> getLotesEvaluacion() {
+        Iterator<Lote> it = this.lotes.getIterator();
+        ArrayList<Lote> lotesEv = new ArrayList<>();
+        while(it.hasNext())
+        {
+          Lote lot = (Lote) it.next();
+          if(lot.getEstadoActual().isEvaluado())
+            lotesEv.add(lot);
+        }
+        it = lotesEv.iterator();
+        return it;
+    }
+    
+    public Iterator<Lote> getLotesIniciados() 
+    {
+      Iterator<Lote> it = this.lotes.getIterator();
+      ArrayList<Lote> lotesEv = new ArrayList<>();
+      while(it.hasNext())
+      {
+        Lote lot = (Lote) it.next();
+        if(lot.getEstadoActual().isIniciado())
+          lotesEv.add(lot);
+      }
+      it = lotesEv.iterator();
+      return it;
+    }
+    
+    public void cambiarAEvaluacion()
+    {
+      if(this.loteActual.verificaNull())
+        this.loteActual.setEstadoActual(new Evaluacion(this.loteActual));
     }
 }

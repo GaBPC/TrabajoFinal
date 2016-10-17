@@ -14,4 +14,22 @@ public abstract class EstadoBase implements Estado{
     public boolean isModificable() {
         return false;
     }
+    
+    @Override
+    public boolean isIniciado() 
+    {
+      return false;
+    }
+    
+    @Override
+    public boolean isAceptado()
+    {
+      return false;
+    }
+    
+    @Override 
+    public boolean isEvaluado()
+    {
+      return false;
+    }
 }

@@ -18,8 +18,7 @@ public class Iniciado extends EstadoBase{
     
     @Override
     public void agregarObservacion(Observacion obs) throws Exception{
-        this.lote.setEstadoActual(new Evaluacion(this.lote));
-        this.lote.getEstadoActual().agregarObservacion(obs);
+        throw new StateException("No se pueden realizar observaciones sobre este lote");
     }
 
     @Override
