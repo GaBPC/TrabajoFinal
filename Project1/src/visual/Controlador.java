@@ -27,12 +27,6 @@ import personal.Empleado;
  *  sistema que permiten realizar las acciones soportadas.
  */
 public class Controlador {
-
-    public static final String VENTAS = "Ventas";
-    public static final String PRODUCCION = "Produccion";
-    public static final String CONTABILIDAD = "Contabilidad";
-    public static final String INSPECCION = "Inspeccion y Calidad";
-
     
     private ListaEmpleados empleados = ListaEmpleados.getInstance();
     private ListaPedidos pedidos = ListaPedidos.getInstance();

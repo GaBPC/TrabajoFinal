@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import listas.ListaEmpleados;
+
 import personal.Empleado;
 
 public class VentanaLogin extends VentanaBase {
@@ -90,11 +92,11 @@ public class VentanaLogin extends VentanaBase {
             public void actionPerformed(ActionEvent actionEvent) {
                 String sector = VentanaLogin.this.empleadoLogeado.getSector().toUpperCase();
 
-                if (sector.compareTo(Controlador.VENTAS.toUpperCase()) == 0) {
+                if (sector.compareTo(ListaEmpleados.VENTAS.toUpperCase()) == 0) {
                     control.setEmpeladoActual(VentanaLogin.this.empleadoLogeado);
                     new VentanaVentas(VentanaLogin.this.control);
                     VentanaLogin.this.dispose();
-                } else if (sector.compareTo(Controlador.PRODUCCION.toUpperCase()) == 0) {
+                } else if (sector.compareTo(ListaEmpleados.PRODUCCION.toUpperCase()) == 0) {
                     control.setEmpeladoActual(VentanaLogin.this.empleadoLogeado);
                     new VentanaProduccion(VentanaLogin.this.control);
                     VentanaLogin.this.dispose();
