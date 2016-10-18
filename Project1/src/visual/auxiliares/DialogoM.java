@@ -29,10 +29,10 @@ import javax.swing.JTextField;
 
 import visual.Controlador;
 
-public class DialogoAceptacion extends JDialog {
+public class DialogoM extends JDialog {
     private Controlador control;
 
-    public DialogoAceptacion(Controlador control, Component relativeTo) {
+    public DialogoM(Controlador control, Component relativeTo) {
         super();
         this.setLocationRelativeTo(relativeTo);
         this.control = control;
@@ -64,13 +64,13 @@ public class DialogoAceptacion extends JDialog {
                     new GregorianCalendar(fechaProduccion.getYear(), fechaProduccion.getMes(),
                                           fechaProduccion.getDia() + 1);
                 try {
-                    DialogoAceptacion.this.control.cambiarAAceptado(calendarFechaProduccion);
-                    DialogoAceptacion.this.control.generarLote();
-                    DialogoAceptacion.this.dispose();
+                    DialogoM.this.control.cambiarAAceptado(calendarFechaProduccion);
+                    DialogoM.this.control.generarLote();
+                    DialogoM.this.dispose();
                 } catch (StateException e) {
-                    JOptionPane.showMessageDialog(DialogoAceptacion.this, e.getMessage());
+                    JOptionPane.showMessageDialog(DialogoM.this, e.getMessage());
                 } catch (ArgumentoIlegalException e) {
-                    JOptionPane.showMessageDialog(DialogoAceptacion.this, e.getMessage());
+                    JOptionPane.showMessageDialog(DialogoM.this, e.getMessage());
                 }
 
             }

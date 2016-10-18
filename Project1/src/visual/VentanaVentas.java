@@ -38,6 +38,7 @@ public class VentanaVentas extends VentanaBase {
 
     public VentanaVentas(Controlador control) {
         super(control, "Ventas", JFrame.DISPOSE_ON_CLOSE, new Dimension(700, 700));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class VentanaVentas extends VentanaBase {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int seleccionado = lotesEv.getSelectedIndex();
-                VentanaVentas.this.control.setLoteActual((Pedido) listModelEv.getElementAt(seleccionado));
+                VentanaVentas.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
                 new DialogoObservaciones(VentanaVentas.this.control);
             }
         });
@@ -99,7 +100,7 @@ public class VentanaVentas extends VentanaBase {
 
                 try {
                     int seleccionado = lotesIn.getSelectedIndex();
-                    VentanaVentas.this.control.setLoteActual((Pedido) listModelIn.getElementAt(seleccionado));
+                    VentanaVentas.this.control.setPedidoActual((Pedido) listModelIn.getElementAt(seleccionado));
                     VentanaVentas.this.control.cambiarAEvaluacion();
                     VentanaVentas.this.actualizarListaIn(listModelIn);
                     VentanaVentas.this.actualizarListaEv(listModelEv);

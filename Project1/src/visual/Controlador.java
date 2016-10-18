@@ -5,6 +5,8 @@ import listas.ListaPedidos;
 import datos.Lote;
 import datos.Pedido;
 
+import datos.TipoProducto;
+
 import datos.estadosPedido.Evaluacion;
 
 import exceptions.ArgumentoIlegalException;
@@ -20,6 +22,9 @@ import java.util.Iterator;
 import listas.ListaEmpleados;
 import listas.ListaLotes;
 
+import listas.ListaMateriales;
+import listas.ListaMaterialesStock;
+
 import personal.Empleado;
 
 /** Clase utilizada para controlar todas las acciones que una ventana tiene permitido realizar.
@@ -31,10 +36,33 @@ public class Controlador {
     private ListaEmpleados empleados = ListaEmpleados.getInstance();
     private ListaPedidos pedidos = ListaPedidos.getInstance();
     private ListaLotes lotes = ListaLotes.getInstance();
+    private ListaMaterialesStock materiales = ListaMaterialesStock.getInstance();
+    
+    private static HashMap<TipoProducto,ListaMateriales> materialesCorrespondientes = new HashMap<>();
+    private static HashMap<String,TipoProducto> tipoProductos = new HashMap<>();
 
     private Empleado empleadoActual = null;
     private Pedido pedidoActual = null;
 
+    static{
+      ListaMateriales matConsolaGrup = new ListaMateriales();
+      ListaMateriales matFliper = new ListaMateriales();
+      ListaMateriales matConsolaInd = new ListaMateriales();
+      ListaMateriales matSimulador = new ListaMateriales();
+      
+      TipoProducto prod1 = new TipoProducto(matConsolaGrup);
+      TipoProducto prod2 = new TipoProducto(matFliper);
+      TipoProducto prod3 = new TipoProducto(matConsolaInd);
+      TipoProducto prod4 = new TipoProducto(matSimulador);
+      
+      tipoProductos.put("Consola grupal", prod1);
+      tipoProductos.put("Fliper", prod2);
+      tipoProductos.put("Consola individual", prod3);
+      tipoProductos.put("Simulador", prod4);
+      
+      //FALTA AGREGAR MATERIALES DE CADA TIPOOOOO
+    }
+    
     public Controlador() {
         super();
     }
@@ -47,11 +75,11 @@ public class Controlador {
         return this.empleadoActual;
     }
 
-    public void setLoteActual(Pedido lote) {
-        this.pedidoActual = lote;
+    public void setPedidoActual(Pedido pedido) {
+        this.pedidoActual = pedido;
     }
 
-    public Pedido getLoteActual() {
+    public Pedido getPedidoActual() {
         return this.pedidoActual;
     }
 
@@ -91,14 +119,7 @@ public class Controlador {
     }
 
     public Iterator<Lote> getLotes() {
-        Iterator<Lote> it = this.lotes.getIterator();
-        ArrayList<Lote> lotes = new ArrayList<>();
-        while (it.hasNext()) {
-            Lote lot = (Lote) it.next();
-            lotes.add(lot);
-        }
-        it = lotes.iterator();
-        return it;
+        return this.lotes.getIterator();
     }
 
     public void cambiarAEvaluacion() throws StateException {
@@ -138,4 +159,6 @@ public class Controlador {
         Lote lote = new Lote(this.pedidoActual, numeroLote);
         this.lotes.agregarNuevo(lote);
     }
+    
+    public void
 }

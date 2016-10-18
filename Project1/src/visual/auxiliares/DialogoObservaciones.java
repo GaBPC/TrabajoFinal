@@ -90,7 +90,7 @@ public class DialogoObservaciones extends JDialog {
                         new Observacion(temaIngresado, GregorianCalendar.getInstance(),
                                         DialogoObservaciones.this.control.getEmpeladoActual().getLegajo(),
                                         observacionIngresada);
-                    DialogoObservaciones.this.control.getLoteActual().agregarObservacion(nueva);
+                    DialogoObservaciones.this.control.getPedidoActual().agregarObservacion(nueva);
                     DialogoObservaciones.this.actualizarLista(listModel);
                 } catch (ArgumentoIlegalException e) {
                     JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
@@ -110,7 +110,7 @@ public class DialogoObservaciones extends JDialog {
     private void actualizarLista(DefaultListModel modelo) {
         modelo.removeAllElements();
 
-        Iterator<Observacion> it = this.control.getLoteActual().getListaObservaciones().iterator();
+        Iterator<Observacion> it = this.control.getPedidoActual().getListaObservaciones().iterator();
         while (it.hasNext())
             modelo.addElement(it.next().toString());
     }

@@ -14,7 +14,11 @@ import java.util.Calendar;
 import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Observable;
+
+import listas.ListaMateriales;
+import listas.ListaMaterialesStock;
 
 /**Clase que contiene todos los datos correspondiente a un lote.
  */
@@ -25,7 +29,8 @@ public class Pedido extends Observable implements ResumenClase {
     private String tipoMaquina = null;
     private int cantProduccion = 0;
     private Estado estadoActual;
-
+    private ListaMateriales listaMat = null;
+    
     private TreeSet<Observacion> listaObservaciones;
 
     /* No hay constructor vacio ya que solo es posible crear el lote con todos los datos que deben
@@ -52,6 +57,7 @@ public class Pedido extends Observable implements ResumenClase {
         this.fechaEntregaVentas = fechaEntregaVentas;
         this.listaObservaciones = new TreeSet<>();
         this.estadoActual = new Iniciado(this);
+        this.listaMat = ListaMaterialesStock.getInstance().getListaCorrespondiente(tipoMaquina);
     }
 
     /**Metodo que verifica si el numero de los legajos o identificadores cumple con las restricciones de longitud
