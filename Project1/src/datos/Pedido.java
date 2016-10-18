@@ -57,7 +57,6 @@ public class Pedido extends Observable implements ResumenClase {
         this.fechaEntregaVentas = fechaEntregaVentas;
         this.listaObservaciones = new TreeSet<>();
         this.estadoActual = new Iniciado(this);
-        this.listaMat = ListaMaterialesStock.getInstance().getListaCorrespondiente(tipoMaquina);
     }
 
     /**Metodo que verifica si el numero de los legajos o identificadores cumple con las restricciones de longitud

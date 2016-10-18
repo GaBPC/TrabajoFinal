@@ -17,6 +17,13 @@ public class ListaMateriales {
         this.lista.put(nuevo.getCodigo(), nuevo);
     }
 
+    public Material getMaterial(String codigo) throws Exception
+    {
+      if(this.lista.containsKey(codigo))
+        return this.lista.get(codigo);
+      else
+        throw new Exception("El material no se encuentra en la lista");
+    }
     public void modificarMaterial(String codigo, float cantidad) throws Exception {
         if (this.lista.containsKey(codigo)) {
             Material aux = this.lista.get(codigo);

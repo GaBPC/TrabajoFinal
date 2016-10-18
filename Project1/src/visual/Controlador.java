@@ -37,31 +37,9 @@ public class Controlador {
     private ListaPedidos pedidos = ListaPedidos.getInstance();
     private ListaLotes lotes = ListaLotes.getInstance();
     private ListaMaterialesStock materiales = ListaMaterialesStock.getInstance();
-    
-    private static HashMap<TipoProducto,ListaMateriales> materialesCorrespondientes = new HashMap<>();
-    private static HashMap<String,TipoProducto> tipoProductos = new HashMap<>();
 
     private Empleado empleadoActual = null;
     private Pedido pedidoActual = null;
-
-    static{
-      ListaMateriales matConsolaGrup = new ListaMateriales();
-      ListaMateriales matFliper = new ListaMateriales();
-      ListaMateriales matConsolaInd = new ListaMateriales();
-      ListaMateriales matSimulador = new ListaMateriales();
-      
-      TipoProducto prod1 = new TipoProducto(matConsolaGrup);
-      TipoProducto prod2 = new TipoProducto(matFliper);
-      TipoProducto prod3 = new TipoProducto(matConsolaInd);
-      TipoProducto prod4 = new TipoProducto(matSimulador);
-      
-      tipoProductos.put("Consola grupal", prod1);
-      tipoProductos.put("Fliper", prod2);
-      tipoProductos.put("Consola individual", prod3);
-      tipoProductos.put("Simulador", prod4);
-      
-      //FALTA AGREGAR MATERIALES DE CADA TIPOOOOO
-    }
     
     public Controlador() {
         super();
@@ -159,6 +137,4 @@ public class Controlador {
         Lote lote = new Lote(this.pedidoActual, numeroLote);
         this.lotes.agregarNuevo(lote);
     }
-    
-    public void
 }
