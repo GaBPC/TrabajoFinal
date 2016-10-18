@@ -16,12 +16,10 @@ public class ListaEmpleados {
     private static ListaEmpleados _instance = null;
 
     private HashMap<String, Empleado> empleados;
-    private HashMap<String, Empleado> legajosLogeados;
 
     private ListaEmpleados() {
         super();
         this.empleados = new HashMap<>();
-        this.legajosLogeados = new HashMap<>();
         try {
             empleados.put("LEG123456", new Empleado("LEG123456", "Prieto Gabriel", VENTAS));
             empleados.put("LEG000000", new Empleado("LEG000000", "Cassanelli Rodrigo", VENTAS));
@@ -42,12 +40,7 @@ public class ListaEmpleados {
 
     public Empleado buscar(String legajo) throws Exception {
         if (this.empleados.containsKey(legajo)) {
-            if (!this.legajosLogeados.containsKey(legajo)) {
-                Empleado aux = this.empleados.get(legajo);
-                this.legajosLogeados.put(legajo, aux);
-                return aux;
-            } else
-                throw new Exception("El empleado ya se encuentra logeado");
+            return this.empleados.get(legajo);
         }
         throw new Exception("El empleado no es parte de la empresa");
     }

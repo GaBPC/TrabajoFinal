@@ -14,8 +14,8 @@ public class PanelFechas extends JPanel
   private JComboBox mes;
   private JComboBox year;
 
-  private final int añoMinimo = 2016;
-  private final int añoMaximo = 2050;
+  private final int yearMinimo = 2016;
+  private final int yearMaximo = 2050;
 
   public PanelFechas()
   {
@@ -62,7 +62,7 @@ public class PanelFechas extends JPanel
     });
     this.mes.setEnabled(false);
     this.year = new JComboBox();
-    for (int i = this.añoMinimo; i <= this.añoMaximo; i++)
+    for (int i = this.yearMinimo; i <= this.yearMaximo; i++)
     {
       year.addItem(i);
     }
@@ -93,7 +93,7 @@ public class PanelFechas extends JPanel
 
   public int getYear()
   {
-    return (this.year.getSelectedIndex() + this.añoMinimo);
+    return (this.year.getSelectedIndex() + this.yearMinimo);
   }
 
   private void verificaDias(boolean bisiesto)
