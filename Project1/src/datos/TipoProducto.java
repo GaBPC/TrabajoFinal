@@ -12,13 +12,13 @@ public class TipoProducto
   
   private static int numeroProd = 0;
   
-  public TipoProducto(ListaMateriales lista)
+  public TipoProducto(ListaMateriales lista, String descripcion)
   {
     super();
     numeroProd ++;
-    //FALTA DESCRIPCION 
     this.generarTipoProd();
     this.listaMat = lista;
+    this.descripcion = descripcion;
   }
   
   public void generarTipoProd() {

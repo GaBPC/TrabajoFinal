@@ -12,6 +12,7 @@ import datos.estadosPedido.Evaluacion;
 
 import exceptions.ArgumentoIlegalException;
 
+import exceptions.FaltantesException;
 import exceptions.StateException;
 
 import java.util.ArrayList;
@@ -33,15 +34,15 @@ import personal.Empleado;
  *  sistema que permiten realizar las acciones soportadas.
  */
 public class Controlador {
-    
+
     private ListaEmpleados empleados = ListaEmpleados.getInstance();
     private ListaPedidos pedidos = ListaPedidos.getInstance();
     private ListaLotes lotes = ListaLotes.getInstance();
-    private ListaMaterialesStock materiales = ListaMaterialesStock.getInstance();
+    private ListaMaterialesStock stock = ListaMaterialesStock.getInstance();
 
     private Empleado empleadoActual = null;
     private Pedido pedidoActual = null;
-    
+
     public Controlador() {
         super();
     }
@@ -139,10 +140,8 @@ public class Controlador {
         Lote lote = new Lote(this.pedidoActual, numeroLote);
         this.lotes.agregarNuevo(lote);
     }
-    
-    public ListaMateriales verificaExistencias(String tipo)
-    throws Exception
-  {
-      return this.materiales.verificarExistencias(tipo);
+
+    public ListaMateriales verificaExistencias(String tipo) throws FaltantesException, Exception {
+        return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
     }
 }

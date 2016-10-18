@@ -1,6 +1,7 @@
 package visual.auxiliares;
 
 import exceptions.ArgumentoIlegalException;
+import exceptions.FaltantesException;
 import exceptions.StateException;
 
 import java.awt.BorderLayout;
@@ -32,61 +33,55 @@ import listas.ListaMateriales;
 
 import visual.Controlador;
 
-public class DialogoMateriales
-  extends JDialog
-{
-  private Controlador control;
+public class DialogoMateriales extends JDialog {
+    private Controlador control;
 
-  public DialogoMateriales(Controlador control, Component relativeTo)
-  {
-    super();
-    this.setLocationRelativeTo(relativeTo);
-    this.control = control;
-    this.setLayout(new BorderLayout());
-    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    this.setModal(true);
-    this.setMinimumSize(new Dimension(400, 300));
-    this.initComponents();
-    this.setVisible(true);
-  }
-  
-  public void initComponents()
-  {
-    Container cp = this.getContentPane();
-    
-    JPanel jp = new JPanel();
-    jp.setLayout(new BorderLayout());
-    
-    JLabel titulo = new JLabel("Materiales necesarios para generar este lote");
-    titulo.setFont(new Font("Arial", 0, 15));
-    jp.add(titulo,BorderLayout.NORTH);
-    
-    JTextArea materiales = new JTextArea();
-  
-    try
-    {
-      this.actualizarMateriales(materiales);
+    public DialogoMateriales(Controlador control, Component relativeTo) {
+        super();
+        this.setLocationRelativeTo(relativeTo);
+        this.control = control;
+        this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setModal(true);
+        this.setMinimumSize(new Dimension(400, 300));
+        this.initComponents();
+        this.setVisible(true);
     }
-    catch (Exception e)
-    {
+
+    public void initComponents() {
+        Container cp = this.getContentPane();
+
+        JPanel jp = new JPanel();
+        jp.setLayout(new BorderLayout());
+
+        JLabel titulo = new JLabel("Materiales necesarios para generar este lote");
+        titulo.setFont(new Font("Arial", 0, 15));
+        jp.add(titulo, BorderLayout.NORTH);
+
+        JTextArea materiales = new JTextArea();
+
+        try {
+            this.actualizarMateriales(materiales);
+        } catch (Exception e) {
+        }
+
+        jp.add(materiales, BorderLayout.CENTER);
+        cp.add(jp, BorderLayout.CENTER);
+
+
     }
-    
-    jp.add(materiales,BorderLayout.CENTER);
-    cp.add(jp,BorderLayout.CENTER);
+
+    public void actualizarMateriales(JTextArea materiales) throws Exception {
+        String tipo = this.control.getPedidoActual().getCodigoMaquina();
+        ListaMateriales lista;
+        try {
+            lista = this.control.verificaExistencias(tipo);
+            materiales.append(lista.detalles());
+        } catch (FaltantesException e) {
+            materiales.append(e.getMessage() + "\n");
+            materiales.append(e.getFaltantes().detalles());
+        }
+    }
 
 
-  }
-  
-  public void actualizarMateriales(JTextArea materiales)
-    throws Exception
-  {
-    String tipo = this.control.getPedidoActual().getCodigoMaquina();
-    ListaMateriales lista = this.control.verificaExistencias(tipo);
-    if(lista == null)
-      materiales.append("Los materiales se cargaron mal");
-    else
-      materiales.append(lista.detalles());
-  }
-
- 
 }

@@ -14,6 +14,7 @@ public class Test {
         } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException |
                  ClassNotFoundException e) {
         }
+        
         Controlador controlUsuario1 = new Controlador();
         new VentanaLogin(controlUsuario1);
 

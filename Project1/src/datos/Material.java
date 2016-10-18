@@ -9,8 +9,15 @@ public class Material {
     private String descripcion = null;
     private float cantidad = 0.0f;
 
-    public Material() {
+    public Material(String codigo, String descripcion, float cantidad) throws ArgumentoIlegalException,
+                                                                              LengthException {
         super();
+        if (this.verificaCodigo(codigo))
+            this.codigo = codigo;
+        if (this.verificaDescripcion(descripcion))
+            this.descripcion = descripcion;
+        if (this.verificaCantidad(cantidad))
+            this.cantidad = cantidad;
     }
 
     private boolean verificaCodigo(String codigo) throws ArgumentoIlegalException {
@@ -22,8 +29,8 @@ public class Material {
                 ret = true;
             else
                 throw new ArgumentoIlegalException("Numero fuera de rango", num);
-        }
-        else throw new ArgumentoIlegalException("El codigo no contiene \"MAT\"", codigo);
+        } else
+            throw new ArgumentoIlegalException("El codigo no contiene \"MAT\"", codigo);
         return ret;
     }
 
@@ -66,14 +73,13 @@ public class Material {
     public float getCantidad() {
         return cantidad;
     }
-    
+
     public String toString() {
         return this.codigo;
     }
-    
-    public String detalles()
-    {
-      String aux = "Material: " + this.codigo + " " + this.cantidad;
-      return aux;
+
+    public String detalles() {
+        String aux = "Material: " + this.codigo + " " + this.cantidad;
+        return aux;
     }
 }

@@ -17,13 +17,13 @@ public class ListaMateriales {
         this.lista.put(nuevo.getCodigo(), nuevo);
     }
 
-    public Material getMaterial(String codigo) throws Exception
-    {
-      if(this.lista.containsKey(codigo))
-        return this.lista.get(codigo);
-      else
-        throw new Exception("El material no se encuentra en la lista");
+    public Material getMaterial(String codigo) throws Exception {
+        if (this.lista.containsKey(codigo))
+            return this.lista.get(codigo);
+        else
+            throw new Exception("El material no se encuentra en la lista");
     }
+
     public void modificarMaterial(String codigo, float cantidad) throws Exception {
         if (this.lista.containsKey(codigo)) {
             Material aux = this.lista.get(codigo);
@@ -41,16 +41,18 @@ public class ListaMateriales {
         Iterator<Material> it = this.lista.values().iterator();
         return it;
     }
-    
-    public String detalles()
-    {
-      Iterator<Material> it = this.getIterator();
-      String aux = null;
-      while(it.hasNext())
-      {
-        Material mat = it.next();
-        aux = aux + mat.detalles() +"\n";
-      }
-      return aux;
+
+    public String detalles() {
+        Iterator<Material> it = this.getIterator();
+        String aux = "";
+        while (it.hasNext()) {
+            Material mat = it.next();
+            aux = aux + mat.detalles() + " unidades\n";
+        }
+        return aux;
+    }
+
+    public int size() {
+        return this.lista.size();
     }
 }

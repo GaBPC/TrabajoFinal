@@ -213,4 +213,8 @@ public class Pedido extends Observable implements ResumenClase {
   {
     return codigoMaquina;
   }
+
+    public int getCantProduccion() {
+        return cantProduccion;
+    }
 }
