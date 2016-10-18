@@ -26,6 +26,7 @@ public class Pedido extends Observable implements ResumenClase {
     private String numeroPedido = null;
     private Calendar fechaPedido = null, fechaEntregaVentas = null, fechaPropuestaProduccion = null, fechaDefinitiva =
         null, fechaPedidoAceptado = null;
+    private String codigoMaquina = null;
     private String tipoMaquina = null;
     private int cantProduccion = 0;
     private Estado estadoActual;
@@ -45,14 +46,16 @@ public class Pedido extends Observable implements ResumenClase {
      * @param cantProduccion
      * @throws ArgumentoIlegalException Si algun parametro no cumple con alguna restriccion, es informado mediante esta excepcion
      */
-    public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String tipoMaquina,
+    public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String codigoMaquina, String tipoMaquina,
                   int cantProduccion) throws ArgumentoIlegalException {
         if (this.verificaNumeroPedido(numeroPedido))
             this.numeroPedido = numeroPedido;
-        if (tipoMaquina != null)
-            this.tipoMaquina = tipoMaquina;
+        if (codigoMaquina != null)
+            this.codigoMaquina = codigoMaquina;
         if (this.verificaCantProduccion(cantProduccion))
             this.cantProduccion = cantProduccion;
+        if (tipoMaquina != null)
+            this.tipoMaquina = tipoMaquina;
         this.fechaPedido = fechaPedido;
         this.fechaEntregaVentas = fechaEntregaVentas;
         this.listaObservaciones = new TreeSet<>();
@@ -172,7 +175,7 @@ public class Pedido extends Observable implements ResumenClase {
             ret += "Numero de pedido: " + ((this.verificaNumeroPedido(this.numeroPedido)) ? this.numeroPedido : " - ");
             ret +=
                 "\nFecha de pedido: " + ((this.fechaPedido != null) ? sdf.format(this.fechaPedido.getTime()) : " - ");
-            ret += "\nTipo de maquina: " + ((this.tipoMaquina != null) ? this.tipoMaquina : " - ");
+            ret += "\nTipo de maquina: " + ((this.codigoMaquina != null) ? this.codigoMaquina : " - ");
             ret +=
                 "\nCantidad a producir: " +
                 ((this.verificaCantProduccion(this.cantProduccion)) ? this.cantProduccion : " - ");
@@ -204,4 +207,10 @@ public class Pedido extends Observable implements ResumenClase {
     public boolean isAceptado() {
         return this.estadoActual.isAceptado();
     }
+
+
+  public String getCodigoMaquina()
+  {
+    return codigoMaquina;
+  }
 }

@@ -3,6 +3,7 @@ package visual;
 import listas.ListaPedidos;
 
 import datos.Lote;
+import datos.Material;
 import datos.Pedido;
 
 import datos.TipoProducto;
@@ -119,11 +120,12 @@ public class Controlador {
                                  Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
         String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
         int longitud = aux.length();
+        String maquina = ListaMaterialesStock.getInstance().getCodigo(tipoMaquina);
         String numeroPedido = "PED";
         for (int i = 0; i < (6 - longitud); i++)
             numeroPedido += "0";
         numeroPedido += aux;
-        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, tipoMaquina, cantProducir);
+        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
         pedidos.agregarNuevo(nuevo);
     }
 
@@ -136,5 +138,11 @@ public class Controlador {
         numeroLote += aux;
         Lote lote = new Lote(this.pedidoActual, numeroLote);
         this.lotes.agregarNuevo(lote);
+    }
+    
+    public ListaMateriales verificaExistencias(String tipo)
+    throws Exception
+  {
+      return this.materiales.verificarExistencias(tipo);
     }
 }

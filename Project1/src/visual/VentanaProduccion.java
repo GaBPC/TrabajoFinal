@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import visual.auxiliares.DialogoM;
+import visual.auxiliares.DialogoMateriales;
 import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.MyList;
 
@@ -133,12 +134,16 @@ public class VentanaProduccion
       public void actionPerformed(ActionEvent actionEvent)
       {
         int seleccionado = lotesAc.getSelectedIndex();
-        
+        Lote lot = (Lote) listModelAc.getElementAt(seleccionado);
+        VentanaProduccion.this.control.setPedidoActual(lot.getPedido());
+        new DialogoMateriales(VentanaProduccion.this.control, VentanaProduccion.this);
+        //FALTA VENTANA MATERIALES
         
           
       }
     });
-
+    aux2_botones.add(generarLote);
+    
     listas.add(aux1);
     listas.add(aux2);
     /* Agrega la lista al panel de revisiones*/

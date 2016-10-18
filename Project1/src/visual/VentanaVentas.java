@@ -27,6 +27,8 @@ import java.util.Observable;
 
 import javax.swing.*;
 
+import listas.ListaMaterialesStock;
+
 import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
@@ -133,10 +135,10 @@ public class VentanaVentas extends VentanaBase {
 
         /* Area para ingresar el tipo de maquina*/
         JComboBox maquinasSoportadas = new JComboBox();
-        maquinasSoportadas.addItem("Consola 2 jugadores");
-        maquinasSoportadas.addItem("Fliper");
-        maquinasSoportadas.addItem("Consola individual");
-        maquinasSoportadas.addItem("Simulador");
+        maquinasSoportadas.addItem(ListaMaterialesStock.CONSOLA_GRUPAL);
+        maquinasSoportadas.addItem(ListaMaterialesStock.FLIPPER);
+        maquinasSoportadas.addItem(ListaMaterialesStock.CONSOLA_IND);
+        maquinasSoportadas.addItem(ListaMaterialesStock.SIMULADOR);
         panelIngreso.add(new JLabel("Tipo de maquina: "));
         panelIngreso.add(maquinasSoportadas);
 
@@ -170,6 +172,7 @@ public class VentanaVentas extends VentanaBase {
                 try {
                     Calendar calendarFechaPedido = GregorianCalendar.getInstance();
                     String maquina = (String) maquinasSoportadas.getSelectedItem();
+               
                     int cantidadProducir = Integer.parseInt(cantProducir.getText());
 
                     Calendar calendarFechaVentas =

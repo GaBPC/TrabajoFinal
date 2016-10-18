@@ -55,7 +55,7 @@ public class DialogoM extends JDialog {
 
         cp.add(panelIngreso, BorderLayout.CENTER);
 
-        JButton aceptarLote = new JButton("Aceptar lote");
+        JButton aceptarLote = new JButton("Aceptar pedido");
         aceptarLote.addActionListener(new ActionListener() {
 
             @Override

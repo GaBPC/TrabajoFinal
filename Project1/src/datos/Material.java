@@ -70,4 +70,10 @@ public class Material {
     public String toString() {
         return this.codigo;
     }
+    
+    public String detalles()
+    {
+      String aux = "Material: " + this.codigo + " " + this.cantidad;
+      return aux;
+    }
 }

@@ -67,4 +67,9 @@ public class Lote implements ResumenClase {
         }
         return ret;
     }
+    
+    public Pedido getPedido()
+    {
+      return this.pedido;
+    }
 }

@@ -41,4 +41,16 @@ public class ListaMateriales {
         Iterator<Material> it = this.lista.values().iterator();
         return it;
     }
+    
+    public String detalles()
+    {
+      Iterator<Material> it = this.getIterator();
+      String aux = null;
+      while(it.hasNext())
+      {
+        Material mat = it.next();
+        aux = aux + mat.detalles() +"\n";
+      }
+      return aux;
+    }
 }
