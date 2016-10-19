@@ -31,6 +31,8 @@ import javax.swing.JTextArea;
 
 import listas.ListaMateriales;
 
+import listas.ListaMaterialesStock;
+
 import visual.Controlador;
 
 public class DialogoMateriales extends JDialog {
@@ -54,21 +56,22 @@ public class DialogoMateriales extends JDialog {
         JPanel jp = new JPanel();
         jp.setLayout(new BorderLayout());
 
-        JLabel titulo = new JLabel("Materiales necesarios para generar este lote");
+        JLabel titulo = new JLabel("Materiales necesarios para generar el lote");
         titulo.setFont(new Font("Arial", 0, 15));
         jp.add(titulo, BorderLayout.NORTH);
 
         JTextArea materiales = new JTextArea();
+        materiales.setEditable(false);
 
-        try {
-            this.actualizarMateriales(materiales);
-        } catch (Exception e) {
-        }
-
+    try
+    {
+      this.actualizarMateriales(materiales);
+    }
+    catch (Exception e)
+    {
+    }
         jp.add(materiales, BorderLayout.CENTER);
         cp.add(jp, BorderLayout.CENTER);
-
-
     }
 
     public void actualizarMateriales(JTextArea materiales) throws Exception {
@@ -81,6 +84,13 @@ public class DialogoMateriales extends JDialog {
             materiales.append(e.getMessage() + "\n");
             materiales.append(e.getFaltantes().detalles());
         }
+    }
+    
+    public void actualizarMatProductos(JTextArea materiales) 
+    {
+      String tipo = this.control.getPedidoActual().getCodigoMaquina();
+      ListaMateriales lista = ListaMaterialesStock.getInstance().getProducto(tipo).getListaMateriales();
+      materiales.append(lista.detalles());
     }
 
 

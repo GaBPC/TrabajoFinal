@@ -30,7 +30,6 @@ public class Pedido extends Observable implements ResumenClase {
     private String tipoMaquina = null;
     private int cantProduccion = 0;
     private Estado estadoActual;
-    private ListaMateriales listaMat = null;
     
     private TreeSet<Observacion> listaObservaciones;
 
@@ -136,8 +135,8 @@ public class Pedido extends Observable implements ResumenClase {
      * @param obs
      * @throws Exception si el lote ya esta aceptado, no es posible agregar mas comentarios, por lo que se produce la exception
      */
-    public void agregarObservacion(Observacion obs) throws Exception {
-        this.estadoActual.agregarObservacion(obs);
+    public synchronized void agregarObservacion(Observacion obs) throws Exception {
+      this.estadoActual.agregarObservacion(obs);
     }
 
     /**Metodo que utilizaran los empleados de produccion para aceptar el lote

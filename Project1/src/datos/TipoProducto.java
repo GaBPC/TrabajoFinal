@@ -3,6 +3,7 @@ package datos;
 import exceptions.ArgumentoIlegalException;
 
 import listas.ListaMateriales;
+import listas.ListaMaterialesStock;
 
 public class TipoProducto
 {
@@ -39,6 +40,12 @@ public class TipoProducto
   public String getCodigoProducto()
   {
     return codigoProducto;
+  }
+  
+  @Override
+  public String toString()
+  {
+    return this.descripcion;
   }
 
 }

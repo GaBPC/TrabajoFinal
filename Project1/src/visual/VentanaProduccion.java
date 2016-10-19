@@ -3,6 +3,8 @@ package visual;
 import datos.Lote;
 import datos.Pedido;
 
+import datos.TipoProducto;
+
 import exceptions.StateException;
 
 import java.awt.BorderLayout;
@@ -27,9 +29,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import javax.swing.SwingConstants;
+
+import listas.ListaMateriales;
+import listas.ListaMaterialesStock;
+
 import visual.auxiliares.DialogoM;
 import visual.auxiliares.DialogoMateriales;
 import visual.auxiliares.DialogoObservaciones;
+import visual.auxiliares.DialogoOpciones1;
 import visual.auxiliares.MyList;
 
 public class VentanaProduccion
@@ -136,10 +144,7 @@ public class VentanaProduccion
         int seleccionado = lotesAc.getSelectedIndex();
         Lote lot = (Lote) listModelAc.getElementAt(seleccionado);
         VentanaProduccion.this.control.setPedidoActual(lot.getPedido());
-        new DialogoMateriales(VentanaProduccion.this.control, VentanaProduccion.this);
-        //FALTA VENTANA MATERIALES
-        
-          
+        new DialogoMateriales(VentanaProduccion.this.control, VentanaProduccion.this);        
       }
     });
     aux2_botones.add(generarLote);
@@ -152,6 +157,57 @@ public class VentanaProduccion
     panelListas.add(titulos, BorderLayout.NORTH);
 
     cp.add(panelListas, BorderLayout.CENTER);
+    
+    /*Crea panel en el que se ubica todo lo relacionado a materiales*/
+    JPanel panelMateriales = new JPanel();
+    panelMateriales.setLayout(new BorderLayout());
+    
+    /*Titulo del panel*/
+    JLabel titulo = new JLabel("Opciones materiales",SwingConstants.CENTER);
+    titulo.setFont(new Font("Arial", 0, 15));
+    
+    panelMateriales.add(titulo,BorderLayout.NORTH);
+    
+    /*Panel que subdivide al panel de materiales en 2 columnas*/
+    JPanel aux = new JPanel();
+    aux.setLayout(new GridLayout(0,2));
+    
+    /*Panel en donde se ubican la lista y el titulo de productos*/
+    JPanel panelLista = new JPanel();
+    panelLista.setLayout(new BorderLayout());
+    
+    JLabel material = new JLabel("Tipos de productos");
+    material.setFont(new Font("Arial", 0, 15));
+    
+    DefaultListModel listaProductosModel = new DefaultListModel();
+    JList listaProductos = new JList(listaProductosModel);
+    JScrollPane lista = new JScrollPane(listaProductos);
+    this.generarListaProducto(listaProductosModel);
+    
+    /*Grid layout para ubicar primero la lista y luego botones*/
+    JPanel auxProductos = new JPanel();
+    auxProductos.setLayout(new GridLayout(0,2));
+    auxProductos.add(lista);
+    
+    JButton consultarLista = new JButton("Lista materiales");
+    consultarLista.addActionListener(new ActionListener()
+    {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent)
+      {
+        int seleccionado = listaProductos.getSelectedIndex();
+        TipoProducto prod = (TipoProducto) listaProductosModel.getElementAt(seleccionado);
+        VentanaProduccion.this.control.setProductoActual(prod);
+        new DialogoOpciones1(VentanaProduccion.this.control, VentanaProduccion.this);
+      }
+      });
+    auxProductos.add(consultarLista);
+    panelLista.add(material,BorderLayout.NORTH);
+    panelLista.add(auxProductos,BorderLayout.CENTER);
+    
+    aux.add(panelLista);
+    panelMateriales.add(aux,BorderLayout.WEST);
+    cp.add(panelMateriales,BorderLayout.SOUTH);
   }
 
   private void actualizarListaEv(DefaultListModel modelo)
@@ -170,6 +226,22 @@ public class VentanaProduccion
     {
       modelo.addElement(it.next());
     }
+  }
+  
+  private void generarListaProducto(DefaultListModel listaProductosModel)
+  {
+    String codigo1 = ListaMaterialesStock.getInstance().getCodigo(ListaMaterialesStock.CONSOLA_GRUPAL);
+    String codigo2 = ListaMaterialesStock.getInstance().getCodigo(ListaMaterialesStock.CONSOLA_IND);
+    String codigo3 = ListaMaterialesStock.getInstance().getCodigo(ListaMaterialesStock.FLIPPER);
+    String codigo4 = ListaMaterialesStock.getInstance().getCodigo(ListaMaterialesStock.SIMULADOR);
+    TipoProducto tip1 = ListaMaterialesStock.getInstance().getProducto(codigo1);
+    TipoProducto tip2 = ListaMaterialesStock.getInstance().getProducto(codigo2);
+    TipoProducto tip3 = ListaMaterialesStock.getInstance().getProducto(codigo3);
+    TipoProducto tip4 = ListaMaterialesStock.getInstance().getProducto(codigo4);
+    listaProductosModel.addElement(tip1);
+    listaProductosModel.addElement(tip2);
+    listaProductosModel.addElement(tip3);
+    listaProductosModel.addElement(tip4);
   }
 
   @Override

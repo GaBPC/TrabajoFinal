@@ -42,6 +42,7 @@ public class Controlador {
 
     private Empleado empleadoActual = null;
     private Pedido pedidoActual = null;
+    private TipoProducto productoActual = null;
 
     public Controlador() {
         super();
@@ -63,10 +64,20 @@ public class Controlador {
         return this.pedidoActual;
     }
 
-    /**Metodo para buscar un empleado por su numero de legajo
-     * @param legajo es el legajo del empleado buscado
-     * @return una referencia al empleado si es encontrado, null en caso contrario
-     */
+  public void setProductoActual(TipoProducto productoActual)
+  {
+    this.productoActual = productoActual;
+  }
+
+  public TipoProducto getProductoActual()
+  {
+    return productoActual;
+  }
+
+  /**Metodo para buscar un empleado por su numero de legajo
+   * @param legajo es el legajo del empleado buscado
+   * @return una referencia al empleado si es encontrado, null en caso contrario
+   */
     public Empleado buscarEmpleado(String legajo) throws Exception {
         return empleados.buscar(legajo);
     }

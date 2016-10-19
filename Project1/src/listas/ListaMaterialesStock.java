@@ -165,4 +165,9 @@ public class ListaMaterialesStock {
     public String getCodigo(String tipoProducto) {
         return codigoProd.get(tipoProducto);
     }
+    
+    public TipoProducto getProducto(String codigo)
+    {
+      return this.recetas.get(codigo);
+    }
 }

@@ -54,5 +54,5 @@ public class ListaMateriales {
 
     public int size() {
         return this.lista.size();
-    }
+    }    
 }
