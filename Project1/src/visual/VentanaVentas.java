@@ -32,6 +32,7 @@ import listas.ListaMaterialesStock;
 import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
+import visual.auxiliares.PanelLista;
 
 public class VentanaVentas extends VentanaBase {
 
@@ -47,61 +48,21 @@ public class VentanaVentas extends VentanaBase {
     protected void IniciarComponentes() {
         Container cp = this.getContentPane();
 
-        /* Crea un panel donde se encuentra todo lo relacionado a
-         * ver y agregar observaciones a pedidos en etapa de revision*/
-        JPanel panelRevision = new JPanel();
-        panelRevision.setLayout(new BorderLayout());
-        JPanel listas = new JPanel();
-        listas.setLayout(new GridLayout(0, 2));
-        /*Crea los titulos de cada lista a aparecer*/
-        JPanel titulos = new JPanel();
-        titulos.setLayout(new GridLayout(0, 2));
-        JLabel tit1 = new JLabel("Lista con todos los pedidos que estan iniciados");
-        tit1.setFont(new Font("Arial", 0, 15));
-        titulos.add(tit1);
-        JLabel tit2 = new JLabel("Lista con todos los pedidos que estan en evaluacion");
-        tit2.setFont(new Font("Arial", 0, 15));
-        titulos.add(tit2);
-        /* Crea un modelo donde se agregaran y quitaran los itemas de la lista*/
-        this.listModelEv = new DefaultListModel();
+        /* Agrega el panel desde donde se ingresaran los nuevos pedidos*/
+        cp.add(this.creaPanelIngreso(), BorderLayout.SOUTH);
+
+        /* Instancia el modelo de la lista de lotes iniciados*/
         this.listModelIn = new DefaultListModel();
-        /* Crea la lista donde se veran todos los lotes que no han sido aun aceptados y sobre
-         * los cuales se pueden agregar observaciones*/
-        MyList lotesEv = new MyList(listModelEv);
-        MyList lotesIn = new MyList(listModelIn);
-        /* Agrega un JScrollPane que permite subir y bajar en la lista*/
-        JScrollPane scrollLotesEv = new JScrollPane(lotesEv);
-        JScrollPane scrollLotesIn = new JScrollPane(lotesIn);
-        /* Carga por primera vez los datos de la lista*/
-        this.actualizarListaEv(listModelEv);
-        this.actualizarListaIn(listModelIn);
-        JPanel aux1 = new JPanel(new BorderLayout());
-        JPanel aux2 = new JPanel(new BorderLayout());
-        /*Agrega las listas al panel de listas*/
-        aux1.add(scrollLotesIn, BorderLayout.CENTER);
-        aux2.add(scrollLotesEv, BorderLayout.CENTER);
-
-        /* Crea un boton que permite agregar una observacion sobre el elemento de la lista seleccionado*/
-        JButton verObservaciones = new JButton("Ver observacion");
-        //TODO hacer que se agrege la observacion
-        verObservaciones.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                int seleccionado = lotesEv.getSelectedIndex();
-                VentanaVentas.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
-                new DialogoObservaciones(VentanaVentas.this.control);
-            }
-        });
-        aux2.add(verObservaciones, BorderLayout.SOUTH);
-
-        /*Crea un boton que permite cambiar el estado de un lote de iniciado a en evaluacion*/
-        JButton evaluar = new JButton("Evaluar pedido");
-        evaluar.addActionListener(new ActionListener() {
+        /* Crea el panel que contiene todo lo relacionado a la lista de lotes iniciados*/
+        PanelLista panelIniciados = new PanelLista("Pedidos que estan iniciados", this.listModelIn);
+        /* Crea un boton que permite cambiar de estado iniciado a estado evaluacion*/
+        JButton evaluarPedido = new JButton("Evaluar pedido");
+        evaluarPedido.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
                 try {
-                    int seleccionado = lotesIn.getSelectedIndex();
+                    int seleccionado = panelIniciados.getLista().getSelectedIndex();
                     VentanaVentas.this.control.setPedidoActual((Pedido) listModelIn.getElementAt(seleccionado));
                     VentanaVentas.this.control.cambiarAEvaluacion();
                     VentanaVentas.this.actualizarListaIn(listModelIn);
@@ -112,59 +73,63 @@ public class VentanaVentas extends VentanaBase {
 
             }
         });
-        aux1.add(evaluar, BorderLayout.SOUTH);
+        panelIniciados.add(evaluarPedido, BorderLayout.SOUTH);
+        /* Actualiza la lista de lotes iniciados por primera vez*/
+        this.actualizarListaIn(this.listModelIn);
 
-        listas.add(aux1);
-        listas.add(aux2);
-        /* Agrega la lista al panel de revisiones*/
-        panelRevision.add(listas, BorderLayout.CENTER);
-        /* Agrega los titulos al panel de revisiones*/
-        panelRevision.add(titulos, BorderLayout.NORTH);
+        /* Instancia el modelo de la lista de lotes en evaluacion*/
+        this.listModelEv = new DefaultListModel();
+        /* Crea el panel que contiene todo lo relacionado a la lista de lotes en evaluacion*/
+        PanelLista panelEvaluacion = new PanelLista("Pedidos que estan en evaluacion", this.listModelEv);
+        /* Crea un boton que permite agregar una observacion sobre el elemento de la lista seleccionado*/
+        JButton verObservaciones = new JButton("Ver observacion");
+        verObservaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
+                VentanaVentas.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
+                new DialogoObservaciones(VentanaVentas.this.control);
+            }
+        });
+        panelEvaluacion.add(verObservaciones, BorderLayout.SOUTH);
+        /* Actualiza la lista de lotes en evaluacion por primera vez*/
+        this.actualizarListaEv(this.listModelEv);
 
-        cp.add(panelRevision, BorderLayout.CENTER);
+        /* Crea un panel donde iran las dos listas para luego agregarlas al ContentPane*/
+        JPanel panelListas = new JPanel(new GridLayout(0, 2));
+        /* Agrega las dos listas al panelListas*/
+        panelListas.add(panelIniciados);
+        panelListas.add(panelEvaluacion);
+        /* Agrega el panel al ContentPane*/
+        cp.add(panelListas, BorderLayout.CENTER);
+    }
 
-        /* Crea un panel donde se encuentra todo lo relacionado a agregar
-         * un nuevo pedido al sistema desde el sector de ventas*/
-        JPanel panelIngreso = new JPanel();
-        panelIngreso.setLayout(new GridLayout(0, 2));
-
-        /* Area para ingresar la fecha del pedido*/
-        /*panelIngreso.add(new JLabel("Fecha de pedido: "));
-        PanelFechas fechaPedido = new PanelFechas();
-        panelIngreso.add(fechaPedido);*/
-
+    private JPanel creaPanelIngreso() {
+        /* Panel para la creacion de nuevos pedidos desde cero*/
+        JPanel panelCreacion = new JPanel();
+        panelCreacion.setLayout(new GridLayout(0, 2));
         /* Area para ingresar el tipo de maquina*/
         JComboBox maquinasSoportadas = new JComboBox();
         maquinasSoportadas.addItem(ListaMaterialesStock.CONSOLA_GRUPAL);
         maquinasSoportadas.addItem(ListaMaterialesStock.FLIPPER);
         maquinasSoportadas.addItem(ListaMaterialesStock.CONSOLA_IND);
         maquinasSoportadas.addItem(ListaMaterialesStock.SIMULADOR);
-        panelIngreso.add(new JLabel("Tipo de maquina: "));
-        panelIngreso.add(maquinasSoportadas);
-
+        panelCreacion.add(new JLabel("Tipo de maquina: "));
+        panelCreacion.add(maquinasSoportadas);
         /* Area para ingresar la cantidad de maquinas a producir*/
-        panelIngreso.add(new JLabel("Cantidad a producir: "));
+        panelCreacion.add(new JLabel("Cantidad a producir: "));
         JTextField cantProducir = new JTextField();
-        panelIngreso.add(cantProducir);
-
+        panelCreacion.add(cantProducir);
         /* Area para ingresar la fecha solicitada por ventas*/
-        panelIngreso.add(new JLabel("Fecha solicitada por ventas: "));
+        panelCreacion.add(new JLabel("Fecha solicitada por ventas: "));
         PanelFechas fechaVentas = new PanelFechas();
-        panelIngreso.add(fechaVentas);
-
-        /* Panel que ira en la parte inferior de la ventana. Este area esta destinada
-         * a agregar nuevos pedidos al sistema*/
-        JPanel panelSouth = new JPanel();
-        panelSouth.setLayout(new BorderLayout());
-        /* Agrega el panelIngreso al panelSouth*/
-        panelSouth.add(panelIngreso, BorderLayout.CENTER);
-        /* Agrega el titulo al panelSouth*/
+        panelCreacion.add(fechaVentas);
+        /* Crea el titulo para la seccion de creacion*/
         JLabel titulo = new JLabel("Ingrese los datos para el nuevo pedido");
         titulo.setFont(new Font("Arial", 0, 15));
-        panelSouth.add(titulo, BorderLayout.NORTH);
-        /*Agrega el boton que carga el nuevo pedido al sistema*/
+        /* Crea un boton que se encarga de llamar a los metodos necesarios para la
+         * creacion de un nuevo pedido*/
         JButton nuevoPedido = new JButton("Cargar nuevo pedido");
-        //TODO funcionalidad del boton
         nuevoPedido.addActionListener(new ActionListener() {
 
             @Override
@@ -172,7 +137,7 @@ public class VentanaVentas extends VentanaBase {
                 try {
                     Calendar calendarFechaPedido = GregorianCalendar.getInstance();
                     String maquina = (String) maquinasSoportadas.getSelectedItem();
-               
+
                     int cantidadProducir = Integer.parseInt(cantProducir.getText());
 
                     Calendar calendarFechaVentas =
@@ -180,7 +145,7 @@ public class VentanaVentas extends VentanaBase {
 
                     /* Agrega el nuevo lote a la lista mediante el controlador*/
                     VentanaVentas.this.control.crearNuevoPedido(calendarFechaPedido, maquina, cantidadProducir,
-                                                              calendarFechaVentas);
+                                                                calendarFechaVentas);
                     /* Cada vez que se agrega un nuevo lote al sistema se actualiza la lista
                      * con los datos del lote recien agregado*/
                     VentanaVentas.this.actualizarListaIn(listModelIn);
@@ -195,10 +160,17 @@ public class VentanaVentas extends VentanaBase {
                 }
             }
         });
-        panelSouth.add(nuevoPedido, BorderLayout.SOUTH);
-
-        /* Agrega el panelSouth a la ventana del programa*/
-        cp.add(panelSouth, BorderLayout.SOUTH);
+        /* Panel que contendra todo lo definido anteriormente, para que sea una sola unidad
+         * en la ventana*/
+        JPanel panelIntegral = new JPanel();
+        panelIntegral.setLayout(new BorderLayout());
+        /* Agrega el panelIntegral al panelSouth*/
+        panelIntegral.add(panelCreacion, BorderLayout.CENTER);
+        /* Agrega el titulo al panelIntegral*/
+        panelIntegral.add(titulo, BorderLayout.NORTH);
+        /*Agrega el boton que carga el nuevo pedido al sistema al panelIntegral*/
+        panelIntegral.add(nuevoPedido, BorderLayout.SOUTH);
+        return panelIntegral;
     }
 
     private void actualizarListaEv(DefaultListModel modelo) {

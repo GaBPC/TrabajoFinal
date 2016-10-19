@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import java.util.Observable;
 
 import javax.swing.JButton;
@@ -31,6 +34,9 @@ public class VentanaLogin extends VentanaBase {
          *accion de terminar el programa al cerrar laventana*/
         super(control, "Login", JFrame.EXIT_ON_CLOSE, new Dimension(400, 250));
         this.setResizable(false);
+        
+        //En la ventana de login no es necesario tener un JMenuBar
+        this.setJMenuBar(null);
     }
 
     @Override
@@ -109,6 +115,26 @@ public class VentanaLogin extends VentanaBase {
 
         //Se añade al ContentPane de la ventana
         cp.add(ingresar, BorderLayout.SOUTH);
+        
+        
+        legajo.addKeyListener(new KeyListener(){
+
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                // TODO Implement this method
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // TODO Implement this method
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                if(keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
+                    buscar.doClick();
+            }
+        });
     }
 
     @Override

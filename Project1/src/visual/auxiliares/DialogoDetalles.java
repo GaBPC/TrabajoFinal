@@ -55,7 +55,7 @@ public class DialogoDetalles extends JDialog
         String codigo = "MAT";
         codigo += codMaterial.getText();
         producto.getListaMateriales().borrarMaterial(codigo);
-        DialogoBorrar.this.dispose();
+        //DialogoBorrar.this.dispose();
       }
     });
     
