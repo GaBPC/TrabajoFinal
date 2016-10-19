@@ -155,4 +155,14 @@ public class Controlador {
     public ListaMateriales verificaExistencias(String tipo) throws FaltantesException, Exception {
         return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
     }
+    
+    public void actualizarExistencias(TipoProducto tipo)
+    {
+      ListaMaterialesStock.getInstance().actualizarExistencias(tipo);
+    }
+    
+    public TipoProducto getProducto(String codigo)
+    {
+      return ListaMaterialesStock.getInstance().getProducto(codigo);
+    }
 }

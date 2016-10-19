@@ -9,6 +9,7 @@ import java.awt.Dimension;
 
 import java.awt.Font;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -55,7 +56,9 @@ public class DialogoOpciones1
     materiales.setEditable(false);
 
     this.actualizarMatProductos(materiales);
-
+    
+    JPanel panelBotones = new JPanel(new GridLayout(0,2));
+    
     JButton agregarMateriales = new JButton("Agregar material");
     agregarMateriales.addActionListener(new ActionListener()
     {
@@ -66,8 +69,20 @@ public class DialogoOpciones1
         DialogoOpciones1.this.actualizarMatProductos(materiales);
       }
     });
+    JButton borrarMateriales = new JButton("Borrar material");
+    borrarMateriales.addActionListener(new ActionListener()
+    {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent)
+      {
+        new DialogoBorrar(DialogoOpciones1.this.control,DialogoOpciones1.this.control.getProductoActual());
+        DialogoOpciones1.this.actualizarMatProductos(materiales);
+      }
+    });
     
-    cp.add(agregarMateriales, BorderLayout.SOUTH);
+    panelBotones.add(agregarMateriales);
+    panelBotones.add(borrarMateriales);
+    cp.add(panelBotones, BorderLayout.SOUTH);
     cp.add(materiales, BorderLayout.CENTER);
   }
 

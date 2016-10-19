@@ -29,12 +29,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import listas.ListaMateriales;
 import listas.ListaMaterialesStock;
 
-import visual.auxiliares.DialogoM;
 import visual.auxiliares.DialogoMateriales;
 import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.DialogoOpciones1;
@@ -114,9 +114,12 @@ public class VentanaProduccion
       }
     });
     aux1_botones.add(verObservaciones);
-
-    JButton aceptarLote = new JButton("Aceptar pedido");
-    aceptarLote.addActionListener(new ActionListener()
+    
+    JPanel panelEstado = new JPanel(new GridLayout(0,2));
+    
+    JButton cancelarPedido = new JButton("Cancelar pedido");
+    JButton aceptarPedido = new JButton("Aceptar pedido");
+    aceptarPedido.addActionListener(new ActionListener()
     {
 
       @Override
@@ -124,16 +127,22 @@ public class VentanaProduccion
       {
 
         int seleccionado = lotesEv.getSelectedIndex();
-        VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
+        Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
+        VentanaProduccion.this.control.setPedidoActual(ped);
+        VentanaProduccion.this.control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
 
-        new DialogoM(VentanaProduccion.this.control, VentanaProduccion.this);
+        new DialogoMateriales(VentanaProduccion.this.control, VentanaProduccion.this);
 
         VentanaProduccion.this.actualizarListaAc(listModelAc);
         VentanaProduccion.this.actualizarListaEv(listModelEv);
 
       }
     });
-    aux1_botones.add(aceptarLote);
+    
+    panelEstado.add(cancelarPedido);
+    panelEstado.add(aceptarPedido);
+    
+    aux1_botones.add(panelEstado);
 
     JButton generarLote = new JButton("Generar lote");
     generarLote.addActionListener(new ActionListener()
@@ -143,10 +152,10 @@ public class VentanaProduccion
       {
         int seleccionado = lotesAc.getSelectedIndex();
         Lote lot = (Lote) listModelAc.getElementAt(seleccionado);
-        VentanaProduccion.this.control.setPedidoActual(lot.getPedido());
-        new DialogoMateriales(VentanaProduccion.this.control, VentanaProduccion.this);        
+        VentanaProduccion.this.control.setPedidoActual(lot.getPedido());        
       }
     });
+    aux2_botones.add(new JLabel());
     aux2_botones.add(generarLote);
     
     listas.add(aux1);
@@ -173,17 +182,13 @@ public class VentanaProduccion
     /*Panel en donde se ubican la lista y el titulo de productos*/
     JPanel panelLista = new JPanel(new BorderLayout());
     
-    JLabel material = new JLabel("Tipos de productos");
+    JLabel material = new JLabel("Tipos de productos",SwingConstants.CENTER);
     material.setFont(new Font("Arial", 0, 15));
     
     DefaultListModel listaProductosModel = new DefaultListModel();
     JList listaProductos = new JList(listaProductosModel);
     JScrollPane lista = new JScrollPane(listaProductos);
     this.generarListaProducto(listaProductosModel);
-    
-    /*Grid layout para ubicar primero la lista y luego botones*/
-    JPanel auxProductos = new JPanel(new GridLayout(0,2));
-    auxProductos.add(lista);
     
     JButton consultarLista = new JButton("Lista materiales");
     consultarLista.addActionListener(new ActionListener()
@@ -197,12 +202,36 @@ public class VentanaProduccion
         new DialogoOpciones1(VentanaProduccion.this.control, VentanaProduccion.this);
       }
       });
-    auxProductos.add(consultarLista);
+    
     panelLista.add(material,BorderLayout.NORTH);
-    panelLista.add(auxProductos,BorderLayout.CENTER);
+    panelLista.add(lista,BorderLayout.CENTER);
+    panelLista.add(consultarLista,BorderLayout.SOUTH);
+    panelMateriales.add(aux,BorderLayout.CENTER);
     
     aux.add(panelLista);
-    panelMateriales.add(aux,BorderLayout.CENTER);
+    
+    JPanel panelExistencias = new JPanel(new BorderLayout());
+    JLabel titExis = new JLabel("Existencias materiales",SwingConstants.CENTER);
+    titExis.setFont(new Font("Arial", 0, 15));
+    panelExistencias.add(titExis,BorderLayout.NORTH);
+    JTextArea existencias = new JTextArea();
+    JScrollPane listaExistencias = new JScrollPane(existencias);
+    panelExistencias.add(listaExistencias,BorderLayout.CENTER);
+    JButton detalle = new JButton("Detalles");
+    
+    detalle.addActionListener(new ActionListener()
+    {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent)
+      {
+        
+      }
+    }
+    );
+    
+    //panelExistencias.add(,BorderLayout.SOUTH);
+    
+    aux.add(panelExistencias);
     cp.add(panelMateriales,BorderLayout.SOUTH);
   }
 

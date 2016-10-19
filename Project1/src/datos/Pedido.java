@@ -25,7 +25,7 @@ import listas.ListaMaterialesStock;
 public class Pedido extends Observable implements ResumenClase {
     private String numeroPedido = null;
     private Calendar fechaPedido = null, fechaEntregaVentas = null, fechaPropuestaProduccion = null, fechaDefinitiva =
-        null, fechaPedidoAceptado = null;
+        fechaPropuestaProduccion, fechaPedidoAceptado = null;
     private String codigoMaquina = null;
     private String tipoMaquina = null;
     private int cantProduccion = 0;
