@@ -62,7 +62,8 @@ public class DialogoOpciones1
       @Override
       public void actionPerformed(ActionEvent actionEvent)
       {
-        new DialogoAgregar(DialogoOpciones1.this.control);
+        new DialogoAgregar(DialogoOpciones1.this.control,DialogoOpciones1.this.control.getProductoActual());
+        DialogoOpciones1.this.actualizarMatProductos(materiales);
       }
     });
     
@@ -72,6 +73,7 @@ public class DialogoOpciones1
 
   public void actualizarMatProductos(JTextArea materiales)
   {
+    materiales.setText("");
     String tipo = this.control
                       .getProductoActual()
                       .getCodigoProducto();

@@ -159,8 +159,7 @@ public class VentanaProduccion
     cp.add(panelListas, BorderLayout.CENTER);
     
     /*Crea panel en el que se ubica todo lo relacionado a materiales*/
-    JPanel panelMateriales = new JPanel();
-    panelMateriales.setLayout(new BorderLayout());
+    JPanel panelMateriales = new JPanel(new BorderLayout());
     
     /*Titulo del panel*/
     JLabel titulo = new JLabel("Opciones materiales",SwingConstants.CENTER);
@@ -169,12 +168,10 @@ public class VentanaProduccion
     panelMateriales.add(titulo,BorderLayout.NORTH);
     
     /*Panel que subdivide al panel de materiales en 2 columnas*/
-    JPanel aux = new JPanel();
-    aux.setLayout(new GridLayout(0,2));
+    JPanel aux = new JPanel(new GridLayout(0,2));
     
     /*Panel en donde se ubican la lista y el titulo de productos*/
-    JPanel panelLista = new JPanel();
-    panelLista.setLayout(new BorderLayout());
+    JPanel panelLista = new JPanel(new BorderLayout());
     
     JLabel material = new JLabel("Tipos de productos");
     material.setFont(new Font("Arial", 0, 15));
@@ -185,8 +182,7 @@ public class VentanaProduccion
     this.generarListaProducto(listaProductosModel);
     
     /*Grid layout para ubicar primero la lista y luego botones*/
-    JPanel auxProductos = new JPanel();
-    auxProductos.setLayout(new GridLayout(0,2));
+    JPanel auxProductos = new JPanel(new GridLayout(0,2));
     auxProductos.add(lista);
     
     JButton consultarLista = new JButton("Lista materiales");
@@ -206,7 +202,7 @@ public class VentanaProduccion
     panelLista.add(auxProductos,BorderLayout.CENTER);
     
     aux.add(panelLista);
-    panelMateriales.add(aux,BorderLayout.WEST);
+    panelMateriales.add(aux,BorderLayout.CENTER);
     cp.add(panelMateriales,BorderLayout.SOUTH);
   }
 
