@@ -41,6 +41,7 @@ public class DialogoObservaciones extends JDialog {
         super();
         this.setLocationRelativeTo(null);
         this.control = control;
+        this.setTitle("Observaciones");
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setModal(true);

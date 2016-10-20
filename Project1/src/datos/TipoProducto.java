@@ -48,4 +48,9 @@ public class TipoProducto
     return this.descripcion;
   }
 
+  public void setListaMat(ListaMateriales listaMat)
+  {
+    this.listaMat = listaMat;
+  }
+
 }

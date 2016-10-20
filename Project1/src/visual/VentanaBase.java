@@ -62,7 +62,7 @@ public abstract class VentanaBase extends JFrame implements Observer {
             }
         });
 
-        JMenu sesion = new JMenu("Sesion");
+        JMenu sesion = new JMenu("Usuario");
         sesion.add(cerrarSesion);
 
         JMenuBar menuBar = new JMenuBar();

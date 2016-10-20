@@ -8,6 +8,10 @@ import exceptions.LengthException;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
+import visual.VentanaLogin;
+
 public class ListaMateriales
 {
   private HashMap<String, Material> lista;
@@ -45,9 +49,12 @@ public class ListaMateriales
   }
 
   public void borrarMaterial(String codigo)
+    throws ArgumentoIlegalException
   {
     if (this.lista.containsKey(codigo))
       this.lista.remove(codigo);
+    else
+      throw new ArgumentoIlegalException("Campo vacio",codigo);
   }
 
   public Iterator<Material> getIterator()
@@ -76,9 +83,8 @@ public class ListaMateriales
   }
 
   public void agregarMaterial(String codigo, String descripcion, float cantidad)
+    throws ArgumentoIlegalException, LengthException
   {
-    try
-    {
       if (!lista.containsKey(codigo))
       {
         Material mat = null;
@@ -93,10 +99,5 @@ public class ListaMateriales
         mat.setCantidad(mat.getCantidad() + cantidad);
         mat.setDescripcion(descripcion);
       }
-    }
-    catch (ArgumentoIlegalException | LengthException e)
-    {
-    }
-
   }
 }

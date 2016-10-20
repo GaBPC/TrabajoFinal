@@ -33,7 +33,7 @@ public class Iniciado extends EstadoBase {
     }
 
     @Override
-    public void evaluarPedido() throws StateException {
+    public void evaluarPedido() {
         this.pedido.setEstadoActual(new Evaluacion(this.pedido));
     }
 }

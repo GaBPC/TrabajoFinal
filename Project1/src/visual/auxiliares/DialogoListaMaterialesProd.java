@@ -26,19 +26,20 @@ import listas.ListaMaterialesStock;
 import visual.Controlador;
 import visual.VentanaProduccion;
 
-public class DialogoOpciones1
+public class DialogoListaMaterialesProd
   extends JDialog
 {
   private Controlador control;
 
-  public DialogoOpciones1(Controlador control, Component relativeTo)
+  public DialogoListaMaterialesProd(Controlador control)
   {
     super();
-    this.setLocationRelativeTo(relativeTo);
+    this.setLocationRelativeTo(null);
     this.control = control;
     this.setLayout(new BorderLayout());
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setModal(true);
+    this.setTitle("Lista de materiales del producto");
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
@@ -48,25 +49,21 @@ public class DialogoOpciones1
   {
     Container cp = this.getContentPane();
 
-    JLabel titulo = new JLabel("Lista de materiales del producto");
-    titulo.setFont(new Font("Arial", 0, 15));
-    cp.add(titulo, BorderLayout.NORTH);
-
     JTextArea materiales = new JTextArea();
     materiales.setEditable(false);
 
     this.actualizarMatProductos(materiales);
-    
-    JPanel panelBotones = new JPanel(new GridLayout(0,2));
-    
+
+    JPanel panelBotones = new JPanel(new GridLayout(0, 2));
+
     JButton agregarMateriales = new JButton("Agregar material");
     agregarMateriales.addActionListener(new ActionListener()
     {
       @Override
       public void actionPerformed(ActionEvent actionEvent)
-      {
-        new DialogoAgregar(DialogoOpciones1.this.control,DialogoOpciones1.this.control.getProductoActual());
-        DialogoOpciones1.this.actualizarMatProductos(materiales);
+      { 
+        new DialogoAgregar(DialogoListaMaterialesProd.this.control);
+        DialogoListaMaterialesProd.this.actualizarMatProductos(materiales);
       }
     });
     JButton borrarMateriales = new JButton("Borrar material");
@@ -75,13 +72,14 @@ public class DialogoOpciones1
       @Override
       public void actionPerformed(ActionEvent actionEvent)
       {
-        new DialogoBorrar(DialogoOpciones1.this.control,DialogoOpciones1.this.control.getProductoActual());
-        DialogoOpciones1.this.actualizarMatProductos(materiales);
+        new DialogoBorrar(DialogoListaMaterialesProd.this.control);
+        DialogoListaMaterialesProd.this.actualizarMatProductos(materiales);
       }
     });
-    
+
     panelBotones.add(agregarMateriales);
     panelBotones.add(borrarMateriales);
+    
     cp.add(panelBotones, BorderLayout.SOUTH);
     cp.add(materiales, BorderLayout.CENTER);
   }

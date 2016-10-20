@@ -33,36 +33,53 @@ import personal.Empleado;
  *  Cada ventana recibe una instancia de un controlador, la cual contiene todos los datos del
  *  sistema que permiten realizar las acciones soportadas.
  */
-public class Controlador {
+public class Controlador
+{
 
-    private ListaEmpleados empleados = ListaEmpleados.getInstance();
-    private ListaPedidos pedidos = ListaPedidos.getInstance();
-    private ListaLotes lotes = ListaLotes.getInstance();
-    private ListaMaterialesStock stock = ListaMaterialesStock.getInstance();
+  private ListaEmpleados empleados = ListaEmpleados.getInstance();
+  private ListaPedidos pedidos = ListaPedidos.getInstance();
+  private ListaLotes lotes = ListaLotes.getInstance();
+  private ListaMaterialesStock stock = ListaMaterialesStock.getInstance();
 
-    private Empleado empleadoActual = null;
-    private Pedido pedidoActual = null;
-    private TipoProducto productoActual = null;
+  private Empleado empleadoActual = null;
+  private Pedido pedidoActual = null;
+  private TipoProducto productoActual = null;
+  private Lote loteActual = null;
 
-    public Controlador() {
-        super();
-    }
+  public Controlador()
+  {
+    super();
+  }
 
-    public void setEmpeladoActual(Empleado actual) {
-        this.empleadoActual = actual;
-    }
+  public void setEmpeladoActual(Empleado actual)
+  {
+    this.empleadoActual = actual;
+  }
 
-    public Empleado getEmpeladoActual() {
-        return this.empleadoActual;
-    }
+  public Empleado getEmpeladoActual()
+  {
+    return this.empleadoActual;
+  }
 
-    public void setPedidoActual(Pedido pedido) {
-        this.pedidoActual = pedido;
-    }
+  public void setPedidoActual(Pedido pedido)
+  {
+    this.pedidoActual = pedido;
+  }
 
-    public Pedido getPedidoActual() {
-        return this.pedidoActual;
-    }
+  public Pedido getPedidoActual()
+  {
+    return this.pedidoActual;
+  }
+
+  public void setLoteActual(Lote loteActual)
+  {
+    this.loteActual = loteActual;
+  }
+
+  public Lote getLoteActual()
+  {
+    return loteActual;
+  }
 
   public void setProductoActual(TipoProducto productoActual)
   {
@@ -78,91 +95,129 @@ public class Controlador {
    * @param legajo es el legajo del empleado buscado
    * @return una referencia al empleado si es encontrado, null en caso contrario
    */
-    public Empleado buscarEmpleado(String legajo) throws Exception {
-        return empleados.buscar(legajo);
-    }
+  public Empleado buscarEmpleado(String legajo)
+    throws Exception
+  {
+    return empleados.buscar(legajo);
+  }
 
-    /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
-     * @return iterator con los lotes
-     */
-    public Iterator<Pedido> getPedidosEvaluacion() {
-        Iterator<Pedido> it = this.pedidos.getIterator();
-        ArrayList<Pedido> lotesEv = new ArrayList<>();
-        while (it.hasNext()) {
-            Pedido lot = (Pedido) it.next();
-            if (lot.isEnEvaluacion())
-                lotesEv.add(lot);
-        }
-        it = lotesEv.iterator();
-        return it;
-    }
-
-    public Iterator<Pedido> getPedidosIniciados() {
-        Iterator<Pedido> it = this.pedidos.getIterator();
-        ArrayList<Pedido> lotesEv = new ArrayList<>();
-        while (it.hasNext()) {
-            Pedido lot = (Pedido) it.next();
-            if (lot.isIniciado())
-                lotesEv.add(lot);
-        }
-        it = lotesEv.iterator();
-        return it;
-    }
-
-    public Iterator<Lote> getLotes() {
-        return this.lotes.getIterator();
-    }
-
-    public void cambiarAEvaluacion() throws StateException {
-        this.pedidoActual.evaluarPedido();
-    }
-
-    public void cambiarAAceptado(Calendar fechaProduccion) throws ArgumentoIlegalException, StateException {
-        this.pedidoActual.aceptarPedido(fechaProduccion);
-    }
-
-    /**Metodo para crear un nuevo lote desde el sector de ventas.
-     * @param numeroPedido es el numero asignado al pedido que se esta creando
-     * @param fechaPedido es la fecha en la que se realiza el nuevo pedido
-     * @param tipoMaquina es el tipo de maquina que debera ser producida
-     * @param cantProducir es la cantidad de unidades a producir
-     * @param fechaSolicitadaVentas es la fecha que propone ventas para tener el pedido listo
-     */
-    public void crearNuevoPedido(Calendar fechaPedido, String tipoMaquina, int cantProducir,
-                                 Calendar fechaSolicitadaVentas) throws ArgumentoIlegalException {
-        String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
-        int longitud = aux.length();
-        String maquina = ListaMaterialesStock.getInstance().getCodigo(tipoMaquina);
-        String numeroPedido = "PED";
-        for (int i = 0; i < (6 - longitud); i++)
-            numeroPedido += "0";
-        numeroPedido += aux;
-        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
-        pedidos.agregarNuevo(nuevo);
-    }
-
-    public void generarLote() throws ArgumentoIlegalException {
-        String aux = Integer.toString(this.lotes.getProximoNumeroLote());
-        int longitud = aux.length();
-        String numeroLote = "LOT";
-        for (int i = 0; i < (6 - longitud); i++)
-            numeroLote += "0";
-        numeroLote += aux;
-        Lote lote = new Lote(this.pedidoActual, numeroLote);
-        this.lotes.agregarNuevo(lote);
-    }
-
-    public ListaMateriales verificaExistencias(String tipo) throws FaltantesException, Exception {
-        return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
-    }
-    
-    public void actualizarExistencias(TipoProducto tipo)
+  /**Metodo que devuelve un iterator con todos los lotes que aun no han sido aceptados
+   * @return iterator con los lotes
+   */
+  public Iterator<Pedido> getPedidosEvaluacion()
+  {
+    Iterator<Pedido> it = this.pedidos.getIterator();
+    ArrayList<Pedido> lotesEv = new ArrayList<>();
+    while (it.hasNext())
     {
-      ListaMaterialesStock.getInstance().actualizarExistencias(tipo);
+      Pedido lot = (Pedido) it.next();
+      if (lot.isEnEvaluacion())
+        lotesEv.add(lot);
     }
-    
-    public TipoProducto getProducto(String codigo)
+    it = lotesEv.iterator();
+    return it;
+  }
+
+  public Iterator<Pedido> getPedidosIniciados()
+  {
+    Iterator<Pedido> it = this.pedidos.getIterator();
+    ArrayList<Pedido> lotesEv = new ArrayList<>();
+    while (it.hasNext())
     {
-      return ListaMaterialesStock.getInstance().getProducto(codigo);
+      Pedido lot = it.next();
+      if (lot.isIniciado())
+        lotesEv.add(lot);
     }
+    it = lotesEv.iterator();
+    return it;
+  }
+
+  public Iterator<Lote> getLotes()
+  {
+    return this.lotes.getIterator();
+  }
+
+  public void cambiarAEvaluacion()
+    throws StateException
+  {
+    this.pedidoActual.evaluarPedido();
+  }
+
+  public void cambiarAAceptado(Calendar fechaProduccion)
+    throws ArgumentoIlegalException, StateException
+  {
+    this.pedidoActual.aceptarPedido(fechaProduccion);
+  }
+
+  /**Metodo para crear un nuevo lote desde el sector de ventas.
+   * @param numeroPedido es el numero asignado al pedido que se esta creando
+   * @param fechaPedido es la fecha en la que se realiza el nuevo pedido
+   * @param tipoMaquina es el tipo de maquina que debera ser producida
+   * @param cantProducir es la cantidad de unidades a producir
+   * @param fechaSolicitadaVentas es la fecha que propone ventas para tener el pedido listo
+   */
+  public void crearNuevoPedido(Calendar fechaPedido, String tipoMaquina, int cantProducir,
+                               Calendar fechaSolicitadaVentas)
+    throws ArgumentoIlegalException
+  {
+    String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
+    int longitud = aux.length();
+    String maquina = ListaMaterialesStock.getInstance().getCodigo(tipoMaquina);
+    String numeroPedido = "PED";
+    for (int i = 0; i < (6 - longitud); i++)
+      numeroPedido += "0";
+    numeroPedido += aux;
+    Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
+    pedidos.agregarNuevo(nuevo);
+  }
+
+  public void generarLote()
+    throws ArgumentoIlegalException
+  {
+    String aux = Integer.toString(this.lotes.getProximoNumeroLote());
+    int longitud = aux.length();
+    String numeroLote = "LOT";
+    for (int i = 0; i < (6 - longitud); i++)
+      numeroLote += "0";
+    numeroLote += aux;
+    Lote lote = new Lote(this.pedidoActual, numeroLote);
+    this.lotes.agregarNuevo(lote);
+  }
+
+  public void removePedido()
+  {
+    this.pedidos.borrarPedido(this.pedidoActual);
+  }
+
+  public void removeLote()
+  {
+    this.lotes.borrarLote(this.loteActual);
+  }
+
+  public String detallesStock()
+  {
+    return ListaMaterialesStock.getInstance().detalles();
+  }
+
+  public ListaMateriales verificaExistencias(String tipo)
+    throws FaltantesException, Exception
+  {
+    return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
+  }
+
+  public void actualizarExistencias(TipoProducto tipo)
+  {
+    ListaMaterialesStock.getInstance().actualizarExistencias(tipo);
+  }
+
+  public TipoProducto getProducto(String codigo)
+  {
+    return ListaMaterialesStock.getInstance().getProducto(codigo);
+  }
+  
+  public void borrarMaterial(String codigo)
+    throws ArgumentoIlegalException
+  {
+    this.productoActual.getListaMateriales().borrarMaterial(codigo);
+  }
 }

@@ -61,6 +61,11 @@ public class ListaPedidos extends Observable implements Observer {
         Iterator<Pedido> it = this.lista.iterator();
         return it;
     }
+    
+    public void borrarPedido(Pedido ped)
+    {
+      this.lista.remove(ped);
+    }
 
     @Override
     public void update(Observable observable, Object object) {

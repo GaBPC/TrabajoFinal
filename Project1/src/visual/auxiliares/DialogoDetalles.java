@@ -15,6 +15,8 @@ import javax.swing.JDialog;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import visual.Controlador;
@@ -23,45 +25,29 @@ public class DialogoDetalles extends JDialog
 {
   private Controlador control;
   
-  public DialogoDetalles(Controlador control,TipoProducto producto)
+  public DialogoDetalles(Controlador control)
   {
     super();
     this.control = control;
     this.setLayout(new BorderLayout());
     this.setLocationRelativeTo(null);
+    this.setTitle("Existencias en stock");
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setModal(true);
-    this.setMinimumSize(new Dimension(300, 100));
-    this.initComponents(producto);
+    this.setMinimumSize(new Dimension(400, 200));
+    this.initComponents();
     this.setVisible(true);
   }
   
-  public void initComponents(TipoProducto producto)
+  public void initComponents()
   {
     Container cp = this.getContentPane();
-    JPanel panel = new JPanel(new GridLayout(0,2));
-    JLabel material = new JLabel("Codigo material");
-    JTextField codMaterial = new JTextField();
     
-    panel.add(material);
-    panel.add(codMaterial);
+    JTextArea area = new JTextArea();
+    area.setEditable(false);
+    area.append(this.control.detallesStock());
+    JScrollPane detalles = new JScrollPane(area);
     
-    JButton agregar = new JButton("Borrar");
-    agregar.addActionListener(new ActionListener()
-    {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent)
-      {
-        String codigo = "MAT";
-        codigo += codMaterial.getText();
-        producto.getListaMateriales().borrarMaterial(codigo);
-        //DialogoBorrar.this.dispose();
-      }
-    });
-    
-    cp.add(panel,BorderLayout.CENTER);
-    cp.add(agregar,BorderLayout.SOUTH);
-       
-    
+    cp.add(detalles,BorderLayout.CENTER);
   }
 }

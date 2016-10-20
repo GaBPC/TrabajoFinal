@@ -42,14 +42,15 @@ public class DialogoMateriales
   private JButton aceptarLote = null;
   private JPanel panelIngreso = null;
 
-  public DialogoMateriales(Controlador control, Component relativeTo)
+  public DialogoMateriales(Controlador control)
   {
     super();
-    this.setLocationRelativeTo(relativeTo);
+    this.setLocationRelativeTo(null);
     this.control = control;
     this.setLayout(new BorderLayout());
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setModal(true);
+    this.setTitle("Materiales necesarios para generar el lote");
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
@@ -61,10 +62,6 @@ public class DialogoMateriales
 
     JPanel jp = new JPanel();
     jp.setLayout(new BorderLayout());
-
-    JLabel titulo = new JLabel("Materiales necesarios para generar el lote");
-    titulo.setFont(new Font("Arial", 0, 15));
-    jp.add(titulo, BorderLayout.NORTH);
 
     JTextArea materiales = new JTextArea();
     materiales.setEditable(false);
@@ -137,7 +134,7 @@ public class DialogoMateriales
     }
     catch (FaltantesException e)
     {
-      materiales.append(e.getMessage() + "\n");
+      materiales.append(e.getMessage() + "\n\n");
       materiales.append(e.getFaltantes().detalles());
     }
   }

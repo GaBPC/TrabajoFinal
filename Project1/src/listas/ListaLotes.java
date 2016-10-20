@@ -46,4 +46,9 @@ public class ListaLotes extends Observable{
         Iterator<Lote> it = this.lista.iterator();
         return it;
     }
+    
+    public void borrarLote(Lote lot)
+    {
+      this.lista.remove(lot);
+    }
 }

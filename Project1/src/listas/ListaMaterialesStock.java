@@ -180,7 +180,7 @@ public class ListaMaterialesStock
     if (listaFaltantes.size() <= 0)
       return listaFinal;
     else
-      throw new FaltantesException("No se cuenta con los suficientes materiales\nEstas son las cantidades faltantes",
+      throw new FaltantesException("No se cuenta con los suficientes materiales\nEstas son las cantidades faltantes:",
                                    listaFaltantes);
   }
 
@@ -210,5 +210,10 @@ public class ListaMaterialesStock
       {
       }
     }
+  }
+  
+  public String detalles()
+  {
+    return this.listaExistencias.detalles();
   }
 }
