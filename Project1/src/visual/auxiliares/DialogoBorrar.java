@@ -22,10 +22,11 @@ import javax.swing.JTextField;
 
 import visual.Controlador;
 
-public class DialogoBorrar extends JDialog
+public class DialogoBorrar
+  extends JDialog
 {
   private Controlador control;
-  
+
   public DialogoBorrar(Controlador control)
   {
     super();
@@ -38,17 +39,17 @@ public class DialogoBorrar extends JDialog
     this.initComponents();
     this.setVisible(true);
   }
-  
+
   public void initComponents()
   {
     Container cp = this.getContentPane();
-    JPanel panel = new JPanel(new GridLayout(0,2));
+    JPanel panel = new JPanel(new GridLayout(0, 2));
     JLabel material = new JLabel("Codigo material");
     JTextField codMaterial = new JTextField();
-    
+
     panel.add(material);
     panel.add(codMaterial);
-    
+
     JButton agregar = new JButton("Borrar");
     agregar.addActionListener(new ActionListener()
     {
@@ -68,10 +69,10 @@ public class DialogoBorrar extends JDialog
         DialogoBorrar.this.dispose();
       }
     });
-    
-    cp.add(panel,BorderLayout.CENTER);
-    cp.add(agregar,BorderLayout.SOUTH);
-       
-    
+
+    cp.add(panel, BorderLayout.CENTER);
+    cp.add(agregar, BorderLayout.SOUTH);
+
+
   }
 }

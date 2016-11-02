@@ -214,10 +214,12 @@ public class Controlador
   {
     return ListaMaterialesStock.getInstance().getProducto(codigo);
   }
-  
+
   public void borrarMaterial(String codigo)
     throws ArgumentoIlegalException
   {
-    this.productoActual.getListaMateriales().borrarMaterial(codigo);
+    this.productoActual
+        .getListaMateriales()
+        .borrarMaterial(codigo);
   }
 }

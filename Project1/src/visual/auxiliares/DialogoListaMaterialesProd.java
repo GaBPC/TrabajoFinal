@@ -61,7 +61,7 @@ public class DialogoListaMaterialesProd
     {
       @Override
       public void actionPerformed(ActionEvent actionEvent)
-      { 
+      {
         new DialogoAgregar(DialogoListaMaterialesProd.this.control);
         DialogoListaMaterialesProd.this.actualizarMatProductos(materiales);
       }
@@ -79,7 +79,7 @@ public class DialogoListaMaterialesProd
 
     panelBotones.add(agregarMateriales);
     panelBotones.add(borrarMateriales);
-    
+
     cp.add(panelBotones, BorderLayout.SOUTH);
     cp.add(materiales, BorderLayout.CENTER);
   }

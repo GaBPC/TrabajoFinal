@@ -88,8 +88,7 @@ public class DialogoMateriales
       public void actionPerformed(ActionEvent actionEvent)
       {
         Calendar calendarFechaProduccion =
-          new GregorianCalendar(panelFechas.getYear(),
-                                panelFechas.getMes(), panelFechas.getDia() + 1);
+          new GregorianCalendar(panelFechas.getYear(), panelFechas.getMes(), panelFechas.getDia() + 1);
         try
         {
           DialogoMateriales.this.control.cambiarAAceptado(calendarFechaProduccion);
@@ -122,7 +121,9 @@ public class DialogoMateriales
   public void actualizarMateriales(JTextArea materiales)
     throws Exception
   {
-    String tipo = this.control.getPedidoActual().getCodigoMaquina();
+    String tipo = this.control
+                      .getPedidoActual()
+                      .getCodigoMaquina();
     ListaMateriales lista;
     try
     {

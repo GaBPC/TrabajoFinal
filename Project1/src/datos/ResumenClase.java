@@ -1,5 +1,6 @@
 package datos;
 
-public interface ResumenClase {
-    String detalles();
+public interface ResumenClase
+{
+  String detalles();
 }

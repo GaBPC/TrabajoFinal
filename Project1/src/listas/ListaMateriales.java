@@ -54,7 +54,7 @@ public class ListaMateriales
     if (this.lista.containsKey(codigo))
       this.lista.remove(codigo);
     else
-      throw new ArgumentoIlegalException("Campo vacio",codigo);
+      throw new ArgumentoIlegalException("Campo vacio", codigo);
   }
 
   public Iterator<Material> getIterator()
@@ -85,19 +85,19 @@ public class ListaMateriales
   public void agregarMaterial(String codigo, String descripcion, float cantidad)
     throws ArgumentoIlegalException, LengthException
   {
-      if (!lista.containsKey(codigo))
-      {
-        Material mat = null;
+    if (!lista.containsKey(codigo))
+    {
+      Material mat = null;
 
-        mat = new Material(codigo, descripcion, cantidad);
-        this.agregarMaterial(mat);
-      }
+      mat = new Material(codigo, descripcion, cantidad);
+      this.agregarMaterial(mat);
+    }
 
-      else
-      {
-        Material mat = lista.get(codigo);
-        mat.setCantidad(mat.getCantidad() + cantidad);
-        mat.setDescripcion(descripcion);
-      }
+    else
+    {
+      Material mat = lista.get(codigo);
+      mat.setCantidad(mat.getCantidad() + cantidad);
+      mat.setDescripcion(descripcion);
+    }
   }
 }

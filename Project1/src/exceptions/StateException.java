@@ -1,6 +1,7 @@
 package exceptions;
 
-public class StateException extends Exception
+public class StateException
+  extends Exception
 {
   private String texto;
 

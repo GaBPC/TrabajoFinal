@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-public class PanelFechas extends JPanel
+public class PanelFechas
+  extends JPanel
 {
   private JComboBox dia;
   private JComboBox mes;
@@ -72,7 +73,7 @@ public class PanelFechas extends JPanel
       @Override
       public void actionPerformed(ActionEvent actionEvent)
       {
-        if(PanelFechas.this.yearBisiesto() && PanelFechas.this.mes.isEnabled())
+        if (PanelFechas.this.yearBisiesto() && PanelFechas.this.mes.isEnabled())
           PanelFechas.this.verificaDias(true);
         else
           PanelFechas.this.verificaDias(false);
@@ -110,7 +111,10 @@ public class PanelFechas extends JPanel
           for (i = 1; i <= 29; i++)
             dia.addItem(i);
         break;
-      case 3: case 5: case 8: case 10: //ABRIL JUNIO SEPTIEMBRE NOVIEMBRE
+      case 3:
+      case 5:
+      case 8:
+      case 10: //ABRIL JUNIO SEPTIEMBRE NOVIEMBRE
         dia.removeAllItems();
         for (i = 1; i <= 30; i++)
           dia.addItem(i);

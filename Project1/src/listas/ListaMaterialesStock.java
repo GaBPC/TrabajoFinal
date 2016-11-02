@@ -203,15 +203,19 @@ public class ListaMaterialesStock
       Material mat = it.next();
       try
       {
-        float cant1 = this.listaExistencias.getMaterial(mat.getCodigo()).getCantidad();
-        this.listaExistencias.getMaterial(mat.getCodigo()).setCantidad(cant1 - mat.getCantidad());
+        float cant1 = this.listaExistencias
+                          .getMaterial(mat.getCodigo())
+                          .getCantidad();
+        this.listaExistencias
+            .getMaterial(mat.getCodigo())
+            .setCantidad(cant1 - mat.getCantidad());
       }
       catch (Exception e)
       {
       }
     }
   }
-  
+
   public String detalles()
   {
     return this.listaExistencias.detalles();

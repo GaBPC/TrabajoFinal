@@ -21,10 +21,11 @@ import javax.swing.JTextField;
 
 import visual.Controlador;
 
-public class DialogoDetalles extends JDialog
+public class DialogoDetalles
+  extends JDialog
 {
   private Controlador control;
-  
+
   public DialogoDetalles(Controlador control)
   {
     super();
@@ -38,16 +39,16 @@ public class DialogoDetalles extends JDialog
     this.initComponents();
     this.setVisible(true);
   }
-  
+
   public void initComponents()
   {
     Container cp = this.getContentPane();
-    
+
     JTextArea area = new JTextArea();
     area.setEditable(false);
     area.append(this.control.detallesStock());
     JScrollPane detalles = new JScrollPane(area);
-    
-    cp.add(detalles,BorderLayout.CENTER);
+
+    cp.add(detalles, BorderLayout.CENTER);
   }
 }

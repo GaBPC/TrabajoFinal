@@ -96,6 +96,7 @@ public class Material
     return cantidad;
   }
 
+  @Override
   public String toString()
   {
     return this.codigo;

@@ -80,15 +80,15 @@ public class VentanaProduccion
       public void actionPerformed(ActionEvent actionEvent)
       {
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
-        if(seleccionado != -1)
+        if (seleccionado != -1)
         {
-          VentanaProduccion.this.control.setPedidoActual((Pedido)listModelEv.getElementAt(seleccionado));
+          VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
           VentanaProduccion.this.control.removePedido();
           VentanaProduccion.this.actualizarListaEv(listModelEv);
           JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado correctamente");
         }
         else
-        JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a cancelar");
+          JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a cancelar");
       }
     });
     botonesEvaluacion.add(cancelarPedido);
@@ -123,7 +123,8 @@ public class VentanaProduccion
         {
           Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
           VentanaProduccion.this.control.setPedidoActual(ped);
-          VentanaProduccion.this.control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
+          VentanaProduccion.this
+            .control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
 
           new DialogoMateriales(VentanaProduccion.this.control);
 
