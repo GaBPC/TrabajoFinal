@@ -80,7 +80,6 @@ public class VentanaProduccion
       public void actionPerformed(ActionEvent actionEvent)
       {
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
-        System.out.println((Pedido) listModelEv.getElementAt(seleccionado));
         if (seleccionado != -1)
         {
           VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
