@@ -113,8 +113,8 @@ public class Pedido
    */
   public boolean verificaNull()
   {
-    return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null);
-  } //FALTA FECHA DEFINITIVA
+    return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.fechaDefinitiva != null);
+  } 
 
   /**Metodo que verifica que la cantidad a producir este en el intervalo 0<cantidadProducir<999
    * @param cantProduccion
@@ -235,7 +235,6 @@ public class Pedido
   {
     return this.estadoActual.isAceptado();
   }
-
 
   public String getCodigoMaquina()
   {

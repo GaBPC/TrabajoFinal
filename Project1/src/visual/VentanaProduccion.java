@@ -80,12 +80,13 @@ public class VentanaProduccion
       public void actionPerformed(ActionEvent actionEvent)
       {
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
+        System.out.println((Pedido) listModelEv.getElementAt(seleccionado));
         if (seleccionado != -1)
         {
           VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
           VentanaProduccion.this.control.removePedido();
           VentanaProduccion.this.actualizarListaEv(listModelEv);
-          JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado correctamente");
+          JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado");
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a cancelar");
