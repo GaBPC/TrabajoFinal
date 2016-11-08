@@ -34,6 +34,9 @@ import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
 import visual.auxiliares.PanelLista;
 
+/**Ventana principal que utilizan los empleados del sector de ventas.
+ * Permite iniciar pedidos y agregarles observaciones.
+ */
 public class VentanaVentas
   extends VentanaBase
 {
@@ -47,6 +50,8 @@ public class VentanaVentas
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
   }
 
+ /**Metodo que inicia todos los componentes de la ventana.
+  */
   @Override
   protected void IniciarComponentes()
   {
@@ -125,7 +130,7 @@ public class VentanaVentas
     cp.add(panelListas, BorderLayout.CENTER);
   }
 
-  private JPanel creaPanelIngreso()
+    private JPanel creaPanelIngreso()
   {
     /* Panel para la creacion de nuevos pedidos desde cero*/
     JPanel panelCreacion = new JPanel();
@@ -204,14 +209,28 @@ public class VentanaVentas
     return panelIntegral;
   }
 
-  private void actualizarListaEv(DefaultListModel modelo)
+    /**Metodo que actualiza los datos de la lista de pedidos en estado de evaluacion
+     * Pre:
+     * - Se asume que el parametro modelo es distinto de null
+     * Pos:
+     * - Se actualiza la lista de pedidos en estado de evaluacion
+     * @param modelo
+     */
+    private void actualizarListaEv(DefaultListModel modelo)
   {
     modelo.removeAllElements();
     Iterator<Pedido> it = this.control.getPedidosEvaluacion();
     while (it.hasNext())
       modelo.addElement(it.next());
   }
-
+    
+ /**Metodo que actualiza los datos de la lista de pedidos en estado iniciado
+  * Pre:
+  * - Se asume que el parametro modelo es distinto de null
+  * Pos:
+  * - Se actualiza la lista de pedidos en estado iniciado
+  * @param modelo
+  */
   private void actualizarListaIn(DefaultListModel modelo)
   {
     modelo.removeAllElements();

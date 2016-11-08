@@ -6,11 +6,20 @@ import java.util.Calendar;
 
 /**Clase que incluye todos los apartados que debe contener una observacion de un lote.
  * Es comparable ya que estas observaciones deben estar ordenadas segun un criterio.
+ * Invariante: luego de la creacion de la instancia se asume en todo momento
+ * - tema != null
+ * - fechaObservacion != null
+ * - legajoEmpleado != null y ademas es del a siguiente forma: LEGXXXXXX con X entre 0 y 9
+ * - texto != null y ademas su longitud es menor a 500 caracteres
  */
 public class Observacion implements Comparable {
+    // Atributo de la clase que contiene el tema de la observacion
     private String tema = null;
+    // Atributo de la clase que contiene la fecha en la que se genera la observacion
     private Calendar fechaObservacion = null;
+    // Atributo de la clase que contiene el numero de legajo del empleado que genero la observacion
     private String legajoEmpleado = null;
+    // Atributo de la clase que contiene el texto de la observacion
     private String texto;
 
     /**Constructor principal de la clase. Si algun campo no esta completo (es decir, es null) o tiene

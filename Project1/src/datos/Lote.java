@@ -4,6 +4,9 @@ import exceptions.ArgumentoIlegalException;
 
 /**Clase que representa un lote de trabajo de la empresa. Contiene los datos del pedido y el numero
  * de lote correspondiente.
+ * Invariante: luego de la creacion de la instancia se asume en todo momento que
+ * - El pedido nunca sera null y tambien cumplira con el invariante de la clase Pedido
+ * - El numero de lote nunca es null y es de la forma LOTXXXXXX siendo X un numero entre 0 y 9
  */
 public class Lote implements ResumenClase {
     // Es el pedido que se construira en este lote
@@ -33,6 +36,8 @@ public class Lote implements ResumenClase {
             throw new ArgumentoIlegalException("El pedido es null", pedido);
         if (this.verificaNumeroLote(numeroLote))
             this.numeroLote = numeroLote;
+        
+        this.verificaInvariante();
     }
 
     /**Metodo que verifica si el numero cumple con las restricciones de longitud.
@@ -55,6 +60,9 @@ public class Lote implements ResumenClase {
                 throw new ArgumentoIlegalException("El numero esta fuera de rango", num);
         } else
             throw new ArgumentoIlegalException("El numero debe tener 6 digitos", str);
+        
+        this.verificaInvariante();
+        
         return ret;
     }
 
@@ -78,6 +86,9 @@ public class Lote implements ResumenClase {
             else
                 throw new ArgumentoIlegalException("El numero de lote no contiene \"LOT\"", numeroLote);
         }
+        
+        this.verificaInvariante();
+        
         return ret;
     }
 
@@ -104,5 +115,16 @@ public class Lote implements ResumenClase {
     public Pedido getPedido()
     {
       return this.pedido;
+    }
+    
+    private void verificaInvariante(){
+        assert this.pedido != null : "El pedido es null";
+        try {
+            assert this.verificaNumeroLote(numeroLote) : "El numero de lote no verifica las condiciones";
+        } catch (ArgumentoIlegalException e) {
+            // Como el assert nunca da false pq si esta mal salta la exception, se lanza un assert
+            // con el texto en el area de catch
+            assert false : "El numero de lote no verifica las condiciones";
+        }
     }
 }
