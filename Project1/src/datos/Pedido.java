@@ -51,7 +51,7 @@ public class Pedido
   /* No hay constructor vacio ya que solo es posible crear el lote con todos los datos que deben
      * brindar los empleados de ventas*/
 
-  /**Constructor principal de la clase. Como el lote es iniciado desde el sector de ventas, recibe
+  /**Constructor principal de la clase. Como el pedido es iniciado desde el sector de ventas, recibe
    * por parametros los datos que le corresponde completar a dicho sector de la empresa.
    * Pre: los siguientes parametros debe cumplir las siguientes precondiciones
    * @param numeroPedido: distinto de null y tiene que ser de la forma PEDXXXXXX siendo X un numero entero
@@ -268,6 +268,12 @@ public class Pedido
     return listaObservaciones;
   }
 
+  /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para 
+   * que actualice
+   * pre: estadoActual distinto de null
+   * @param estadoActual
+   * post: cambia el estado del pedido
+   */
   public void setEstadoActual(Estado estadoActual)
   {
     assert estadoActual != null : "Estado nulo";

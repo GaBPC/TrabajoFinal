@@ -35,16 +35,26 @@ import listas.ListaMaterialesStock;
 
 import visual.Controlador;
 
+/**Dialogo que se encarga de mostrar los materiales de los lotes o pedidos. Extiende de la clase JDialog
+ * Invariantes: atributos distintos de null
+ */
 public class DialogoMateriales
   extends JDialog
 {
-  private Controlador control;
-  private JButton aceptarLote = null;
-  private JPanel panelIngreso = null;
+  private Controlador control;           //instancia del controlador
+  private JButton aceptarLote = null;    //boton de aceptar lote
+  private JPanel panelIngreso = null;    //panel de ingreso de los datos para aceptar el pedido
 
+  /**Constructor de la clase
+   * pre: control distinto de null
+   * @param control
+   * post: se crea la instancia de la clase o se informa el error
+   */
   public DialogoMateriales(Controlador control)
   {
     super();
+    assert control != null : "Controlador nulo";
+    
     this.setLocationRelativeTo(null);
     this.control = control;
     this.setLayout(new BorderLayout());
@@ -54,8 +64,13 @@ public class DialogoMateriales
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo en el cual se generan los componentes del dialogo
+   * post: los componentes inicializados
+   */
   public void initComponents()
   {
     Container cp = this.getContentPane();
@@ -116,11 +131,21 @@ public class DialogoMateriales
     catch (Exception e)
     {
     }
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que muestra la lista de materiales a utilizar para aceptar el pedido o los faltantes
+   * pre: materiales distinto de null
+   * @param materiales
+   * post: se actualiza la lista o se lanza una excepcion
+   * @throws Exception
+   */
   public void actualizarMateriales(JTextArea materiales)
     throws Exception
   {
+    assert materiales != null : "Materiales nulo";
+    
     String tipo = this.control
                       .getPedidoActual()
                       .getCodigoMaquina();
@@ -138,5 +163,16 @@ public class DialogoMateriales
       materiales.append(e.getMessage() + "\n\n");
       materiales.append(e.getFaltantes().detalles());
     }
+    
+    this.verificarInvariantes();
+  }
+
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.control != null : "Atributo controlador nulo";
+    assert this.aceptarLote != null : "Atributo boton aceptar nulo";
+    assert this.panelIngreso != null : "Atributo panel ingreso nulo";
   }
 }

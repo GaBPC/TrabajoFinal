@@ -86,6 +86,7 @@ public class Material
   private boolean verificaDescripcion(String descripcion)
     throws LengthException
   {
+    assert descripcion != null : "Descripcion invalida";
     boolean ret = false;
     if (descripcion.length() <= 100)
       ret = true;

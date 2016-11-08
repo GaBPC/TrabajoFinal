@@ -8,16 +8,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+/**Dialogo que incluye el panel de seleccion de fechas. Extiende de la clase JPanel
+ * Invariantes: los atributos deben ser distintos de null
+ */
 public class PanelFechas
   extends JPanel
 {
-  private JComboBox dia;
-  private JComboBox mes;
-  private JComboBox year;
+  private JComboBox dia;  //Combo box con los dias a seleccionar
+  private JComboBox mes;  //Combo box con los meses a seleccionar
+  private JComboBox year; //Combo box con los anios a seleccionar
 
   private final int yearMinimo = 2016;
   private final int yearMaximo = 2050;
 
+  /**Constructor de la clase, en el cual se establecen los componentes
+   * post: se genera el dialogo con todos sus componentes
+   */
   public PanelFechas()
   {
     super();
@@ -26,8 +32,13 @@ public class PanelFechas
     this.add(year, BorderLayout.WEST);
     this.add(mes, BorderLayout.CENTER);
     this.add(dia, BorderLayout.EAST);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que inicializa todos los componentes graficos del dialogo
+   * post: se generan todos los componentes
+   */
   private void initComponents()
   {
     this.dia = new JComboBox();
@@ -80,6 +91,8 @@ public class PanelFechas
         PanelFechas.this.mes.setEnabled(true);
       }
     });
+    
+    this.verificarInvariantes();
   }
 
   public int getDia()
@@ -97,6 +110,10 @@ public class PanelFechas
     return (this.year.getSelectedIndex() + this.yearMinimo);
   }
 
+  /**Metodo en el cual se establecen los dias posibles de elegir correspondiendose con el mes y si el anio es bisiesto o no
+   * @param bisiesto
+   * post: el atributo dia tiene los dias correspondientes a seleccionar dependiendo del mes
+   */
   private void verificaDias(boolean bisiesto)
   {
     int i;
@@ -122,6 +139,10 @@ public class PanelFechas
     }
   }
 
+  /**Metodo que indica si el anio es bisiesto o no
+   * post: se sabe si el anio es bisiesto o no
+   * @return boolean
+   */
   private boolean yearBisiesto()
   {
     boolean ret = false;
@@ -131,6 +152,15 @@ public class PanelFechas
       else if (this.getYear() % 400 == 0)
         ret = true;
     return ret;
+  }
+
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.year != null : "Atributo year invalido";
+    assert this.mes != null : "Atributo mes invalido";
+    assert this.dia != null : "Atributo dia invalido";
   }
 
 }

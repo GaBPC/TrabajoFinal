@@ -25,12 +25,19 @@ import listas.ListaEmpleados;
 
 import personal.Empleado;
 
+/**Ventana de logeo del empleado. Extiende de VentanaBase
+ */
 public class VentanaLogin
   extends VentanaBase
 {
 
-  private Empleado empleadoLogeado = null;
+  private Empleado empleadoLogeado = null;    //empleado que se logea en el sistema
 
+  /**Constructor de la clase
+   * pre: control distinto de null
+   * @param control
+   * post: se crea la instancia o se informa el error
+   */
   public VentanaLogin(Controlador control)
   {
     /*Crea la ventana con el titulo Login y con la
@@ -42,6 +49,8 @@ public class VentanaLogin
     this.getJMenuBar().setVisible(false);
   }
 
+  /**Metodo en el cual se inicilizan todas los componentes de la ventana
+   */
   @Override
   protected void IniciarComponentes()
   {
@@ -164,11 +173,13 @@ public class VentanaLogin
     });
   }
 
+  /**Metodo que reacciona a los cambios de los objetos observados. Se sobreescribe para que no realice nada
+   * @param observable
+   * @param object
+   */
   @Override
   public void update(Observable observable, Object object)
   {
     // DO NOTHING
-
-
   }
 }

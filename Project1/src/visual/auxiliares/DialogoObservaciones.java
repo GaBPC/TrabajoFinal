@@ -33,15 +33,25 @@ import javax.swing.JTextField;
 
 import visual.Controlador;
 
+/**Dialogo desde el cual se observan las observaciones de los pedidos. Extiende de JDialog
+ * Invariantes: atributo control distinto de null
+ */
 public class DialogoObservaciones
   extends JDialog
 {
 
-  private Controlador control;
+  private Controlador control;   //instancia de la clase controlador
 
+  /**Constructor de la clase, en el cual se crea la instancia de la clase y todos sus componentes
+   * pre: control distinto de null
+   * @param control
+   * post: se crea la instancia de la clase o se informa el error
+   */
   public DialogoObservaciones(Controlador control)
   {
     super();
+    assert control != null : "Controlador invalido";
+    
     this.setLocationRelativeTo(null);
     this.control = control;
     this.setTitle("Observaciones");
@@ -51,8 +61,13 @@ public class DialogoObservaciones
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que inicializa todas las componentes del dialogo
+   * post: se generan todos los componentes
+   */
   private void initComponents()
   {
     Container cp = this.getContentPane();
@@ -120,10 +135,19 @@ public class DialogoObservaciones
     panelSouth.add(nuevoIngreso);
     /* Se añade el panel al contenedor del dialogo*/
     cp.add(panelSouth, BorderLayout.SOUTH);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que actualiza la lista en la que se encuentran las observaciones
+   * pre: modelo distinto de null
+   * @param modelo
+   * post: se actualiza la lista que se muestra por pantalla
+   */
   private void actualizarLista(DefaultListModel modelo)
   {
+    assert modelo != null : "Modelo nulo";
+    
     modelo.removeAllElements();
 
     Iterator<Observacion> it = this.control
@@ -132,5 +156,12 @@ public class DialogoObservaciones
                                    .iterator();
     while (it.hasNext())
       modelo.addElement(it.next().toString());
+  }
+
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.control != null : "Atributo controlador invalido";
   }
 }

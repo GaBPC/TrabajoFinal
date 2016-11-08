@@ -48,18 +48,28 @@ import visual.auxiliares.DialogoListaMaterialesProd;
 import visual.auxiliares.MyList;
 import visual.auxiliares.PanelLista;
 
+/**Clase que se encarga de la parte visual de la ventana de produccion. Extiende de VentanaBase
+ */
 public class VentanaProduccion
   extends VentanaBase
 {
-  private DefaultListModel listModelEv;
-  private DefaultListModel listModelAc;
+  private DefaultListModel listModelEv;   //DefaultListModel que se utiliza para mostrar en pantalla los pedidos en evaluacion
+  private DefaultListModel listModelAc;   //DefaultListModel que se utiliza para mostrar en pantalla los pedidos aceptados
 
+  /**Constructor de la ventana, se le pasa el controlador por parametro, el cual es pasado a la ventana padre
+   * pre: control distinto de null
+   * @param control
+   * post: se crea instancia de la clase
+   */
   public VentanaProduccion(Controlador control)
   {
     super(control, "Produccion", JFrame.DISPOSE_ON_CLOSE, new Dimension(700, 700));
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
   }
 
+  /**Metodo en el cual se establecen todos los componentes de la ventana
+   * post: se inicializa la ventana con todos sus componentes graficos
+   */
   @Override
   protected void IniciarComponentes()
   {
@@ -84,7 +94,7 @@ public class VentanaProduccion
         {
           VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
           VentanaProduccion.this.control.removePedido();
-          VentanaProduccion.this.actualizarListaEv(listModelEv);
+          VentanaProduccion.this.actualizarListaEv();
           JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado");
         }
         else
@@ -128,8 +138,8 @@ public class VentanaProduccion
 
           new DialogoMateriales(VentanaProduccion.this.control);
 
-          VentanaProduccion.this.actualizarListaAc(listModelAc);
-          VentanaProduccion.this.actualizarListaEv(listModelEv);
+          VentanaProduccion.this.actualizarListaAc();
+          VentanaProduccion.this.actualizarListaEv();
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a aceptar");
@@ -139,7 +149,7 @@ public class VentanaProduccion
     /* Agrega los botones al panelEvaluacion*/
     panelEvaluacion.add(botonesEvaluacion, BorderLayout.SOUTH);
     /* Actualiza la lista de lotes en evaluacion por primera vez*/
-    this.actualizarListaEv(this.listModelEv);
+    this.actualizarListaEv();
 
     /* Instancia el modelo de la lsita de pedidos aceptados*/
     this.listModelAc = new DefaultListModel();
@@ -158,7 +168,7 @@ public class VentanaProduccion
           Lote lot = (Lote) listModelAc.getElementAt(seleccionado);
           VentanaProduccion.this.control.setLoteActual(lot);
           VentanaProduccion.this.control.removeLote();
-          VentanaProduccion.this.actualizarListaAc(listModelAc);
+          VentanaProduccion.this.actualizarListaAc();
           JOptionPane.showMessageDialog(VentanaProduccion.this, "Ha comenzado a generarse el lote");
         }
         else
@@ -168,7 +178,7 @@ public class VentanaProduccion
     /* Agrega el boton de generar lote al panelAceptado*/
     panelAceptado.add(generarLote, BorderLayout.SOUTH);
     /* Actualiza la lista de lotes aceptados por primera vez*/
-    this.actualizarListaAc(this.listModelAc);
+    this.actualizarListaAc();
 
     /* Crea el panel donde iran las dos listas para luego agregarlas al ContentPane*/
     JPanel panelListas = new JPanel(new GridLayout(0, 2));
@@ -243,31 +253,47 @@ public class VentanaProduccion
     (this.getJMenuBar()).add(menuMateriales);
   }
 
-  private void actualizarListaEv(DefaultListModel modelo)
+  /**Metodo que se encarga de actualizar el atributo listModelEv, para que asi se reflejen en pantalla los cambios efectuados
+   * post: en pantalla se actualiza la lista de pedidos en evaluacion
+   */
+  private void actualizarListaEv()
   {
-    modelo.removeAllElements();
+    this.listModelEv.removeAllElements();
     Iterator<Pedido> it = this.control.getPedidosEvaluacion();
     while (it.hasNext())
-      modelo.addElement(it.next());
+      this.listModelEv.addElement(it.next());
   }
 
-  private void actualizarListaAc(DefaultListModel modelo)
+  /**Metodo que se encarga de actualizar el atributo listModelAc, para que asi se reflejen en pantalla los cambios efectuados
+   * post: en pantalla se actualiza la lista de lotes en espera de ser generados
+   */
+  private void actualizarListaAc()
   {
-    modelo.removeAllElements();
+    this.listModelAc.removeAllElements();
     Iterator<Lote> it = this.control.getLotes();
     while (it.hasNext())
     {
-      modelo.addElement(it.next());
+      this.listModelAc.addElement(it.next());
     }
   }
 
+  /**Metodo que se activa cuando se realiza algun cambio en las clases a las cuales observa esta ventana. Se detecta el 
+   * elemento que produjo el cambio y se adquiere una explicacion del cambio sufrido
+   * pre: los parametros deben ser distintos de null
+   * @param observable
+   * @param object
+   * post: se actualizan las listas o se lanza una excepcion
+   */
   @Override
   public void update(Observable observable, Object object)
   {
+    assert observable != null : "Observable nulo";
+    assert object != null : "Object nulo";
+    
     if (this.observados.contains(observable))
     {
-      this.actualizarListaAc(this.listModelAc);
-      this.actualizarListaEv(this.listModelEv);
+      this.actualizarListaAc();
+      this.actualizarListaEv();
     }
     else
       throw new IllegalArgumentException("Fatal error");

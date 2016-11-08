@@ -26,14 +26,24 @@ import listas.ListaMaterialesStock;
 import visual.Controlador;
 import visual.VentanaProduccion;
 
+/**Clase que muestra la lista de materiales de un producto y las diversas opciones que se pueden realizar. Extiende de JDialog
+ * Invariante: atributo control distinto de null
+ */
 public class DialogoListaMaterialesProd
   extends JDialog
 {
-  private Controlador control;
+  private Controlador control;  //instancia de controlador
 
+  /**Constructor de la clase
+   * pre: control distinto de null
+   * @param control
+   * post: se crea la instancia de la clase o se informa el error
+   */
   public DialogoListaMaterialesProd(Controlador control)
   {
     super();
+    assert control != null : "Controlador nulo";
+    
     this.setLocationRelativeTo(null);
     this.control = control;
     this.setLayout(new BorderLayout());
@@ -43,8 +53,12 @@ public class DialogoListaMaterialesProd
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que inicializa todos los componentes del dialogo
+   */
   public void initComponents()
   {
     Container cp = this.getContentPane();
@@ -82,10 +96,19 @@ public class DialogoListaMaterialesProd
 
     cp.add(panelBotones, BorderLayout.SOUTH);
     cp.add(materiales, BorderLayout.CENTER);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que actualiza la lista de los materiales del producto a mostrar
+   * pre: materiales distinto de null
+   * @param materiales
+   * post: lista actualizada o error mostrado
+   */
   public void actualizarMatProductos(JTextArea materiales)
   {
+    assert materiales != null : "Materiales nulo";
+    
     materiales.setText("");
     String tipo = this.control
                       .getProductoActual()
@@ -96,5 +119,10 @@ public class DialogoListaMaterialesProd
     materiales.append(lista.detalles());
   }
 
-
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.control != null : "Atributo controlador invalido";
+  }
 }

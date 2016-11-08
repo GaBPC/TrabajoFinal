@@ -25,14 +25,24 @@ import javax.swing.JTextField;
 import visual.Controlador;
 import visual.VentanaLogin;
 
+/**Clase en la cual se puede agregar una cierta cantidad de un material o un material nuevo. Extiende de JDialog
+ * Invariantes: atributo control distinto de null
+ */
 public class DialogoAgregar
   extends JDialog
 {
-  private Controlador control;
+  private Controlador control;    //instancia del controlador
 
+  /**Constructor de la clase.
+   * pre: control distinto de null
+   * @param control
+   * post: se crea la instancia de la clase o se informa el error
+   */
   public DialogoAgregar(Controlador control)
   {
     super();
+    assert control != null : "Controlador nulo";
+    
     this.control = control;
     this.setLayout(new BorderLayout());
     this.setLocationRelativeTo(null);
@@ -41,8 +51,12 @@ public class DialogoAgregar
     this.setMinimumSize(new Dimension(200, 150));
     this.initComponents();
     this.setVisible(true);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que genera e inicializa todos los componentes del dialogo
+   */
   public void initComponents()
   {
     Container cp = this.getContentPane();
@@ -94,6 +108,14 @@ public class DialogoAgregar
     cp.add(panel, BorderLayout.CENTER);
     cp.add(agregar, BorderLayout.SOUTH);
 
-
+    this.verificarInvariantes();
   }
+
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.control != null : "Atributo controlador invalido";
+  }
+
 }

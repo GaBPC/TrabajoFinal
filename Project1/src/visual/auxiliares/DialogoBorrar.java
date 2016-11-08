@@ -22,14 +22,24 @@ import javax.swing.JTextField;
 
 import visual.Controlador;
 
+/**Dialogo desde el cual se puede borrar un material de la lista de materiales de un producto. Extiende de JDialog
+ * Invariante: atributo control distinto de null
+ */
 public class DialogoBorrar
   extends JDialog
 {
-  private Controlador control;
+  private Controlador control;  //instancia de controlador
 
+  /**Constructor de la clase
+   * pre: control distinto de null
+   * @param control
+   * post: se crea instancia de la clase o se indica el error
+   */
   public DialogoBorrar(Controlador control)
   {
     super();
+    assert control != null : "Controlador nulo";
+    
     this.control = control;
     this.setLayout(new BorderLayout());
     this.setLocationRelativeTo(null);
@@ -38,8 +48,12 @@ public class DialogoBorrar
     this.setMinimumSize(new Dimension(300, 100));
     this.initComponents();
     this.setVisible(true);
+    
+    this.verificarInvariantes();
   }
 
+  /**Metodo que inicializa todos los componentes del dialogo
+   */
   public void initComponents()
   {
     Container cp = this.getContentPane();
@@ -72,7 +86,15 @@ public class DialogoBorrar
 
     cp.add(panel, BorderLayout.CENTER);
     cp.add(agregar, BorderLayout.SOUTH);
+    
+    this.verificarInvariantes();
 
+  }
 
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   */
+  private void verificarInvariantes()
+  {
+    assert this.control != null : "Atributo controlador invalido";
   }
 }
