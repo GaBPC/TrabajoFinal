@@ -20,38 +20,59 @@ import java.util.Observable;
 import listas.ListaMateriales;
 import listas.ListaMaterialesStock;
 
-/**Clase que contiene todos los datos correspondiente a un lote.
+/**Clase que contiene todos los datos correspondiente a un pedido, extiende de la clase Observable e implementa la
+ * interfaz ResumenClase
+ * Invariante: los siguientes atributos cumpliran siempre las siguientes condiciones:
+ *            numeroPedido: distinto de null y tiene que ser de la forma PEDXXXXXX siendo X un numero entero
+ *            fechaPedido: Calendar distinto de null
+ *            fechaEntregaVentas: Calendar distinto de null
+ *            tipoMaqiuna: String distinto de null
+ *            codigoMaquina: String distinto de null
+ *            cantProduccion: float mayor o igual que 0 y menor que 1000
+ *            estadoActual: distinto de null
  */
 public class Pedido
   extends Observable
   implements ResumenClase
 {
-  private String numeroPedido = null;
-  private Calendar fechaPedido = null, fechaEntregaVentas = null, fechaPropuestaProduccion = null, fechaDefinitiva =
-    null, fechaPedidoAceptado = null;
-  private String codigoMaquina = null;
-  private String tipoMaquina = null;
-  private int cantProduccion = 0;
-  private Estado estadoActual;
+  private String numeroPedido = null;               //numero que referencia a un pedido
+  private Calendar fechaPedido = null;              //fecha en la que se realiza el pedido
+  private Calendar fechaEntregaVentas = null;       //fecha en la que ventas propone la entrega
+  private Calendar fechaPropuestaProduccion = null; //fecha en la que produccion propone la entrega
+  private Calendar fechaDefinitiva = null;          //fecha definitiva de entrega
+  private Calendar fechaPedidoAceptado = null;      //fecha en la que el pedido es aceptado
+  private String codigoMaquina = null;              //codigo que refiere al tipo de la maquina a producir en el pedido
+  private String tipoMaquina = null;                //tipo de maquina a producir en el pedido
+  private int cantProduccion = 0;                   //cantidad a producir
+  private Estado estadoActual = new Iniciado(this); //estado en el que se encuentra el pedido
 
-  private TreeSet<Observacion> listaObservaciones;
+  private TreeSet<Observacion> listaObservaciones = new TreeSet<>();
 
   /* No hay constructor vacio ya que solo es posible crear el lote con todos los datos que deben
      * brindar los empleados de ventas*/
 
   /**Constructor principal de la clase. Como el lote es iniciado desde el sector de ventas, recibe
    * por parametros los datos que le corresponde completar a dicho sector de la empresa.
-   * @param numeroPedido
-   * @param fechaPedido
-   * @param fechaEntregaVentas
-   * @param tipoMaquina
-   * @param cantProduccion
+   * Pre: los siguientes parametros debe cumplir las siguientes precondiciones
+   * @param numeroPedido: distinto de null y tiene que ser de la forma PEDXXXXXX siendo X un numero entero
+   * @param fechaPedido: Calendar distinto de null
+   * @param fechaEntregaVentas: Calendar distinto de null
+   * @param tipoMaquina: String distinto de null
+   * @param cantProduccion: float mayor o igual que 0 y menor que 1000
+   * Post: se crea una instancia de la clase Pedido o se informa que parametro no es correcto
    * @throws ArgumentoIlegalException Si algun parametro no cumple con alguna restriccion, es informado mediante esta excepcion
    */
   public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String codigoMaquina,
                 String tipoMaquina, int cantProduccion)
     throws ArgumentoIlegalException
   {
+    assert this.verificaNumeroPedido(numeroPedido) : "Numero pedido invalido";
+    assert this.verificaCantProduccion(cantProduccion) : "Cantidad invalida";
+    assert fechaEntregaVentas != null : "Fecha de entrega invalida";
+    assert codigoMaquina != null : "Codigo de maquina invalido";
+    assert tipoMaquina != null : "Tipo de maquina invalido";
+    assert fechaPedido != null : "Fecha de pedido invalida";
+    
     if (this.verificaNumeroPedido(numeroPedido))
       this.numeroPedido = numeroPedido;
     if (codigoMaquina != null)
@@ -62,63 +83,56 @@ public class Pedido
       this.tipoMaquina = tipoMaquina;
     this.fechaPedido = fechaPedido;
     this.fechaEntregaVentas = fechaEntregaVentas;
-    this.listaObservaciones = new TreeSet<>();
-    this.estadoActual = new Iniciado(this);
+    
+    this.verificarInvariantes();
   }
 
-  /**Metodo que verifica si el numero de los legajos o identificadores cumple con las restricciones de longitud
-   * @param str
-   * @return
-   * @throws ArgumentoIlegalException
-   */
-  private boolean verifica(String str)
-    throws ArgumentoIlegalException
-  {
-    boolean ret = false;
-    if (str.length() == 9)
-    {
-      int num = Integer.parseInt(str.substring(3).trim());
-      if (num >= 0 && num <= 999999)
-        ret = true;
-      else
-        throw new ArgumentoIlegalException("El numero esta fuera de rango", num);
-    }
-    else
-      throw new ArgumentoIlegalException("El numero debe tener 6 digitos", str);
-    return ret;
-  }
-
-  /**Metodo que verifica si el numero de pedido cumple con la restriccion de longitud y que ademas
-   * incluya el prefijo PED
+  /**Metodo que verifica si el numero de pedido cumple con las condiciones
+   * pre: numeroPedido distinto de null
+   * post: se indica si el numero de pedido cumple o no con las condiciones
    * @param numeroPedido
-   * @return
+   * @return boolean
    * @throws ArgumentoIlegalException
    */
   private boolean verificaNumeroPedido(String numeroPedido)
     throws ArgumentoIlegalException
   {
+    assert numeroPedido != null: "El numero de pedido es nulo";
     boolean ret = false;
-    String aux = numeroPedido.substring(0, 3);
-    if (aux.compareTo("PED") == 0)
-      ret = verifica(numeroPedido);
+    if (numeroPedido.length() == 9)
+    {
+      String aux = numeroPedido.substring(0, 3);
+      if (aux.compareTo("PED") == 0)
+      {
+        int num = Integer.parseInt(numeroPedido.substring(3).trim());
+        if (num >= 0 && num <= 999999)
+          ret = true;
+        else
+          throw new ArgumentoIlegalException("El numero esta fuera de rango", num);
+      }
+      else
+        throw new ArgumentoIlegalException("El numero de pedido no contiene \"PED\"", numeroPedido);
+    }
     else
-      throw new ArgumentoIlegalException("El numero de pedido no contiene \"PED\"", numeroPedido);
+      throw new ArgumentoIlegalException("El numero debe tener 6 digitos", numeroPedido);
     return ret;
   }
 
-  /**Metodo que verifica que ningun atributo del lote este sin inicializar. Como los atributos que son
-   * inicializados en el constructor no cambiaran, y ya se verifico que esten bien inicializados, se asumen
+  /**Metodo que verifica que ningun atributo del pedido este sin inicializar. Como los atributos que son
+   * inicializados en el constructor se mantienen constantes, y ya se verifico que esten bien inicializados, se asumen
    * como correctos
-   * @return
+   * Post: se indica si el pedido cumple las condiciones o no
+   * @return boolean
    */
   public boolean verificaNull()
   {
     return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.fechaDefinitiva != null);
-  } 
+  }
 
-  /**Metodo que verifica que la cantidad a producir este en el intervalo 0<cantidadProducir<999
+  /**Metodo que verifica que la cantidad a producir sea correcta segun las condiciones
+   * Post: se indica si la cantidad es correcta o no
    * @param cantProduccion
-   * @return
+   * @return boolean
    */
   private boolean verificaCantProduccion(int cantProduccion)
     throws ArgumentoIlegalException
@@ -129,67 +143,61 @@ public class Pedido
       throw new ArgumentoIlegalException("La cantidad a producir debe ser 0 < cant < 999", cantProduccion);
   }
 
-  /**Metodo que permite cambiar los estados del lote, mediante el patron State
-   * @param estadoActual
-   */
-  public void setEstadoActual(Estado estadoActual)
-  {
-    this.estadoActual = estadoActual;
-    this.setChanged();
-    this.notifyObservers();
-  }
-
-  /**Metodo que devuelve el estado actual del lote, mediante el patron State
-   * @return
-   */
-  public Estado getEstadoActual()
-  {
-    return estadoActual;
-  }
-
-  /**Metodo que permite a los empleados tanto de ventas como produccion agregar una observacion al lote
+  /**Metodo que permite a los empleados tanto de ventas como produccion agregar una observacion al pedido, esta
+   * sincronizado para que no se produzcan accesos simultaneos al metodo
+   * Pre: obs distinto de null
    * @param obs
-   * @throws Exception si el lote ya esta aceptado, no es posible agregar mas comentarios, por lo que se produce la exception
+   * Post: se le agrega una observacion al pedido actual o se lanza una excepcion indicando que la observacion no es
+   * correcta
+   * @throws Exception si el pedido ya esta aceptado, no es posible agregar mas comentarios, por lo que se produce la exception
    */
   public synchronized void agregarObservacion(Observacion obs)
-    throws Exception
+    throws StateException
   {
+    assert obs != null: "Observacion nula";
     this.estadoActual.agregarObservacion(obs);
+    this.verificarInvariantes();
   }
 
-  /**Metodo que utilizaran los empleados de produccion para aceptar el lote
-   * @throws Exception si el lote aun no esta listo para ser aceptado se produce la exception
+  /**Metodo que utilizaran los empleados de produccion para aceptar el pedido
+   * Pre: fechaProduccion distinta de null
+   * Post: se acepta el pedido si se cumplen todas las condiciones, sino se lanza una excepcion
+   * @throws Exception si el pedido aun no esta listo para ser aceptado se produce la exception
    */
   public void aceptarPedido(Calendar fechaProduccion)
     throws ArgumentoIlegalException, StateException
   {
-
+    assert fechaProduccion != null: "Fecha propuesta por produccion nula";
     this.fechaPedidoAceptado = GregorianCalendar.getInstance();
     this.fechaPropuestaProduccion = fechaProduccion;
     this.fechaDefinitiva = fechaProduccion;
     this.estadoActual.aceptarPedido();
+    this.verificarInvariantes();
   }
 
+  /**Metodo que se encarga de cambiar el estado del pedido a en Evaluacion
+   * Post: Se cambia el estado del pedido o se lanza una excepcion informando el error
+   * @throws StateException
+   */
   public void evaluarPedido()
     throws StateException
   {
     this.estadoActual.evaluarPedido();
+    this.verificarInvariantes();
   }
 
-  /**Metodo que devuelve la coleccion que contiene todas las observaciones del lote
-   * @return
+  /**Metodo que genera un String con los datos basicos del pedido
+   * @return String
    */
-  public TreeSet<Observacion> getListaObservaciones()
-  {
-    return listaObservaciones;
-  }
-
   public String toString()
   {
     String ret = this.numeroPedido + ": " + this.tipoMaquina + " " + this.cantProduccion + "u.";
     return ret;
   }
 
+  /**Metodo que genera un String con los detalles necesarios del pedido
+   * @return String con los detalles
+   */
   public String detalles()
   {
     String ret = "";
@@ -221,16 +229,25 @@ public class Pedido
     return ret;
   }
 
+  /**Metodo que indica si el pedido se encuentra en estado Iniciado o no
+   * @return boolean
+   */
   public boolean isIniciado()
   {
     return this.estadoActual.isIniciado();
   }
 
+  /**Metodo que indica si el pedido se encuentra en estado en Evaluacion o no
+   * @return boolean
+   */
   public boolean isEnEvaluacion()
   {
     return this.estadoActual.isEnEvaluacion();
   }
 
+  /**Metodo que indica si el pedido se encuentra en estado Aceptado o no
+   * @return boolean
+   */
   public boolean isAceptado()
   {
     return this.estadoActual.isAceptado();
@@ -245,4 +262,44 @@ public class Pedido
   {
     return cantProduccion;
   }
+
+  public TreeSet<Observacion> getListaObservaciones()
+  {
+    return listaObservaciones;
+  }
+
+  public void setEstadoActual(Estado estadoActual)
+  {
+    assert estadoActual != null : "Estado nulo";
+    this.estadoActual = estadoActual;
+    this.setChanged();
+    this.notifyObservers();
+    this.verificarInvariantes();
+  }
+
+  public Estado getEstadoActual()
+  {
+    return estadoActual;
+  }
+
+  /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
+   * Captura las excepciones lanzadas por los metodos porque no interesa que se genere ningun aviso mediante interfaz
+   */
+  private void verificarInvariantes()
+  {
+    try
+    {
+      assert this.verificaNumeroPedido(this.numeroPedido): "Atributo numeroPedido invalido";
+      assert this.verificaCantProduccion(this.cantProduccion): "Atributo cantProduccion invalido";
+    }
+    catch (ArgumentoIlegalException e)
+    {
+    }
+    assert this.fechaEntregaVentas != null : "Atributo fechaEntregaVentas invalido";
+    assert this.fechaPedido != null : "Atributo fechaPedido invalido";
+    assert this.tipoMaquina != null : "Atributo tipoMaquina invalido";
+    assert this.codigoMaquina != null : "Atributo codigoMaquina invalido";
+    assert this.estadoActual != null : "Atributo estadoActual invalido";
+  }
+
 }
