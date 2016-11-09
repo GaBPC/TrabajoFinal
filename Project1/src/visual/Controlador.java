@@ -214,7 +214,11 @@ public class Controlador
       throw new Exception("Pedido invalido");
   }
 
-  public void generarLote()
+    /**Metodo que genera un lote con el pedido actualmente seleccionado. El sistema se encarga
+     * de calcular el numero de lote correspondiente.
+     * @throws Exception
+     */
+    public void generarLote()
     throws Exception
   {
     String aux = Integer.toString(this.lotes.getProximoNumeroLote());
@@ -232,22 +236,37 @@ public class Controlador
       throw new Exception("Falta seleccionar el pedido");
   }
 
-  public void removePedido()
+    /**Metodo que elimina de la lista de pedidos el pedido actualmente seleccionado.
+     */
+    public void removePedido()
   {
     this.pedidos.borrarPedido(this.pedidoActual);
   }
 
-  public void removeLote()
+    /**Metodo que elimina de la lista de lotes el lote actualmente seleccionado.
+     */
+    public void removeLote()
   {
     this.lotes.borrarLote(this.loteActual);
   }
 
-  public String detallesStock()
+    /**Metodo que devuelve un String con los detalles de los materiales que hay actualmente
+     * en stock.
+     * @return
+     */
+    public String detallesStock()
   {
     return ListaMaterialesStock.getInstance().detalles();
   }
 
-  public ListaMateriales verificaExistencias(String tipo)
+    /**Metodo que devuelve una lista con las existencias actuales del tipo de material
+     * indicado por parametro.
+     * @param tipo
+     * @return
+     * @throws FaltantesException
+     * @throws Exception
+     */
+    public ListaMateriales verificaExistencias(String tipo)
     throws FaltantesException, Exception
   {
     return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
@@ -271,7 +290,14 @@ public class Controlador
         .borrarMaterial(codigo);
   }
 
-  public Observacion crearObservacion(String temaIngresado, String texto)
+    /**Metodo para generar una nueva observacion. Esta observacion sera generada por el empleado
+     * que este actualmente logeado al sistema.
+     * @param temaIngresado es el tema que tendra la nueva observacion
+     * @param texto es el texto que el empleado quiere ingresar como observacion
+     * @return
+     * @throws Exception
+     */
+    public Observacion crearObservacion(String temaIngresado, String texto)
     throws Exception
   {
     Observacion obs = null;
