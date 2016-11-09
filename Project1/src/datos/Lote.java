@@ -1,7 +1,5 @@
 package datos;
 
-import exceptions.ArgumentoIlegalException;
-
 /**Clase que representa un lote de trabajo de la empresa. Contiene los datos del pedido y el numero
  * de lote correspondiente.
  * Invariante: luego de la creacion de la instancia se asume en todo momento que

@@ -4,21 +4,14 @@ import datos.estadosPedido.Estado;
 
 import datos.estadosPedido.Iniciado;
 
-import exceptions.ArgumentoIlegalException;
-
 import exceptions.StateException;
 
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.TreeSet;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Observable;
-
-import listas.ListaMateriales;
-import listas.ListaMaterialesStock;
 
 /**Clase que contiene todos los datos correspondiente a un pedido, extiende de la clase Observable e implementa la
  * interfaz ResumenClase

@@ -2,8 +2,6 @@ package datos.estadosPedido;
 
 import datos.Pedido;
 
-import exceptions.StateException;
-
 /**Clase que modela la base de todos los estados que puede tomar un pedido.
  * Es una clase abstracta, ya que no modela un estado real, si no las caracteristicas comunes
  * de todos.

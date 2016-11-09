@@ -1,9 +1,5 @@
 package visual.auxiliares;
 
-import datos.TipoProducto;
-
-import exceptions.ArgumentoIlegalException;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -76,7 +72,7 @@ public class DialogoBorrar
           codigo += codMaterial.getText();
           DialogoBorrar.this.control.borrarMaterial(codigo);
         }
-        catch (ArgumentoIlegalException e)
+        catch (Exception e)
         {
           JOptionPane.showMessageDialog(DialogoBorrar.this, e.getMessage());
         }

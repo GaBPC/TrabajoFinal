@@ -5,47 +5,32 @@ import datos.Pedido;
 
 import datos.TipoProducto;
 
-import exceptions.StateException;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import java.util.Iterator;
 
 import java.util.Observable;
 
-import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-
-import listas.ListaMateriales;
 import listas.ListaMaterialesStock;
 
 import visual.auxiliares.DialogoDetalles;
 import visual.auxiliares.DialogoMateriales;
 import visual.auxiliares.DialogoObservaciones;
 import visual.auxiliares.DialogoListaMaterialesProd;
-import visual.auxiliares.MyList;
 import visual.auxiliares.PanelLista;
 
 /**Clase que se encarga de la parte visual de la ventana de produccion. Extiende de VentanaBase
@@ -226,7 +211,7 @@ public class VentanaProduccion
     recetaSimulador.addActionListener(recetasListener);
     recetaConsolaGrupal.addActionListener(recetasListener);
     recetaConsolaIndividual.addActionListener(recetasListener);
-    /* Añade al menu recetaProductos todos los items*/
+    /* Aï¿½ade al menu recetaProductos todos los items*/
     recetaProductos.add(recetaFlipper);
     recetaProductos.add(recetaSimulador);
     recetaProductos.add(recetaConsolaGrupal);

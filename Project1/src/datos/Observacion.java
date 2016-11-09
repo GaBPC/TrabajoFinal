@@ -1,7 +1,5 @@
 package datos;
 
-import exceptions.ArgumentoIlegalException;
-
 import java.util.Calendar;
 
 /**Clase que incluye todos los apartados que debe contener una observacion de un lote.

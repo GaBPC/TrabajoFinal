@@ -1,9 +1,5 @@
 package datos;
 
-import exceptions.ArgumentoIlegalException;
-import exceptions.LengthException;
-
-
 /**Material, el cual posee un codigo para identificacion, una descripcion que otorga detalles del mismo, y la cantidad
  * que se posee del mismo
  * Invariante: los atributos cumpliran las siguientes condiciones en todo momento
@@ -26,7 +22,6 @@ public class Material
    * Post: se crea una instancia de la clase Material o se indica cual es el parametro invalido
    */
   public Material(String codigo, String descripcion, float cantidad)
-    throws ArgumentoIlegalException, LengthException
   {
     super();
     assert Verificaciones.verificaCodigo(codigo): "Codigo invalido";

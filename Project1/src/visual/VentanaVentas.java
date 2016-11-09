@@ -1,9 +1,7 @@
 package visual;
 
 import datos.Pedido;
-import datos.Material;
 
-import exceptions.ArgumentoIlegalException;
 
 import exceptions.StateException;
 
@@ -12,7 +10,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +27,6 @@ import javax.swing.*;
 import listas.ListaMaterialesStock;
 
 import visual.auxiliares.DialogoObservaciones;
-import visual.auxiliares.MyList;
 import visual.auxiliares.PanelFechas;
 import visual.auxiliares.PanelLista;
 
@@ -181,10 +177,6 @@ public class VentanaVentas
           VentanaVentas.this.actualizarListaIn(listModelIn);
           /* Pone el blanco todos los campos de ingreso nuevamente*/
           cantProducir.setText("");
-        }
-        catch (ArgumentoIlegalException e)
-        {
-          JOptionPane.showMessageDialog(VentanaVentas.this, e.getMessage());
         }
         catch (NumberFormatException e)
         {

@@ -2,11 +2,9 @@ package visual.auxiliares;
 
 import datos.Observacion;
 
-import exceptions.ArgumentoIlegalException;
 
 import java.awt.BorderLayout;
 
-import java.awt.Component;
 import java.awt.Container;
 
 
@@ -16,8 +14,6 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.util.GregorianCalendar;
 
 import java.util.Iterator;
 
@@ -96,7 +92,7 @@ public class DialogoObservaciones
     JTextField observacion = new JTextField();
     panelSouth.add(observacion);
 
-    /* Boton que añade la nueva observacion al lote*/
+    /* Boton que aï¿½ade la nueva observacion al lote*/
     JButton nuevoIngreso = new JButton("+");
     nuevoIngreso.addActionListener(new ActionListener()
     {
@@ -121,11 +117,11 @@ public class DialogoObservaciones
         }
       }
     });
-    //TODO implementar la logica de añadir
-    /* Se añaden todos los componentes al panel*/
+    //TODO implementar la logica de aï¿½adir
+    /* Se aï¿½aden todos los componentes al panel*/
     panelSouth.add(new JLabel(""));
     panelSouth.add(nuevoIngreso);
-    /* Se añade el panel al contenedor del dialogo*/
+    /* Se aï¿½ade el panel al contenedor del dialogo*/
     cp.add(panelSouth, BorderLayout.SOUTH);
     
     this.verificarInvariantes();

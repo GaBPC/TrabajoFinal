@@ -3,7 +3,6 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,7 +59,7 @@ public class VentanaLogin
     JTextArea datos = new JTextArea("Legajo:\n\n\nApellido y nombre:\n\n\nSector:\n\n\n");
     //Se impide que se pueda modificar manualmente los datos
     datos.setEditable(false);
-    //Se añade al ContentPane de la ventana
+    //Se aï¿½ade al ContentPane de la ventana
     cp.add(datos, BorderLayout.CENTER);
 
     //Se crea un panel donde estaran todos los elementos que permiten buscar un empleado
@@ -145,7 +144,7 @@ public class VentanaLogin
     });
 
 
-    //Se añade al ContentPane de la ventana
+    //Se aï¿½ade al ContentPane de la ventana
     cp.add(ingresar, BorderLayout.SOUTH);
 
 

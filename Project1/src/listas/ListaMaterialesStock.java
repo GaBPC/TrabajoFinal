@@ -1,17 +1,12 @@
 package listas;
 
 import datos.Material;
-import datos.Pedido;
 import datos.TipoProducto;
 
-import exceptions.ArgumentoIlegalException;
 import exceptions.FaltantesException;
-import exceptions.LengthException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Observable;
 
 /**Clase donde se almacenan todas las existencias de los materiales disponibles.
  * Es una clase singleton ya que "simula" ser una base de datos de los materiales, y todos los
@@ -58,72 +53,58 @@ public class ListaMaterialesStock
   private ListaMateriales iniciarStock()
   {
     ListaMateriales stock = null;
-    try
-    {
-      stock = new ListaMateriales();
-      stock.agregarMaterial(new Material(COD_MADERA, DES_MADERA, 10.0f));
-      stock.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 10.0f));
-      stock.agregarMaterial(new Material(COD_METAL, DES_METAL, 35.0f));
-      stock.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 15.0f));
 
-    }
-    catch (LengthException e)
-    {
-    }
-    catch (ArgumentoIlegalException e)
-    {
-    }
+    stock = new ListaMateriales();
+    stock.agregarMaterial(new Material(COD_MADERA, DES_MADERA, 10.0f));
+    stock.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 10.0f));
+    stock.agregarMaterial(new Material(COD_METAL, DES_METAL, 35.0f));
+    stock.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 15.0f));
+
+
     return stock;
   }
 
   private HashMap<String, TipoProducto> iniciaRecetas()
   {
     HashMap<String, TipoProducto> recetas = null;
-    try
-    {
-      ListaMateriales recetaFlipper = new ListaMateriales();
-      recetaFlipper.agregarMaterial(new Material(COD_MADERA, DES_MADERA, 3.0f));
-      recetaFlipper.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 1.0f));
-      recetaFlipper.agregarMaterial(new Material(COD_METAL, DES_METAL, 0.5f));
 
-      ListaMateriales recetaConsola1 = new ListaMateriales();
-      recetaConsola1.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 4.0f));
-      recetaConsola1.agregarMaterial(new Material(COD_METAL, DES_METAL, 1.0f));
+    ListaMateriales recetaFlipper = new ListaMateriales();
+    recetaFlipper.agregarMaterial(new Material(COD_MADERA, DES_MADERA, 3.0f));
+    recetaFlipper.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 1.0f));
+    recetaFlipper.agregarMaterial(new Material(COD_METAL, DES_METAL, 0.5f));
 
-      ListaMateriales recetaConsola2 = new ListaMateriales();
-      recetaConsola2.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 8.0f));
-      recetaConsola2.agregarMaterial(new Material(COD_METAL, DES_METAL, 2.0f));
+    ListaMateriales recetaConsola1 = new ListaMateriales();
+    recetaConsola1.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 4.0f));
+    recetaConsola1.agregarMaterial(new Material(COD_METAL, DES_METAL, 1.0f));
 
-      ListaMateriales recetaSimulador = new ListaMateriales();
-      recetaSimulador.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 7.0f));
-      recetaSimulador.agregarMaterial(new Material(COD_METAL, DES_METAL, 5.0f));
-      recetaSimulador.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 2.0f));
+    ListaMateriales recetaConsola2 = new ListaMateriales();
+    recetaConsola2.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 8.0f));
+    recetaConsola2.agregarMaterial(new Material(COD_METAL, DES_METAL, 2.0f));
 
-      TipoProducto flipper = new TipoProducto(recetaFlipper, "Producto flipper");
-      TipoProducto consolaIndividual = new TipoProducto(recetaConsola1, "Producto consola individual");
-      TipoProducto consolaGrupal = new TipoProducto(recetaConsola2, "Producto consola grupal");
-      TipoProducto simulador = new TipoProducto(recetaSimulador, "Producto simulador");
+    ListaMateriales recetaSimulador = new ListaMateriales();
+    recetaSimulador.agregarMaterial(new Material(COD_PLASTICO, DES_PLASTICO, 7.0f));
+    recetaSimulador.agregarMaterial(new Material(COD_METAL, DES_METAL, 5.0f));
+    recetaSimulador.agregarMaterial(new Material(COD_VIDRIO, DES_VIDRIO, 2.0f));
 
-      recetas = new HashMap<>();
-      recetas.put(flipper.getCodigoProducto(), flipper);
-      recetas.put(consolaIndividual.getCodigoProducto(), consolaIndividual);
-      recetas.put(consolaGrupal.getCodigoProducto(), consolaGrupal);
-      recetas.put(simulador.getCodigoProducto(), simulador);
+    TipoProducto flipper = new TipoProducto(recetaFlipper, "Producto flipper");
+    TipoProducto consolaIndividual = new TipoProducto(recetaConsola1, "Producto consola individual");
+    TipoProducto consolaGrupal = new TipoProducto(recetaConsola2, "Producto consola grupal");
+    TipoProducto simulador = new TipoProducto(recetaSimulador, "Producto simulador");
 
-      this.codigoProd = new HashMap<>();
+    recetas = new HashMap<>();
+    recetas.put(flipper.getCodigoProducto(), flipper);
+    recetas.put(consolaIndividual.getCodigoProducto(), consolaIndividual);
+    recetas.put(consolaGrupal.getCodigoProducto(), consolaGrupal);
+    recetas.put(simulador.getCodigoProducto(), simulador);
 
-      codigoProd.put(FLIPPER, flipper.getCodigoProducto());
-      codigoProd.put(CONSOLA_IND, consolaIndividual.getCodigoProducto());
-      codigoProd.put(CONSOLA_GRUPAL, consolaGrupal.getCodigoProducto());
-      codigoProd.put(SIMULADOR, simulador.getCodigoProducto());
+    this.codigoProd = new HashMap<>();
 
-    }
-    catch (LengthException e)
-    {
-    }
-    catch (ArgumentoIlegalException e)
-    {
-    }
+    codigoProd.put(FLIPPER, flipper.getCodigoProducto());
+    codigoProd.put(CONSOLA_IND, consolaIndividual.getCodigoProducto());
+    codigoProd.put(CONSOLA_GRUPAL, consolaGrupal.getCodigoProducto());
+    codigoProd.put(SIMULADOR, simulador.getCodigoProducto());
+
+
     return recetas;
   }
 
@@ -160,9 +141,7 @@ public class ListaMaterialesStock
     ListaMateriales listaFinal = new ListaMateriales();
     ListaMateriales listaFaltantes = new ListaMateriales();
 
-    ListaMateriales receta = this.recetas
-                                 .get(tipo)
-                                 .getListaMateriales();
+    ListaMateriales receta = this.recetas.get(tipo).getListaMateriales();
     Iterator<Material> itReceta = receta.getIterator();
 
     while (itReceta.hasNext())
@@ -203,12 +182,8 @@ public class ListaMaterialesStock
       Material mat = it.next();
       try
       {
-        float cant1 = this.listaExistencias
-                          .getMaterial(mat.getCodigo())
-                          .getCantidad();
-        this.listaExistencias
-            .getMaterial(mat.getCodigo())
-            .setCantidad(cant1 - mat.getCantidad());
+        float cant1 = this.listaExistencias.getMaterial(mat.getCodigo()).getCantidad();
+        this.listaExistencias.getMaterial(mat.getCodigo()).setCantidad(cant1 - mat.getCantidad());
       }
       catch (Exception e)
       {

@@ -2,15 +2,10 @@ package listas;
 
 import datos.Material;
 
-import exceptions.ArgumentoIlegalException;
 import exceptions.LengthException;
 
 import java.util.HashMap;
 import java.util.Iterator;
-
-import javax.swing.JOptionPane;
-
-import visual.VentanaLogin;
 
 public class ListaMateriales
 {
@@ -49,12 +44,12 @@ public class ListaMateriales
   }
 
   public void borrarMaterial(String codigo)
-    throws ArgumentoIlegalException
+    throws Exception
   {
     if (this.lista.containsKey(codigo))
       this.lista.remove(codigo);
     else
-      throw new ArgumentoIlegalException("Campo vacio", codigo);
+      throw new Exception("Campo vacio");
   }
 
   public Iterator<Material> getIterator()
@@ -83,7 +78,7 @@ public class ListaMateriales
   }
 
   public void agregarMaterial(String codigo, String descripcion, float cantidad)
-    throws ArgumentoIlegalException, LengthException
+    throws LengthException
   {
     if (!lista.containsKey(codigo))
     {

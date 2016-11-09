@@ -2,7 +2,6 @@ package visual.auxiliares;
 
 import datos.TipoProducto;
 
-import exceptions.ArgumentoIlegalException;
 import exceptions.LengthException;
 
 import java.awt.BorderLayout;
@@ -23,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import visual.Controlador;
-import visual.VentanaLogin;
 
 /**Clase en la cual se puede agregar una cierta cantidad de un material o un material nuevo. Extiende de JDialog
  * Invariantes: atributo control distinto de null
@@ -94,7 +92,7 @@ public class DialogoAgregar
           {
             prod.getListaMateriales().agregarMaterial(codigo, descripcion, cantidad);
           }
-          catch (ArgumentoIlegalException | LengthException e)
+          catch (LengthException e)
           {
             JOptionPane.showMessageDialog(DialogoAgregar.this, e.getMessage());
           }

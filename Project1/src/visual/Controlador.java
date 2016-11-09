@@ -3,17 +3,12 @@ package visual;
 import listas.ListaPedidos;
 
 import datos.Lote;
-import datos.Material;
 import datos.Observacion;
 import datos.Pedido;
 
 import datos.TipoProducto;
 
 import datos.Verificaciones;
-
-import datos.estadosPedido.Evaluacion;
-
-import exceptions.ArgumentoIlegalException;
 
 import exceptions.FaltantesException;
 import exceptions.StateException;
@@ -22,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import listas.ListaEmpleados;
@@ -32,8 +26,6 @@ import listas.ListaMateriales;
 import listas.ListaMaterialesStock;
 
 import personal.Empleado;
-
-import visual.auxiliares.DialogoObservaciones;
 
 /** Clase utilizada para controlar todas las acciones que una ventana tiene permitido realizar.
  *  Cada ventana recibe una instancia de un controlador, la cual contiene todos los datos del
@@ -272,7 +264,7 @@ public class Controlador
   }
 
   public void borrarMaterial(String codigo)
-    throws ArgumentoIlegalException
+    throws Exception
   {
     this.productoActual
         .getListaMateriales()

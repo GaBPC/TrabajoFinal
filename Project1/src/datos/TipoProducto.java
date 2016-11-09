@@ -1,9 +1,6 @@
 package datos;
 
-import exceptions.ArgumentoIlegalException;
-
 import listas.ListaMateriales;
-import listas.ListaMaterialesStock;
 
 /**Clase que contiene todos datos correspondientes a un producto
  * Invariantes: los siguientes atributos cumpliran las siguientes condiciones:

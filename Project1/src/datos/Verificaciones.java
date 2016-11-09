@@ -1,8 +1,5 @@
 package datos;
 
-import exceptions.ArgumentoIlegalException;
-import exceptions.LengthException;
-
 public abstract class Verificaciones
 {
   /**Metodo que verifica si el numero cumple con las restricciones de longitud.
@@ -136,12 +133,13 @@ public abstract class Verificaciones
       return (texto.length() <= 500);
   }
   
-  /**Metodo que se encarga de verificar que el codigo cumpla con las condiciones establecidas para el codigo
-   * pre: codigo distinto de null
-   * post: se determina si el codigo cumple o no con las condiciones
-   * @param codigo
-   * @return boolean
-   */
+   /**Metodo que verifica que el legajo del empleado tenga la longitud correspondiente y ademas
+    * tenga el prefijo LEG
+    * pre: legajo distinto de null
+    * @param legajo
+    * post: se indica si el legajo es valido o no
+    * @return boolean
+    */
   public static boolean verificaNumeroLegajo(String codigo)
   {
     boolean ret = false;
@@ -155,6 +153,18 @@ public abstract class Verificaciones
       }
     }
     return ret;
+  }
+
+  /**Metodo que verifica que el nombre y apellido del empleado tenga menos de 100 caracteres
+   * pre: nya distinto de null
+   * @param nya
+   * post: se verifica que nya sea valido
+   * @return
+   */
+  public static boolean verificaNombreyApellido(String nya)
+  {
+    assert nya != null: "Nombre y apellido invalido";
+    return (nya.length() <= 100);
   }
 
 }
