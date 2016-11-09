@@ -35,15 +35,15 @@ public class Pedido
   extends Observable
   implements ResumenClase
 {
-  private String numeroPedido = null;               //numero que referencia a un pedido
-  private Calendar fechaPedido = null;              //fecha en la que se realiza el pedido
-  private Calendar fechaEntregaVentas = null;       //fecha en la que ventas propone la entrega
+  private String numeroPedido = null; //numero que referencia a un pedido
+  private Calendar fechaPedido = null; //fecha en la que se realiza el pedido
+  private Calendar fechaEntregaVentas = null; //fecha en la que ventas propone la entrega
   private Calendar fechaPropuestaProduccion = null; //fecha en la que produccion propone la entrega
-  private Calendar fechaDefinitiva = null;          //fecha definitiva de entrega
-  private Calendar fechaPedidoAceptado = null;      //fecha en la que el pedido es aceptado
-  private String codigoMaquina = null;              //codigo que refiere al tipo de la maquina a producir en el pedido
-  private String tipoMaquina = null;                //tipo de maquina a producir en el pedido
-  private int cantProduccion = 0;                   //cantidad a producir
+  private Calendar fechaDefinitiva = null; //fecha definitiva de entrega
+  private Calendar fechaPedidoAceptado = null; //fecha en la que el pedido es aceptado
+  private String codigoMaquina = null; //codigo que refiere al tipo de la maquina a producir en el pedido
+  private String tipoMaquina = null; //tipo de maquina a producir en el pedido
+  private int cantProduccion = 0; //cantidad a producir
   private Estado estadoActual = new Iniciado(this); //estado en el que se encuentra el pedido
 
   private TreeSet<Observacion> listaObservaciones = new TreeSet<>();
@@ -60,88 +60,27 @@ public class Pedido
    * @param tipoMaquina: String distinto de null
    * @param cantProduccion: float mayor o igual que 0 y menor que 1000
    * Post: se crea una instancia de la clase Pedido o se informa que parametro no es correcto
-   * @throws ArgumentoIlegalException Si algun parametro no cumple con alguna restriccion, es informado mediante esta excepcion
    */
   public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String codigoMaquina,
                 String tipoMaquina, int cantProduccion)
-    throws ArgumentoIlegalException
   {
-    assert this.verificaNumeroPedido(numeroPedido) : "Numero pedido invalido";
-    assert this.verificaCantProduccion(cantProduccion) : "Cantidad invalida";
-    assert fechaEntregaVentas != null : "Fecha de entrega invalida";
-    assert codigoMaquina != null : "Codigo de maquina invalido";
-    assert tipoMaquina != null : "Tipo de maquina invalido";
-    assert fechaPedido != null : "Fecha de pedido invalida";
-    
-    if (this.verificaNumeroPedido(numeroPedido))
-      this.numeroPedido = numeroPedido;
-    if (codigoMaquina != null)
-      this.codigoMaquina = codigoMaquina;
-    if (this.verificaCantProduccion(cantProduccion))
-      this.cantProduccion = cantProduccion;
-    if (tipoMaquina != null)
-      this.tipoMaquina = tipoMaquina;
+    assert Verificaciones.verificaNumeroPedido(numeroPedido): "Numero pedido invalido";
+    assert Verificaciones.verificaCantProduccion(cantProduccion): "Cantidad invalida";
+    assert fechaEntregaVentas != null: "Fecha de entrega invalida";
+    assert codigoMaquina != null: "Codigo de maquina invalido";
+    assert tipoMaquina != null: "Tipo de maquina invalido";
+    assert fechaPedido != null: "Fecha de pedido invalida";
+
+    this.numeroPedido = numeroPedido;
+    this.codigoMaquina = codigoMaquina;
+    this.cantProduccion = cantProduccion;
+    this.tipoMaquina = tipoMaquina;
     this.fechaPedido = fechaPedido;
     this.fechaEntregaVentas = fechaEntregaVentas;
-    
+
     this.verificarInvariantes();
   }
 
-  /**Metodo que verifica si el numero de pedido cumple con las condiciones
-   * pre: numeroPedido distinto de null
-   * post: se indica si el numero de pedido cumple o no con las condiciones
-   * @param numeroPedido
-   * @return boolean
-   * @throws ArgumentoIlegalException
-   */
-  private boolean verificaNumeroPedido(String numeroPedido)
-    throws ArgumentoIlegalException
-  {
-    assert numeroPedido != null: "El numero de pedido es nulo";
-    boolean ret = false;
-    if (numeroPedido.length() == 9)
-    {
-      String aux = numeroPedido.substring(0, 3);
-      if (aux.compareTo("PED") == 0)
-      {
-        int num = Integer.parseInt(numeroPedido.substring(3).trim());
-        if (num >= 0 && num <= 999999)
-          ret = true;
-        else
-          throw new ArgumentoIlegalException("El numero esta fuera de rango", num);
-      }
-      else
-        throw new ArgumentoIlegalException("El numero de pedido no contiene \"PED\"", numeroPedido);
-    }
-    else
-      throw new ArgumentoIlegalException("El numero debe tener 6 digitos", numeroPedido);
-    return ret;
-  }
-
-  /**Metodo que verifica que ningun atributo del pedido este sin inicializar. Como los atributos que son
-   * inicializados en el constructor se mantienen constantes, y ya se verifico que esten bien inicializados, se asumen
-   * como correctos
-   * Post: se indica si el pedido cumple las condiciones o no
-   * @return boolean
-   */
-  public boolean verificaNull()
-  {
-    return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.fechaDefinitiva != null);
-  }
-
-  /**Metodo que verifica que la cantidad a producir sea correcta segun las condiciones
-   * Post: se indica si la cantidad es correcta o no
-   * @param cantProduccion
-   * @return boolean
-   */
-  private boolean verificaCantProduccion(int cantProduccion)
-    throws ArgumentoIlegalException
-  {
-    if (cantProduccion > 0 && cantProduccion < 999)
-      return true;
-    else
-      throw new ArgumentoIlegalException("La cantidad a producir debe ser 0 < cant < 999", cantProduccion);
-  }
 
   /**Metodo que permite a los empleados tanto de ventas como produccion agregar una observacion al pedido, esta
    * sincronizado para que no se produzcan accesos simultaneos al metodo
@@ -157,6 +96,17 @@ public class Pedido
     assert obs != null: "Observacion nula";
     this.estadoActual.agregarObservacion(obs);
     this.verificarInvariantes();
+  }
+
+  /**Metodo que verifica que ningun atributo del pedido este sin inicializar. Como los atributos que son
+   * inicializados en el constructor se mantienen constantes, y ya se verifico que esten bien inicializados, se asumen
+   * como correctos
+   * Post: se indica si el pedido cumple las condiciones o no
+   * @return boolean
+   */
+  public boolean verificaNull()
+  {
+    return (this.fechaPedidoAceptado != null && this.fechaPropuestaProduccion != null && this.fechaDefinitiva != null);
   }
 
   /**Metodo que utilizaran los empleados de produccion para aceptar el pedido
@@ -204,28 +154,18 @@ public class Pedido
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMMM/yyyy");
 
-    try
-    {
-      ret += "Numero de pedido: " + ((this.verificaNumeroPedido(this.numeroPedido))? this.numeroPedido: " - ");
-      ret += "\nFecha de pedido: " + ((this.fechaPedido != null)? sdf.format(this.fechaPedido.getTime()): " - ");
-      ret += "\nTipo de maquina: " + ((this.codigoMaquina != null)? this.codigoMaquina: " - ");
-      ret +=
-        "\nCantidad a producir: " + ((this.verificaCantProduccion(this.cantProduccion))? this.cantProduccion: " - ");
-      ret +=
-        "\nFecha de entrega solicitada por ventas: " +
-        ((this.fechaEntregaVentas != null)? sdf.format(this.fechaEntregaVentas.getTime()): " - ");
-      ret +=
-        "\nFecha propuesta por produccion: " +
-        ((this.fechaPropuestaProduccion != null)? sdf.format(this.fechaPropuestaProduccion.getTime()): " - ");
-      ret +=
-        "\nFecha definitiva: " + ((this.fechaDefinitiva != null)? sdf.format(this.fechaDefinitiva.getTime()): " - ");
-      ret +=
-        "\nFecha de pedido aceptado: " +
-        ((this.fechaPedidoAceptado != null)? sdf.format(this.fechaPedidoAceptado.getTime()): " - ");
-    }
-    catch (ArgumentoIlegalException e)
-    {
-    }
+    ret += "Numero de pedido: " + this.numeroPedido;
+    ret += "\nFecha de pedido: " + sdf.format(this.fechaPedido.getTime());
+    ret += "\nTipo de maquina: " + this.codigoMaquina;
+    ret += "\nCantidad a producir: " + this.cantProduccion;
+    ret += "\nFecha de entrega solicitada por ventas: " + sdf.format(this.fechaEntregaVentas.getTime());
+    ret +=
+      "\nFecha propuesta por produccion: " +
+      ((this.fechaPropuestaProduccion != null)? sdf.format(this.fechaPropuestaProduccion.getTime()): " - ");
+    ret += "\nFecha definitiva: " + ((this.fechaDefinitiva != null)? sdf.format(this.fechaDefinitiva.getTime()): " - ");
+    ret +=
+      "\nFecha de pedido aceptado: " +
+      ((this.fechaPedidoAceptado != null)? sdf.format(this.fechaPedidoAceptado.getTime()): " - ");
     return ret;
   }
 
@@ -268,7 +208,7 @@ public class Pedido
     return listaObservaciones;
   }
 
-  /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para 
+  /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para
    * que actualice
    * pre: estadoActual distinto de null
    * @param estadoActual
@@ -276,7 +216,7 @@ public class Pedido
    */
   public void setEstadoActual(Estado estadoActual)
   {
-    assert estadoActual != null : "Estado nulo";
+    assert estadoActual != null: "Estado nulo";
     this.estadoActual = estadoActual;
     this.setChanged();
     this.notifyObservers();
@@ -289,23 +229,16 @@ public class Pedido
   }
 
   /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
-   * Captura las excepciones lanzadas por los metodos porque no interesa que se genere ningun aviso mediante interfaz
    */
   private void verificarInvariantes()
   {
-    try
-    {
-      assert this.verificaNumeroPedido(this.numeroPedido): "Atributo numeroPedido invalido";
-      assert this.verificaCantProduccion(this.cantProduccion): "Atributo cantProduccion invalido";
-    }
-    catch (ArgumentoIlegalException e)
-    {
-    }
-    assert this.fechaEntregaVentas != null : "Atributo fechaEntregaVentas invalido";
-    assert this.fechaPedido != null : "Atributo fechaPedido invalido";
-    assert this.tipoMaquina != null : "Atributo tipoMaquina invalido";
-    assert this.codigoMaquina != null : "Atributo codigoMaquina invalido";
-    assert this.estadoActual != null : "Atributo estadoActual invalido";
+    assert Verificaciones.verificaNumeroPedido(this.numeroPedido): "Atributo numeroPedido invalido";
+    assert Verificaciones.verificaCantProduccion(this.cantProduccion): "Atributo cantProduccion invalido";
+    assert this.fechaEntregaVentas != null: "Atributo fechaEntregaVentas invalido";
+    assert this.fechaPedido != null: "Atributo fechaPedido invalido";
+    assert this.tipoMaquina != null: "Atributo tipoMaquina invalido";
+    assert this.codigoMaquina != null: "Atributo codigoMaquina invalido";
+    assert this.estadoActual != null: "Atributo estadoActual invalido";
   }
 
 }
