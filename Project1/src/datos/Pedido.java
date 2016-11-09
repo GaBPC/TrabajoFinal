@@ -115,7 +115,7 @@ public class Pedido
    * @throws Exception si el pedido aun no esta listo para ser aceptado se produce la exception
    */
   public void aceptarPedido(Calendar fechaProduccion)
-    throws ArgumentoIlegalException, StateException
+  throws StateException
   {
     assert fechaProduccion != null: "Fecha propuesta por produccion nula";
     this.fechaPedidoAceptado = GregorianCalendar.getInstance();

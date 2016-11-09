@@ -109,19 +109,11 @@ public class DialogoObservaciones
         Observacion nueva;
         try
         {
-          nueva =
-            new Observacion(temaIngresado, GregorianCalendar.getInstance(), DialogoObservaciones.this.control
-                                                                                                           .getEmpeladoActual()
-                                                                                                           .getLegajo(),
-                            observacionIngresada);
+          nueva = DialogoObservaciones.this.control.crearObservacion(temaIngresado,observacionIngresada);
           DialogoObservaciones.this.control
                                    .getPedidoActual()
                                    .agregarObservacion(nueva);
           DialogoObservaciones.this.actualizarLista(listModel);
-        }
-        catch (ArgumentoIlegalException e)
-        {
-          JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
         }
         catch (Exception e)
         {
