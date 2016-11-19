@@ -29,7 +29,7 @@ public class Empleado
 
     assert Verificaciones.verificaNumeroLegajo(legajo): "Legajo invalido";
     assert Verificaciones.verificaNombreyApellido(nya): "Nombre y apellido invalidos";
-    assert sector != null: "Sector invalido";
+    assert Verificaciones.verificaSector(sector) : "Sector invalido";
 
 
     this.legajo = legajo;

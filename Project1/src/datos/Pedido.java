@@ -60,8 +60,8 @@ public class Pedido
     assert Verificaciones.verificaNumeroPedido(numeroPedido): "Numero pedido invalido";
     assert Verificaciones.verificaCantProduccion(cantProduccion): "Cantidad invalida";
     assert fechaEntregaVentas != null: "Fecha de entrega invalida";
-    assert codigoMaquina != null: "Codigo de maquina invalido";
-    assert tipoMaquina != null: "Tipo de maquina invalido";
+    assert Verificaciones.verificaCodigo(codigoMaquina) : "Codigo de maquina invalido";
+    assert Verificaciones.verificaTipoProducto(tipoMaquina) : "Tipo de maquina invalido";
     assert fechaPedido != null: "Fecha de pedido invalida";
 
     this.numeroPedido = numeroPedido;

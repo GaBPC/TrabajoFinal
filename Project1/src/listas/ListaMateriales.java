@@ -19,6 +19,8 @@ public class ListaMateriales
 
   public void agregarMaterial(Material nuevo)
   {
+    assert nuevo != null : "Material nulo";
+    
     this.lista.put(nuevo.getCodigo(), nuevo);
   }
 

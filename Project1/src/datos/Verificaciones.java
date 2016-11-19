@@ -1,5 +1,8 @@
 package datos;
 
+import listas.ListaEmpleados;
+import listas.ListaMaterialesStock;
+
 public abstract class Verificaciones
 {
   /**Metodo que verifica si el numero cumple con las restricciones de longitud.
@@ -39,7 +42,7 @@ public abstract class Verificaciones
     }
     return ret;
   }
-  
+
   /**Metodo que se encarga de verificar que el codigo cumpla con las condiciones establecidas para el codigo
    * pre: codigo distinto de null
    * post: se determina si el codigo cumple o no con las condiciones
@@ -72,9 +75,9 @@ public abstract class Verificaciones
   public static boolean verificaDescripcion(String descripcion)
   {
     assert descripcion != null: "Descripcion invalida";
-    
+
     boolean ret = false;
-    if (descripcion.length() <= 100)
+    if (descripcion.length() <= 100 && descripcion.length() > 0)
       ret = true;
     return ret;
   }
@@ -88,7 +91,7 @@ public abstract class Verificaciones
   {
     return (cantidad > 0.0 && cantidad <= 999.9999);
   }
-  
+
   /**Metodo que verifica si el numero de pedido cumple con las condiciones
    * pre: numeroPedido distinto de null
    * post: se indica si el numero de pedido cumple o no con las condiciones
@@ -129,17 +132,18 @@ public abstract class Verificaciones
    * @param texto
    * @return
    */
-  public static boolean verificaTexto(String texto) {
-      return (texto.length() <= 500);
+  public static boolean verificaTexto(String texto)
+  {
+    return (texto.length() <= 500);
   }
-  
-   /**Metodo que verifica que el legajo del empleado tenga la longitud correspondiente y ademas
-    * tenga el prefijo LEG
-    * pre: legajo distinto de null
-    * @param legajo
-    * post: se indica si el legajo es valido o no
-    * @return boolean
-    */
+
+  /**Metodo que verifica que el legajo del empleado tenga la longitud correspondiente y ademas
+   * tenga el prefijo LEG
+   * pre: legajo distinto de null
+   * @param legajo
+   * post: se indica si el legajo es valido o no
+   * @return boolean
+   */
   public static boolean verificaNumeroLegajo(String codigo)
   {
     boolean ret = false;
@@ -164,7 +168,38 @@ public abstract class Verificaciones
   public static boolean verificaNombreyApellido(String nya)
   {
     assert nya != null: "Nombre y apellido invalido";
-    return (nya.length() <= 100);
+
+    return (nya.length() > 0 && nya.length() <= 100);
   }
 
+  public static boolean verificaTipoCodigo(String tipoCodigo)
+  {
+    assert tipoCodigo != null: "El numero de pedido es nulo";
+    boolean ret = false;
+    if (tipoCodigo.length() == 9)
+    {
+      String aux = tipoCodigo.substring(0, 3);
+      if (aux.compareTo("PED") == 0)
+      {
+        ret = Verificaciones.verifica(tipoCodigo);
+      }
+    }
+    return ret;
+  }
+
+  public static boolean verificaTipoProducto(String tipoProducto)
+  {
+    return ListaMaterialesStock.getInstance()
+                               .getCodigoProd()
+                               .containsKey(tipoProducto);
+  }
+
+  public static boolean verificaSector(String sector)
+  {
+    boolean ret = false;
+    if (sector == ListaEmpleados.VENTAS || sector == ListaEmpleados.CONTABILIDAD ||
+        sector == ListaEmpleados.INSPECCION || sector == ListaEmpleados.PRODUCCION)
+        ret = true;
+    return ret;
+  }
 }

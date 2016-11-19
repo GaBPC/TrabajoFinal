@@ -3,6 +3,8 @@ package listas;
 import datos.Material;
 import datos.TipoProducto;
 
+import datos.Verificaciones;
+
 import exceptions.FaltantesException;
 
 import java.util.HashMap;
@@ -104,7 +106,6 @@ public class ListaMaterialesStock
     codigoProd.put(CONSOLA_GRUPAL, consolaGrupal.getCodigoProducto());
     codigoProd.put(SIMULADOR, simulador.getCodigoProducto());
 
-
     return recetas;
   }
 
@@ -138,6 +139,9 @@ public class ListaMaterialesStock
   public ListaMateriales verificarExistencias(String tipo, int cantidad)
     throws FaltantesException, Exception
   {
+    assert Verificaciones.verificaCodigo(tipo) : "Tipo invalido";
+    assert Verificaciones.verificaCantProduccion(cantidad) : "Cantidad invalida";
+    
     ListaMateriales listaFinal = new ListaMateriales();
     ListaMateriales listaFaltantes = new ListaMateriales();
 
@@ -165,16 +169,22 @@ public class ListaMaterialesStock
 
   public String getCodigo(String tipoProducto)
   {
+    assert Verificaciones.verificaTipoProducto(tipoProducto) : "Tipo producto invalido";
+    
     return codigoProd.get(tipoProducto);
   }
 
   public TipoProducto getProducto(String codigo)
   {
+    assert Verificaciones.verificaTipoCodigo(codigo) : "Codigo invalido";
+    
     return this.recetas.get(codigo);
   }
 
   public void actualizarExistencias(TipoProducto tipo)
   {
+    assert tipo != null : "Producto nulo";
+    
     ListaMateriales lista = tipo.getListaMateriales();
     Iterator<Material> it = lista.getIterator();
     while (it.hasNext())
@@ -195,4 +205,11 @@ public class ListaMaterialesStock
   {
     return this.listaExistencias.detalles();
   }
+  
+  public HashMap<String,String> getCodigoProd()
+  {
+    return this.codigoProd;
+  }
+                                  
+  
 }
