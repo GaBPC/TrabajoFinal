@@ -94,8 +94,7 @@ public class Material
   private void verificarInvariante()
   {
     assert Verificaciones.verificaCodigo(this.codigo): "Atributo codigo invalido";
-      assert Verificaciones.verificaDescripcion(this.descripcion): "Atributo descripcion invalido";
-    
+    assert Verificaciones.verificaDescripcion(this.descripcion): "Atributo descripcion invalido";
     assert Verificaciones.verificaCantidad(this.cantidad): "Atributo cantidad invalido";
   }
 }
