@@ -179,7 +179,7 @@ public abstract class Verificaciones
     if (tipoCodigo.length() == 9)
     {
       String aux = tipoCodigo.substring(0, 3);
-      if (aux.compareTo("PED") == 0)
+      if (aux.compareTo("TIP") == 0)
       {
         ret = Verificaciones.verifica(tipoCodigo);
       }

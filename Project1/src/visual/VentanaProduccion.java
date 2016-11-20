@@ -273,7 +273,6 @@ public class VentanaProduccion
   public void update(Observable observable, Object object)
   {
     assert observable != null : "Observable nulo";
-    assert object != null : "Object nulo";
     
     if (this.observados.contains(observable))
     {

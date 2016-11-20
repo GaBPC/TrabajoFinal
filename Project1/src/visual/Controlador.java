@@ -197,7 +197,7 @@ public class Controlador
                                Calendar fechaSolicitadaVentas)
     throws Exception
   {
-    if (fechaPedido != null && tipoMaquina != null && Verificaciones.verificaCantProduccion(cantProducir) &&
+    if (fechaPedido != null && Verificaciones.verificaTipoProducto(tipoMaquina) && Verificaciones.verificaCantProduccion(cantProducir) &&
         fechaSolicitadaVentas != null)
     {
       String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
