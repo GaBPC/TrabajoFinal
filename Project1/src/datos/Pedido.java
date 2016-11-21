@@ -51,7 +51,7 @@ public class Pedido
    * @param fechaPedido: Calendar distinto de null
    * @param fechaEntregaVentas: Calendar distinto de null
    * @param tipoMaquina: String distinto de null
-   * @param cantProduccion: float mayor o igual que 0 y menor que 1000
+   * @param cantProduccion: int mayor o igual que 0 y menor que 1000
    * Post: se crea una instancia de la clase Pedido o se informa que parametro no es correcto
    */
   public Pedido(String numeroPedido, Calendar fechaPedido, Calendar fechaEntregaVentas, String codigoMaquina,

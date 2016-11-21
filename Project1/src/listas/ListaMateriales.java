@@ -79,7 +79,7 @@ public class ListaMateriales
     return this.lista.size();
   }
 
-  public void agregarMaterial(String codigo, String descripcion, float cantidad)
+  public void agregarMaterial(String codigo, String descripcion, double cantidad)
     throws LengthException
   {
     if (!lista.containsKey(codigo))

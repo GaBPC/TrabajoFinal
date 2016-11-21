@@ -152,7 +152,7 @@ public class ListaMaterialesStock
     {
       Material matReceta = itReceta.next();
       Material matExistente = this.listaExistencias.getMaterial(matReceta.getCodigo());
-      float cantidadMaterialNecesaria = matReceta.getCantidad() * cantidad;
+      double cantidadMaterialNecesaria = matReceta.getCantidad() * cantidad;
       if (matExistente.getCantidad() >= cantidadMaterialNecesaria)
         listaFinal.agregarMaterial(new Material(matReceta.getCodigo(), matReceta.getDescripcion(),
                                                 cantidadMaterialNecesaria));
@@ -192,7 +192,7 @@ public class ListaMaterialesStock
       Material mat = it.next();
       try
       {
-        float cant1 = this.listaExistencias.getMaterial(mat.getCodigo()).getCantidad();
+        double cant1 = this.listaExistencias.getMaterial(mat.getCodigo()).getCantidad();
         this.listaExistencias.getMaterial(mat.getCodigo()).setCantidad(cant1 - mat.getCantidad());
       }
       catch (Exception e)

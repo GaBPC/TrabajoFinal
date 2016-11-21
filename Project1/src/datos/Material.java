@@ -12,7 +12,7 @@ public class Material
 
   private String codigo = null; //codigo que referencia a un material
   private String descripcion = null; //descipcion breve sobre el material
-  private float cantidad = 0.0f; //cantidad del material disponible
+  private double cantidad = 0.0f; //cantidad del material disponible
 
   /**Constructor principal de la clase
    * Pre: condiciones que deben cumplir los parametros
@@ -21,7 +21,7 @@ public class Material
    * @param cantidad: float que debe ser mayor o igual que 0 y menor que 1000
    * Post: se crea una instancia de la clase Material o se indica cual es el parametro invalido
    */
-  public Material(String codigo, String descripcion, float cantidad)
+  public Material(String codigo, String descripcion, double cantidad)
   {
     super();
     assert Verificaciones.verificaCodigo(codigo): "Codigo invalido";
@@ -61,14 +61,14 @@ public class Material
     return descripcion;
   }
 
-  public void setCantidad(float cantidad)
+  public void setCantidad(double cantidad)
   {
     assert Verificaciones.verificaCantidad(cantidad): "Cantidad invalida";
     this.cantidad = cantidad;
     this.verificarInvariante();
   }
 
-  public float getCantidad()
+  public double getCantidad()
   {
     return cantidad;
   }

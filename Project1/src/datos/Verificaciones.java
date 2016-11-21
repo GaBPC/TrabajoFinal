@@ -87,7 +87,7 @@ public abstract class Verificaciones
    * @param cantidad
    * @return boolean
    */
-  public static boolean verificaCantidad(float cantidad)
+  public static boolean verificaCantidad(double cantidad)
   {
     return (cantidad > 0.0 && cantidad <= 999.9999);
   }
