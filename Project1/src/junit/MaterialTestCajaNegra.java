@@ -24,14 +24,18 @@ public class MaterialTestCajaNegra
   @Before
   public void setUp()
   {
-    String descripcion = "esta es una descripcion de longitud 50 que debe aa";
-    this.material = new Material("MAT10211",descripcion,300);
   }
   
   @After
   public void tearDown()
   {
     this.material = null;
+  }
+  
+  private void setUp_2()
+  {
+    String descripcion = "esta es una descripcion de longitud 50 que debe aa";
+    this.material = new Material("MAT10211",descripcion,300);
   }
   
   @Test
@@ -275,6 +279,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_1()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT10211");
@@ -288,6 +293,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_2()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT99999");
@@ -301,6 +307,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_3()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT00000");
@@ -314,6 +321,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_4()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT101");
@@ -327,6 +335,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_5()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT0000");
@@ -340,6 +349,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_6()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT1000000");
@@ -353,6 +363,7 @@ public class MaterialTestCajaNegra
   @Test 
   public void testSetCodigo_7()
   {
+    this.setUp_2();
     try
     {
       this.material.setCodigo("MAT999999");
@@ -366,6 +377,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_1()
   {
+    this.setUp_2();
     try
     {
     String descripcion = "esta es una descripcion de longitud 50 que debe aa";
@@ -380,6 +392,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_2()
   {
+    this.setUp_2();
     try
     {
       String descripcion = "esta es una descripcion de longitud 100 caracteres para comprobar que funciona bien el constructor..";
@@ -394,6 +407,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_3()
   {
+    this.setUp_2();
     try
     {
       String descripcion = ".";
@@ -408,6 +422,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_4()
   {
+    this.setUp_2();
     try
     {
       String descripcion = "";
@@ -423,6 +438,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_5()
   {
+    this.setUp_2();
     try
     {
       String descripcion = "esta es una descripcion de longitud 100 caracteres para comprobar que funciona bien el constructor ahora es d 200 porque hay que corroborar que siga siendo robusto para cualquier caso que se presente.";
@@ -437,6 +453,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetDescripcion_6()
   {
+    this.setUp_2();
     try
     {
       String descripcion = "esta es una descripcion de longitud 100 caracteres para comprobar que funciona bien el constructor...";
@@ -451,6 +468,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_1()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(300);
@@ -465,6 +483,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_2()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(999.9999);
@@ -478,6 +497,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_3()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(000.0001);
@@ -491,6 +511,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_4()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(000.0000);
@@ -504,6 +525,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_5()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(1001.0000);
@@ -517,6 +539,7 @@ public class MaterialTestCajaNegra
   @Test
   public void testSetCantidad_6()
   {
+    this.setUp_2();
     try
     {
       this.material.setCantidad(1000.0000);
