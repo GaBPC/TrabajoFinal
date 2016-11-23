@@ -51,8 +51,9 @@ public abstract class Verificaciones
    */
   public static boolean verificaCodigo(String codigo)
   {
-    boolean ret = false;
+
     assert codigo != null: "El codigo es nulo";
+    boolean ret = false;
     if (codigo.length() == 8)
     {
       String aux = codigo.substring(0, 3);
