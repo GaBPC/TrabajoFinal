@@ -197,28 +197,34 @@ public class Controlador
                                Calendar fechaSolicitadaVentas)
     throws Exception
   {
-    if (fechaPedido != null && Verificaciones.verificaTipoProducto(tipoMaquina) && Verificaciones.verificaCantProduccion(cantProducir) &&
-        fechaSolicitadaVentas != null)
+    if (Verificaciones.verificaTipoProducto(tipoMaquina))
     {
+      String maquina = ListaMaterialesStock.getInstance().getCodigo(tipoMaquina);
       String aux = Integer.toString(this.pedidos.getProximoNumeroPedido());
       int longitud = aux.length();
-      String maquina = ListaMaterialesStock.getInstance().getCodigo(tipoMaquina);
       String numeroPedido = "PED";
       for (int i = 0; i < (6 - longitud); i++)
         numeroPedido += "0";
       numeroPedido += aux;
-      Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
-      pedidos.agregarNuevo(nuevo);
+      if (Verificaciones.verificaTipoCodigo(maquina) && Verificaciones.verificaNumeroPedido(numeroPedido) &&
+          fechaPedido != null && Verificaciones.verificaTipoProducto(tipoMaquina) &&
+          Verificaciones.verificaCantProduccion(cantProducir) && fechaSolicitadaVentas != null)
+      {
+        Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
+        pedidos.agregarNuevo(nuevo);
+      }
+      else
+        throw new Exception("Pedido invalido");
     }
     else
-      throw new Exception("Pedido invalido");
+      throw new Exception("Tipo producto invalido");
   }
 
-    /**Metodo que genera un lote con el pedido actualmente seleccionado. El sistema se encarga
-     * de calcular el numero de lote correspondiente.
-     * @throws Exception
-     */
-    public void generarLote()
+  /**Metodo que genera un lote con el pedido actualmente seleccionado. El sistema se encarga
+   * de calcular el numero de lote correspondiente.
+   * @throws Exception
+   */
+  public void generarLote()
     throws Exception
   {
     String aux = Integer.toString(this.lotes.getProximoNumeroLote());
@@ -227,49 +233,59 @@ public class Controlador
     for (int i = 0; i < (6 - longitud); i++)
       numeroLote += "0";
     numeroLote += aux;
-    if (this.pedidoActual != null)
+    if (this.pedidoActual != null && Verificaciones.verificaNumeroLote(numeroLote))
     {
       Lote lote = new Lote(this.pedidoActual, numeroLote);
-      this.lotes.agregarNuevo(lote);
+      if (lote != null)
+        this.lotes.agregarNuevo(lote);
+      else
+        throw new Exception("El lote no se creo");
     }
     else
-      throw new Exception("Falta seleccionar el pedido");
+      throw new Exception("El lote es invalido");
   }
 
-    /**Metodo que elimina de la lista de pedidos el pedido actualmente seleccionado.
-     */
-    public void removePedido()
+  /**Metodo que elimina de la lista de pedidos el pedido actualmente seleccionado.
+   */
+  public void removePedido()
   {
     this.pedidos.borrarPedido(this.pedidoActual);
   }
 
-    /**Metodo que elimina de la lista de lotes el lote actualmente seleccionado.
-     */
-    public void removeLote()
+  /**Metodo que elimina de la lista de lotes el lote actualmente seleccionado.
+   */
+  public void removeLote()
   {
-    this.lotes.borrarLote(this.loteActual);
+    if (this.loteActual != null)
+      this.lotes.borrarLote(this.loteActual);
   }
 
-    /**Metodo que devuelve un String con los detalles de los materiales que hay actualmente
-     * en stock.
-     * @return
-     */
-    public String detallesStock()
+  /**Metodo que devuelve un String con los detalles de los materiales que hay actualmente
+   * en stock.
+   * @return
+   */
+  public String detallesStock()
   {
     return ListaMaterialesStock.getInstance().detalles();
   }
 
-    /**Metodo que devuelve una lista con las existencias actuales del tipo de material
-     * indicado por parametro.
-     * @param tipo
-     * @return
-     * @throws FaltantesException
-     * @throws Exception
-     */
-    public ListaMateriales verificaExistencias(String tipo)
+  /**Metodo que devuelve una lista con las existencias actuales del tipo de material
+   * indicado por parametro.
+   * @param tipo
+   * @return
+   * @throws FaltantesException
+   * @throws Exception
+   */
+  public ListaMateriales verificaExistencias(String tipo)
     throws FaltantesException, Exception
   {
-    return this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
+    ListaMateriales list;
+    if (Verificaciones.verificaTipoCodigo(tipo) &&
+        Verificaciones.verificaCantidad(this.pedidoActual.getCantProduccion()))
+      list = this.stock.verificarExistencias(tipo, this.pedidoActual.getCantProduccion());
+    else
+      throw new Exception("Cantidad o producto invalido");
+    return list;
   }
 
   public void actualizarExistencias(TipoProducto tipo)
@@ -285,26 +301,30 @@ public class Controlador
   public void borrarMaterial(String codigo)
     throws Exception
   {
-    this.productoActual
-        .getListaMateriales()
-        .borrarMaterial(codigo);
+    if (Verificaciones.verificaCodigo(codigo))
+      this.productoActual
+          .getListaMateriales()
+          .borrarMaterial(codigo);
+    else
+      throw new Exception("Codigo invalido");
   }
 
-    /**Metodo para generar una nueva observacion. Esta observacion sera generada por el empleado
-     * que este actualmente logeado al sistema.
-     * @param temaIngresado es el tema que tendra la nueva observacion
-     * @param texto es el texto que el empleado quiere ingresar como observacion
-     * @return
-     * @throws Exception
-     */
-    public Observacion crearObservacion(String temaIngresado, String texto)
+  /**Metodo para generar una nueva observacion. Esta observacion sera generada por el empleado
+   * que este actualmente logeado al sistema.
+   * @param temaIngresado es el tema que tendra la nueva observacion
+   * @param texto es el texto que el empleado quiere ingresar como observacion
+   * @return
+   * @throws Exception
+   */
+  public Observacion crearObservacion(String temaIngresado, String texto)
     throws Exception
   {
     Observacion obs = null;
     String numeroLegajo = this.empleadoActual.getLegajo();
+    Calendar cal = GregorianCalendar.getInstance();
     if (temaIngresado != null && Verificaciones.verificaNumeroLegajo(numeroLegajo) &&
-        Verificaciones.verificaTexto(texto))
-      obs = new Observacion(temaIngresado, GregorianCalendar.getInstance(), numeroLegajo, texto);
+        Verificaciones.verificaTexto(texto) && cal != null)
+      obs = new Observacion(temaIngresado, cal, numeroLegajo, texto);
     else
       throw new Exception("La observacion es invalida");
     return obs;

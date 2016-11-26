@@ -35,14 +35,6 @@ public class Material
     this.verificarInvariante();
   }
 
-  public void setCodigo(String codigo)
-  {
-    assert Verificaciones.verificaCodigo(codigo): "Codigo invalido";
-
-    this.codigo = codigo;
-    this.verificarInvariante();
-  }
-
   public String getCodigo()
   {
     return codigo;

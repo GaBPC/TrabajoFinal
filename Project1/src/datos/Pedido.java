@@ -203,13 +203,11 @@ public class Pedido
 
   /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para
    * que actualice
-   * pre: estadoActual distinto de null
    * @param estadoActual
    * post: cambia el estado del pedido
    */
   public void setEstadoActual(Estado estadoActual)
   {
-    assert estadoActual != null: "Estado nulo";
     this.estadoActual = estadoActual;
     this.setChanged();
     this.notifyObservers();

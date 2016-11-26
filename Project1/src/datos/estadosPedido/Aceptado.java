@@ -33,7 +33,6 @@ public class Aceptado extends EstadoBase {
      */
     @Override
     public void agregarObservacion(Observacion obs) throws StateException {
-        assert obs != null : "El parametro es null";
         throw new StateException("Imposible agregar, pedido ya aceptado");
     }
 

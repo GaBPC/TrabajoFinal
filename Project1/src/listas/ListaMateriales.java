@@ -2,7 +2,7 @@ package listas;
 
 import datos.Material;
 
-import exceptions.LengthException;
+import datos.Verificaciones;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,16 +17,11 @@ public class ListaMateriales
     this.lista = new HashMap();
   }
 
-  public void agregarMaterial(Material nuevo)
-  {
-    assert nuevo != null : "Material nulo";
-    
-    this.lista.put(nuevo.getCodigo(), nuevo);
-  }
-
   public Material getMaterial(String codigo)
     throws Exception
   {
+    assert Verificaciones.verificaCodigo(codigo) : "Codigo invalido";
+    
     Material ret = null;
     if (this.lista.containsKey(codigo))
       ret = this.lista.get(codigo);
@@ -35,16 +30,11 @@ public class ListaMateriales
     return ret;
   }
 
-  public void modificarMaterial(String codigo, float cantidad)
-    throws Exception
+  public void agregarMaterial(Material nuevo)
   {
-    if (this.lista.containsKey(codigo))
-    {
-      Material aux = this.lista.get(codigo);
-      aux.setCantidad(cantidad);
-    }
-    else
-      throw new Exception("El material no existe");
+    assert nuevo != null: "Material nulo";
+
+    this.lista.put(nuevo.getCodigo(), nuevo);
   }
 
   public void borrarMaterial(String codigo)
@@ -53,7 +43,7 @@ public class ListaMateriales
     if (this.lista.containsKey(codigo))
       this.lista.remove(codigo);
     else
-      throw new Exception("Campo vacio");
+      throw new Exception("No contiene al material solicitado");
   }
 
   public Iterator<Material> getIterator()
@@ -82,14 +72,11 @@ public class ListaMateriales
   }
 
   public void agregarMaterial(String codigo, String descripcion, double cantidad)
-    throws LengthException
   {
     if (!lista.containsKey(codigo))
     {
-      Material mat = null;
-
-      mat = new Material(codigo, descripcion, cantidad);
-      this.agregarMaterial(mat);
+      Material mat = new Material(codigo, descripcion, cantidad);
+      this.lista.put(mat.getCodigo(), mat);
     }
 
     else

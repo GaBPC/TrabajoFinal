@@ -110,6 +110,7 @@ public class ListaMaterialesStock
   }
 
 
+
   /**Metodo que devuelve la referencia a la unica instancia posible de la lista de stock
    * @return
    */
@@ -118,14 +119,6 @@ public class ListaMaterialesStock
     if (_instance == null)
       _instance = new ListaMaterialesStock();
     return _instance;
-  }
-
-  /**Metodo que agrega un nuevo material a la lista
-   * @param nuevo
-   */
-  public void agregarNuevo(Material nuevo)
-  {
-    this.listaExistencias.agregarMaterial(nuevo);
   }
 
   /**Metodo que devuelve todos los materiales que estan presentes en la lista
@@ -137,15 +130,17 @@ public class ListaMaterialesStock
   }
 
   public ListaMateriales verificarExistencias(String tipo, int cantidad)
-    throws FaltantesException, Exception
+    throws FaltantesException,Exception
   {
-    assert Verificaciones.verificaTipoCodigo(tipo) : "Tipo invalido";
-    assert Verificaciones.verificaCantProduccion(cantidad) : "Cantidad invalida";
-    
+    assert Verificaciones.verificaTipoCodigo(tipo): "Tipo invalido";
+    assert Verificaciones.verificaCantProduccion(cantidad): "Cantidad invalida";
+
     ListaMateriales listaFinal = new ListaMateriales();
     ListaMateriales listaFaltantes = new ListaMateriales();
 
-    ListaMateriales receta = this.recetas.get(tipo).getListaMateriales();
+    ListaMateriales receta = this.recetas
+                                 .get(tipo)
+                                 .getListaMateriales();
     Iterator<Material> itReceta = receta.getIterator();
 
     while (itReceta.hasNext())
@@ -157,8 +152,10 @@ public class ListaMaterialesStock
         listaFinal.agregarMaterial(new Material(matReceta.getCodigo(), matReceta.getDescripcion(),
                                                 cantidadMaterialNecesaria));
       else
-        listaFaltantes.agregarMaterial(new Material(matReceta.getCodigo(), matReceta.getDescripcion(),
-                                                    cantidadMaterialNecesaria - matExistente.getCantidad()));
+      {
+        double cant = cantidadMaterialNecesaria - matExistente.getCantidad();
+        listaFaltantes.agregarMaterial(new Material(matReceta.getCodigo(), matReceta.getDescripcion(),cant)); 
+      }
     }
     if (listaFaltantes.size() <= 0)
       return listaFinal;
@@ -169,22 +166,22 @@ public class ListaMaterialesStock
 
   public String getCodigo(String tipoProducto)
   {
-    assert Verificaciones.verificaTipoProducto(tipoProducto) : "Tipo producto invalido";
-    
+    assert Verificaciones.verificaTipoProducto(tipoProducto): "Tipo producto invalido";
+
     return codigoProd.get(tipoProducto);
   }
 
   public TipoProducto getProducto(String codigo)
   {
-    assert Verificaciones.verificaTipoCodigo(codigo) : "Codigo invalido";
-    
+    assert Verificaciones.verificaTipoCodigo(codigo): "Codigo invalido";
+
     return this.recetas.get(codigo);
   }
 
   public void actualizarExistencias(TipoProducto tipo)
   {
-    assert tipo != null : "Producto nulo";
-    
+    assert tipo != null: "Producto nulo";
+
     ListaMateriales lista = tipo.getListaMateriales();
     Iterator<Material> it = lista.getIterator();
     while (it.hasNext())
@@ -192,8 +189,12 @@ public class ListaMaterialesStock
       Material mat = it.next();
       try
       {
-        double cant1 = this.listaExistencias.getMaterial(mat.getCodigo()).getCantidad();
-        this.listaExistencias.getMaterial(mat.getCodigo()).setCantidad(cant1 - mat.getCantidad());
+        double cant1 = this.listaExistencias
+                           .getMaterial(mat.getCodigo())
+                           .getCantidad();
+        this.listaExistencias
+            .getMaterial(mat.getCodigo())
+            .setCantidad(cant1 - mat.getCantidad());
       }
       catch (Exception e)
       {
@@ -205,11 +206,11 @@ public class ListaMaterialesStock
   {
     return this.listaExistencias.detalles();
   }
-  
-  public HashMap<String,String> getCodigoProd()
+
+  public HashMap<String, String> getCodigoProd()
   {
     return this.codigoProd;
   }
-                                  
-  
+
+
 }

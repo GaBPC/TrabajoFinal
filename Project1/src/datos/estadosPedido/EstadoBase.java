@@ -17,9 +17,6 @@ public abstract class EstadoBase implements Estado {
      */
     public EstadoBase(Pedido pedido) {
         super();
-        
-        assert pedido != null : "El parametro es null";
-        
         this.pedido = pedido;
     }
 

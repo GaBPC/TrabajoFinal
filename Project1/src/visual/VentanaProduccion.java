@@ -5,6 +5,8 @@ import datos.Pedido;
 
 import datos.TipoProducto;
 
+import datos.Verificaciones;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -38,8 +40,8 @@ import visual.auxiliares.PanelLista;
 public class VentanaProduccion
   extends VentanaBase
 {
-  private DefaultListModel listModelEv;   //DefaultListModel que se utiliza para mostrar en pantalla los pedidos en evaluacion
-  private DefaultListModel listModelAc;   //DefaultListModel que se utiliza para mostrar en pantalla los pedidos aceptados
+  private DefaultListModel listModelEv; //DefaultListModel que se utiliza para mostrar en pantalla los pedidos en evaluacion
+  private DefaultListModel listModelAc; //DefaultListModel que se utiliza para mostrar en pantalla los pedidos aceptados
 
   /**Constructor de la ventana, se le pasa el controlador por parametro, el cual es pasado a la ventana padre
    * pre: control distinto de null
@@ -77,10 +79,16 @@ public class VentanaProduccion
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
         if (seleccionado != -1)
         {
-          VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
-          VentanaProduccion.this.control.removePedido();
-          VentanaProduccion.this.actualizarListaEv();
-          JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado");
+          Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
+          if (ped != null)
+          {
+            VentanaProduccion.this.control.setPedidoActual(ped);
+            VentanaProduccion.this.control.removePedido();
+            VentanaProduccion.this.actualizarListaEv();
+            JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado");
+          }
+          else
+            JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido es nulo");
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a cancelar");
@@ -117,14 +125,25 @@ public class VentanaProduccion
         if (seleccionado != -1)
         {
           Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
-          VentanaProduccion.this.control.setPedidoActual(ped);
-          VentanaProduccion.this
-            .control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
+          if (ped != null)
+          {
+            VentanaProduccion.this.control.setPedidoActual(ped);
+            String cod = ped.getCodigoMaquina();
+            if (Verificaciones.verificaTipoCodigo(cod))
+            {
+              VentanaProduccion.this
+                .control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
 
-          new DialogoMateriales(VentanaProduccion.this.control);
+              new DialogoMateriales(VentanaProduccion.this.control);
 
-          VentanaProduccion.this.actualizarListaAc();
-          VentanaProduccion.this.actualizarListaEv();
+              VentanaProduccion.this.actualizarListaAc();
+              VentanaProduccion.this.actualizarListaEv();
+            }
+            else
+              JOptionPane.showMessageDialog(VentanaProduccion.this, "Codigo de producto invalido");
+          }
+          else
+            JOptionPane.showMessageDialog(VentanaProduccion.this, "Pedido nulo");
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a aceptar");
@@ -262,7 +281,7 @@ public class VentanaProduccion
     }
   }
 
-  /**Metodo que se activa cuando se realiza algun cambio en las clases a las cuales observa esta ventana. Se detecta el 
+  /**Metodo que se activa cuando se realiza algun cambio en las clases a las cuales observa esta ventana. Se detecta el
    * elemento que produjo el cambio y se adquiere una explicacion del cambio sufrido
    * pre: los parametros deben ser distintos de null
    * @param observable
@@ -272,8 +291,8 @@ public class VentanaProduccion
   @Override
   public void update(Observable observable, Object object)
   {
-    assert observable != null : "Observable nulo";
-    
+    assert observable != null: "Observable nulo";
+
     if (this.observados.contains(observable))
     {
       this.actualizarListaAc();

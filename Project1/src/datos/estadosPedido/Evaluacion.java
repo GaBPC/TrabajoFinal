@@ -12,7 +12,7 @@ public class Evaluacion
   extends EstadoBase
 {
   /**Constructor vacio de la clase, el cual le pasa el parametro pedido a la clase padre
-   * @param pedido distinto de null
+   * @param pedido 
    */
   public Evaluacion(Pedido pedido)
   {
@@ -47,6 +47,8 @@ public class Evaluacion
   public void agregarObservacion(Observacion obs)
     throws StateException
   {
+    assert obs!=null : "Observacion nula";
+    
     if (obs.verificacion())
       this.pedido
           .getListaObservaciones()

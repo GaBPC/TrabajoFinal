@@ -71,14 +71,6 @@ public class TipoProducto
     return this.descripcion;
   }
 
-  public void setListaMat(ListaMateriales listaMat)
-  {
-    assert listaMat != null : "Lista de Materiales nula";
-    this.listaMat = listaMat;
-    
-    this.verificarInvariantes();
-  }
-
   /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
    */
   private void verificarInvariantes()

@@ -45,7 +45,6 @@ public class Iniciado extends EstadoBase {
      */
     @Override
     public void agregarObservacion(Observacion obs) throws StateException {
-        assert obs != null : "El parametro es null";
         throw new StateException("No se pueden realizar observaciones sobre este pedido");
     }
 

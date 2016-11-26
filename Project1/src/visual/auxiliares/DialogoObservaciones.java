@@ -36,7 +36,7 @@ public class DialogoObservaciones
   extends JDialog
 {
 
-  private Controlador control;   //instancia de la clase controlador
+  private Controlador control; //instancia de la clase controlador
 
   /**Constructor de la clase, en el cual se crea la instancia de la clase y todos sus componentes
    * pre: control distinto de null
@@ -46,8 +46,8 @@ public class DialogoObservaciones
   public DialogoObservaciones(Controlador control)
   {
     super();
-    assert control != null : "Controlador invalido";
-    
+    assert control != null: "Controlador invalido";
+
     this.setLocationRelativeTo(null);
     this.control = control;
     this.setTitle("Observaciones");
@@ -57,7 +57,7 @@ public class DialogoObservaciones
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
-    
+
     this.verificarInvariantes();
   }
 
@@ -102,14 +102,19 @@ public class DialogoObservaciones
       {
         String temaIngresado = tema.getText();
         String observacionIngresada = observacion.getText();
-        Observacion nueva;
+        Observacion nueva = null;
         try
         {
-          nueva = DialogoObservaciones.this.control.crearObservacion(temaIngresado,observacionIngresada);
-          DialogoObservaciones.this.control
-                                   .getPedidoActual()
-                                   .agregarObservacion(nueva);
-          DialogoObservaciones.this.actualizarLista(listModel);
+          nueva = DialogoObservaciones.this.control.crearObservacion(temaIngresado, observacionIngresada);
+          if (nueva == null)
+            JOptionPane.showMessageDialog(DialogoObservaciones.this, "Observacion mal creada");
+          else
+          {
+            DialogoObservaciones.this.control
+                                     .getPedidoActual()
+                                     .agregarObservacion(nueva);
+            DialogoObservaciones.this.actualizarLista(listModel);
+          }
         }
         catch (Exception e)
         {
@@ -123,7 +128,7 @@ public class DialogoObservaciones
     panelSouth.add(nuevoIngreso);
     /* Se a�ade el panel al contenedor del dialogo*/
     cp.add(panelSouth, BorderLayout.SOUTH);
-    
+
     this.verificarInvariantes();
   }
 
@@ -134,8 +139,8 @@ public class DialogoObservaciones
    */
   private void actualizarLista(DefaultListModel modelo)
   {
-    assert modelo != null : "Modelo nulo";
-    
+    assert modelo != null: "Modelo nulo";
+
     modelo.removeAllElements();
 
     Iterator<Observacion> it = this.control
@@ -150,6 +155,6 @@ public class DialogoObservaciones
    */
   private void verificarInvariantes()
   {
-    assert this.control != null : "Atributo controlador invalido";
+    assert this.control != null: "Atributo controlador invalido";
   }
 }

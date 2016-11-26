@@ -2,7 +2,8 @@ package visual.auxiliares;
 
 import datos.TipoProducto;
 
-import exceptions.LengthException;
+import datos.Verificaciones;
+
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -80,23 +81,19 @@ public class DialogoAgregar
       @Override
       public void actionPerformed(ActionEvent actionEvent)
       {
-        System.out.println(codMaterial.getText());
-
         if (codMaterial.getText().length() != 0 && descMaterial.getText().length() != 0 && cant.getText().length() != 0)
         {
           String codigo = "MAT";
           codigo += codMaterial.getText();
           String descripcion = descMaterial.getText();
           float cantidad = Float.parseFloat(cant.getText());
-          try
+          if(Verificaciones.verificaCodigo(codigo) && Verificaciones.verificaDescripcion(descripcion) && Verificaciones.verificaCantidad(cantidad))
           {
             prod.getListaMateriales().agregarMaterial(codigo, descripcion, cantidad);
+            DialogoAgregar.this.dispose();
           }
-          catch (LengthException e)
-          {
-            JOptionPane.showMessageDialog(DialogoAgregar.this, e.getMessage());
-          }
-          DialogoAgregar.this.dispose();
+          else
+            JOptionPane.showMessageDialog(DialogoAgregar.this, "Datos invalidos");
         }
         else
           JOptionPane.showMessageDialog(DialogoAgregar.this, "Campos vacios");
