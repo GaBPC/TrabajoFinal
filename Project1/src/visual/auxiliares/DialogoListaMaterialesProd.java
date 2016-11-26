@@ -1,5 +1,7 @@
 package visual.auxiliares;
 
+import datos.TipoProducto;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -25,7 +28,7 @@ import visual.Controlador;
 public class DialogoListaMaterialesProd
   extends JDialog
 {
-  private Controlador control;  //instancia de controlador
+  private Controlador control; //instancia de controlador
 
   /**Constructor de la clase
    * pre: control distinto de null
@@ -35,8 +38,8 @@ public class DialogoListaMaterialesProd
   public DialogoListaMaterialesProd(Controlador control)
   {
     super();
-    assert control != null : "Controlador nulo";
-    
+    assert control != null: "Controlador nulo";
+
     this.setLocationRelativeTo(null);
     this.control = control;
     this.setLayout(new BorderLayout());
@@ -46,7 +49,7 @@ public class DialogoListaMaterialesProd
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
-    
+
     this.verificarInvariantes();
   }
 
@@ -89,7 +92,7 @@ public class DialogoListaMaterialesProd
 
     cp.add(panelBotones, BorderLayout.SOUTH);
     cp.add(materiales, BorderLayout.CENTER);
-    
+
     this.verificarInvariantes();
   }
 
@@ -100,22 +103,29 @@ public class DialogoListaMaterialesProd
    */
   public void actualizarMatProductos(JTextArea materiales)
   {
-    assert materiales != null : "Materiales nulo";
-    
+    assert materiales != null: "Materiales nulo";
+
     materiales.setText("");
-    String tipo = this.control
-                      .getProductoActual()
-                      .getCodigoProducto();
-    ListaMateriales lista = ListaMaterialesStock.getInstance()
-                                                .getProducto(tipo)
-                                                .getListaMateriales();
-    materiales.append(lista.detalles());
+    try
+    {
+      String tipo = this.control
+                        .getProductoActual()
+                        .getCodigoProducto();
+      ListaMateriales lista = ListaMaterialesStock.getInstance()
+                                                  .getProducto(tipo)
+                                                  .getListaMateriales();
+      materiales.append(lista.detalles());
+    }
+    catch (Exception e)
+    {
+      JOptionPane.showMessageDialog(DialogoListaMaterialesProd.this, e.getMessage());
+    }
   }
 
   /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError
    */
   private void verificarInvariantes()
   {
-    assert this.control != null : "Atributo controlador invalido";
+    assert this.control != null: "Atributo controlador invalido";
   }
 }

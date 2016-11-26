@@ -83,7 +83,7 @@ public class VentanaProduccion
           if (ped != null)
           {
             VentanaProduccion.this.control.setPedidoActual(ped);
-            VentanaProduccion.this.control.removePedido();
+              VentanaProduccion.this.control.removePedido();
             VentanaProduccion.this.actualizarListaEv();
             JOptionPane.showMessageDialog(VentanaProduccion.this, "El pedido ha sido cancelado");
           }
@@ -105,8 +105,14 @@ public class VentanaProduccion
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
         if (seleccionado != -1)
         {
-          VentanaProduccion.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
-          new DialogoObservaciones(VentanaProduccion.this.control);
+          Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
+          if (ped != null)
+          {
+            VentanaProduccion.this.control.setPedidoActual(ped);
+            new DialogoObservaciones(VentanaProduccion.this.control);
+          }
+          else
+            JOptionPane.showMessageDialog(VentanaProduccion.this, "Pedido nulo");
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun pedido a observar");
@@ -131,11 +137,12 @@ public class VentanaProduccion
             String cod = ped.getCodigoMaquina();
             if (Verificaciones.verificaTipoCodigo(cod))
             {
-              VentanaProduccion.this
-                .control.setProductoActual(VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina()));
-
-              new DialogoMateriales(VentanaProduccion.this.control);
-
+              TipoProducto prod = VentanaProduccion.this.control.getProducto(ped.getCodigoMaquina());
+              if (prod != null)
+              {
+                VentanaProduccion.this.control.setProductoActual(prod);
+                new DialogoMateriales(VentanaProduccion.this.control);
+              }
               VentanaProduccion.this.actualizarListaAc();
               VentanaProduccion.this.actualizarListaEv();
             }
@@ -170,10 +177,13 @@ public class VentanaProduccion
         if (seleccionado != -1)
         {
           Lote lot = (Lote) listModelAc.getElementAt(seleccionado);
-          VentanaProduccion.this.control.setLoteActual(lot);
-          VentanaProduccion.this.control.removeLote();
-          VentanaProduccion.this.actualizarListaAc();
-          JOptionPane.showMessageDialog(VentanaProduccion.this, "Ha comenzado a generarse el lote");
+          if (lot != null)
+          {
+            VentanaProduccion.this.control.setLoteActual(lot);
+            VentanaProduccion.this.control.removeLote();
+            VentanaProduccion.this.actualizarListaAc();
+            JOptionPane.showMessageDialog(VentanaProduccion.this, "Ha comenzado a generarse el lote");
+          }
         }
         else
           JOptionPane.showMessageDialog(VentanaProduccion.this, "No se ha seleccionado ningun lote a generar");
@@ -220,8 +230,11 @@ public class VentanaProduccion
         if (codigoMaterial != null)
         {
           TipoProducto tp = ListaMaterialesStock.getInstance().getProducto(codigoMaterial);
-          VentanaProduccion.this.control.setProductoActual(tp);
-          new DialogoListaMaterialesProd(VentanaProduccion.this.control);
+          if (tp != null)
+          {
+            VentanaProduccion.this.control.setProductoActual(tp);
+            new DialogoListaMaterialesProd(VentanaProduccion.this.control);
+          }
         }
       }
     };

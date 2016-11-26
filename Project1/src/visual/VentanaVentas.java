@@ -46,8 +46,8 @@ public class VentanaVentas
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
   }
 
- /**Metodo que inicia todos los componentes de la ventana.
-  */
+  /**Metodo que inicia todos los componentes de la ventana.
+   */
   @Override
   protected void IniciarComponentes()
   {
@@ -73,10 +73,16 @@ public class VentanaVentas
           int seleccionado = panelIniciados.getLista().getSelectedIndex();
           if (seleccionado != -1)
           {
-            VentanaVentas.this.control.setPedidoActual((Pedido) listModelIn.getElementAt(seleccionado));
-            VentanaVentas.this.control.cambiarAEvaluacion();
-            VentanaVentas.this.actualizarListaIn(listModelIn);
-            VentanaVentas.this.actualizarListaEv(listModelEv);
+            Pedido ped = (Pedido) listModelIn.getElementAt(seleccionado);
+            if (ped != null)
+            {
+              VentanaVentas.this.control.setPedidoActual(ped);
+              VentanaVentas.this.control.cambiarAEvaluacion();
+              VentanaVentas.this.actualizarListaIn(listModelIn);
+              VentanaVentas.this.actualizarListaEv(listModelEv);
+            }
+            else
+              JOptionPane.showMessageDialog(VentanaVentas.this, "El pedido es nulo");
           }
           else
             JOptionPane.showMessageDialog(VentanaVentas.this, "No se ha seleccionado ningun pedido para evaluar");
@@ -106,8 +112,12 @@ public class VentanaVentas
         int seleccionado = panelEvaluacion.getLista().getSelectedIndex();
         if (seleccionado != -1)
         {
-          VentanaVentas.this.control.setPedidoActual((Pedido) listModelEv.getElementAt(seleccionado));
-          new DialogoObservaciones(VentanaVentas.this.control);
+          Pedido ped = (Pedido) listModelEv.getElementAt(seleccionado);
+          if (ped != null)
+          {
+            VentanaVentas.this.control.setPedidoActual(ped);
+            new DialogoObservaciones(VentanaVentas.this.control);
+          }
         }
         else
           JOptionPane.showMessageDialog(VentanaVentas.this, "No se ha seleccionado ningun pedido a observar");
@@ -126,7 +136,7 @@ public class VentanaVentas
     cp.add(panelListas, BorderLayout.CENTER);
   }
 
-    private JPanel creaPanelIngreso()
+  private JPanel creaPanelIngreso()
   {
     /* Panel para la creacion de nuevos pedidos desde cero*/
     JPanel panelCreacion = new JPanel();
@@ -201,28 +211,28 @@ public class VentanaVentas
     return panelIntegral;
   }
 
-    /**Metodo que actualiza los datos de la lista de pedidos en estado de evaluacion
-     * Pre:
-     * - Se asume que el parametro modelo es distinto de null
-     * Pos:
-     * - Se actualiza la lista de pedidos en estado de evaluacion
-     * @param modelo
-     */
-    private void actualizarListaEv(DefaultListModel modelo)
+  /**Metodo que actualiza los datos de la lista de pedidos en estado de evaluacion
+   * Pre:
+   * - Se asume que el parametro modelo es distinto de null
+   * Pos:
+   * - Se actualiza la lista de pedidos en estado de evaluacion
+   * @param modelo
+   */
+  private void actualizarListaEv(DefaultListModel modelo)
   {
     modelo.removeAllElements();
     Iterator<Pedido> it = this.control.getPedidosEvaluacion();
     while (it.hasNext())
       modelo.addElement(it.next());
   }
-    
- /**Metodo que actualiza los datos de la lista de pedidos en estado iniciado
-  * Pre:
-  * - Se asume que el parametro modelo es distinto de null
-  * Pos:
-  * - Se actualiza la lista de pedidos en estado iniciado
-  * @param modelo
-  */
+
+  /**Metodo que actualiza los datos de la lista de pedidos en estado iniciado
+   * Pre:
+   * - Se asume que el parametro modelo es distinto de null
+   * Pos:
+   * - Se actualiza la lista de pedidos en estado iniciado
+   * @param modelo
+   */
   private void actualizarListaIn(DefaultListModel modelo)
   {
     modelo.removeAllElements();

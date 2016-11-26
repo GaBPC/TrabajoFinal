@@ -3,6 +3,8 @@ package visual.auxiliares;
 import datos.Observacion;
 
 
+import datos.Pedido;
+
 import java.awt.BorderLayout;
 
 import java.awt.Container;
@@ -114,6 +116,7 @@ public class DialogoObservaciones
                                      .getPedidoActual()
                                      .agregarObservacion(nueva);
             DialogoObservaciones.this.actualizarLista(listModel);
+            DialogoObservaciones.this.dispose();
           }
         }
         catch (Exception e)
@@ -143,12 +146,17 @@ public class DialogoObservaciones
 
     modelo.removeAllElements();
 
-    Iterator<Observacion> it = this.control
-                                   .getPedidoActual()
-                                   .getListaObservaciones()
-                                   .iterator();
-    while (it.hasNext())
-      modelo.addElement(it.next().toString());
+    try
+    {
+      Pedido ped = this.control.getPedidoActual();
+      Iterator<Observacion> it = ped.getListaObservaciones().iterator();
+      while (it.hasNext())
+        modelo.addElement(it.next().toString());
+    }
+    catch (Exception e)
+    {
+      JOptionPane.showMessageDialog(DialogoObservaciones.this, e.getMessage());
+    }
   }
 
   /**Metodo que verifica que los invariantes de clase se cumplan. Si algo falla lanza un AssertError

@@ -130,7 +130,7 @@ public class ListaMaterialesStock
   }
 
   public ListaMateriales verificarExistencias(String tipo, int cantidad)
-    throws FaltantesException,Exception
+    throws FaltantesException, Exception
   {
     assert Verificaciones.verificaTipoCodigo(tipo): "Tipo invalido";
     assert Verificaciones.verificaCantProduccion(cantidad): "Cantidad invalida";

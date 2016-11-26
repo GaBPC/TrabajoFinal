@@ -67,22 +67,18 @@ public class Controlador
     this.empleadoActual = actual;
   }
 
-  public Empleado getEmpeladoActual()
-  {
-    assert this.empleadoActual != null: "Atributo null";
-    return this.empleadoActual;
-  }
-
   public void setPedidoActual(Pedido pedido)
   {
     assert pedido != null: "El parametro es null";
     this.pedidoActual = pedido;
   }
 
-  public Pedido getPedidoActual()
+  public Pedido getPedidoActual() throws Exception
   {
-    assert this.pedidoActual != null: "Atributo null";
-    return this.pedidoActual;
+    if(this.pedidoActual != null)
+      return this.pedidoActual;
+    else
+      throw new Exception("El pedido es incorrecto");
   }
 
   public void setLoteActual(Lote loteActual)
@@ -91,22 +87,18 @@ public class Controlador
     this.loteActual = loteActual;
   }
 
-  public Lote getLoteActual()
-  {
-    assert this.loteActual != null: "Atributo null";
-    return loteActual;
-  }
-
   public void setProductoActual(TipoProducto productoActual)
   {
     assert productoActual != null: "El parametro es null";
     this.productoActual = productoActual;
   }
 
-  public TipoProducto getProductoActual()
+  public TipoProducto getProductoActual() throws Exception
   {
-    assert this.productoActual != null: "Atributo null";
-    return productoActual;
+    if(this.productoActual != null)
+      return productoActual;
+    else
+      throw new Exception("El producto es incorrecto");
   }
 
   /* -----------Fin de los metodos de set y get de la clase----------*/
@@ -207,8 +199,7 @@ public class Controlador
         numeroPedido += "0";
       numeroPedido += aux;
       if (Verificaciones.verificaTipoCodigo(maquina) && Verificaciones.verificaNumeroPedido(numeroPedido) &&
-          fechaPedido != null && Verificaciones.verificaTipoProducto(tipoMaquina) &&
-          Verificaciones.verificaCantProduccion(cantProducir) && fechaSolicitadaVentas != null)
+          fechaPedido != null && Verificaciones.verificaCantProduccion(cantProducir) && fechaSolicitadaVentas != null)
       {
         Pedido nuevo = new Pedido(numeroPedido, fechaPedido, fechaSolicitadaVentas, maquina, tipoMaquina, cantProducir);
         pedidos.agregarNuevo(nuevo);
@@ -249,7 +240,8 @@ public class Controlador
    */
   public void removePedido()
   {
-    this.pedidos.borrarPedido(this.pedidoActual);
+    if(this.pedidoActual != null)
+      this.pedidos.borrarPedido(this.pedidoActual);
   }
 
   /**Metodo que elimina de la lista de lotes el lote actualmente seleccionado.

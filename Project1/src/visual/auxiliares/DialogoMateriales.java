@@ -121,13 +121,7 @@ public class DialogoMateriales
     this.aceptarLote.setEnabled(false);
     panelAceptar.add(aceptarLote, BorderLayout.SOUTH);
 
-    try
-    {
-      this.actualizarMateriales(materiales);
-    }
-    catch (Exception e)
-    {
-    }
+    this.actualizarMateriales(materiales);
 
     this.verificarInvariantes();
   }
@@ -138,24 +132,19 @@ public class DialogoMateriales
    * @throws Exception
    */
   public void actualizarMateriales(JTextArea materiales)
-    throws Exception
+
   {
-    String tipo = this.control
-                      .getPedidoActual()
-                      .getCodigoMaquina();
-    ListaMateriales lista;
     try
     {
+      String tipo = this.control
+                        .getPedidoActual()
+                        .getCodigoMaquina();
+      ListaMateriales lista;
       lista = this.control.verificaExistencias(tipo);
-      if (this.control.getProductoActual() != null)
-      {
-        this.control.actualizarExistencias(this.control.getProductoActual());
-        materiales.append(lista.detalles());
-        this.aceptarLote.setEnabled(true);
-        this.panelIngreso.setVisible(true);
-      }
-      else
-        JOptionPane.showMessageDialog(DialogoMateriales.this, "Producto nulo");
+      this.control.actualizarExistencias(this.control.getProductoActual());
+      materiales.append(lista.detalles());
+      this.aceptarLote.setEnabled(true);
+      this.panelIngreso.setVisible(true);
     }
     catch (FaltantesException e)
     {
@@ -166,7 +155,10 @@ public class DialogoMateriales
       else
         JOptionPane.showMessageDialog(DialogoMateriales.this, "Lista de faltantes nula");
     }
-
+    catch (Exception e)
+    {
+      JOptionPane.showMessageDialog(DialogoMateriales.this, e.getMessage());
+    }
     this.verificarInvariantes();
   }
 

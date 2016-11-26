@@ -73,7 +73,8 @@ public class DialogoAgregar
     panel.add(descMaterial);
     panel.add(cantidad);
     panel.add(cant);
-
+    try
+    {
     TipoProducto prod = this.control.getProductoActual();
     JButton agregar = new JButton("Agregar");
     agregar.addActionListener(new ActionListener()
@@ -89,7 +90,8 @@ public class DialogoAgregar
           float cantidad = Float.parseFloat(cant.getText());
           if(Verificaciones.verificaCodigo(codigo) && Verificaciones.verificaDescripcion(descripcion) && Verificaciones.verificaCantidad(cantidad))
           {
-            prod.getListaMateriales().agregarMaterial(codigo, descripcion, cantidad);
+            if(prod != null)
+              prod.getListaMateriales().agregarMaterial(codigo, descripcion, cantidad);
             DialogoAgregar.this.dispose();
           }
           else
@@ -99,9 +101,13 @@ public class DialogoAgregar
           JOptionPane.showMessageDialog(DialogoAgregar.this, "Campos vacios");
       }
     });
-
     cp.add(panel, BorderLayout.CENTER);
     cp.add(agregar, BorderLayout.SOUTH);
+    }
+    catch(Exception e)
+    {
+      JOptionPane.showMessageDialog(DialogoAgregar.this, e.getMessage());
+    }
 
     this.verificarInvariantes();
   }
