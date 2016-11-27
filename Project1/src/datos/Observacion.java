@@ -58,7 +58,7 @@ public class Observacion
    */
   public boolean verificacion()
   {
-    return (this.tema != null && this.fechaObservacion != null && this.legajoEmpleado != null && this.texto != null);
+    return (this.tema != null && this.fechaObservacion != null && Verificaciones.verificaNumeroLegajo(this.legajoEmpleado) && this.texto != null);
   }
 
   /**Metodo que devuelve los datos de la instancia de clase en forma de String

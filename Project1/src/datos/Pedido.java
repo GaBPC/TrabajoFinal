@@ -196,6 +196,26 @@ public class Pedido
     return cantProduccion;
   }
 
+  public String getNumeroPedido()
+  {
+    return numeroPedido;
+  }
+
+  public Calendar getFechaPedido()
+  {
+    return fechaPedido;
+  }
+
+  public Calendar getFechaEntregaVentas()
+  {
+    return fechaEntregaVentas;
+  }
+
+  public String getTipoMaquina()
+  {
+    return tipoMaquina;
+  }
+
   public TreeSet<Observacion> getListaObservaciones()
   {
     return listaObservaciones;

@@ -117,7 +117,7 @@ public abstract class Verificaciones
   public static boolean verificaCantProduccion(int cantProduccion)
   {
     boolean ret = false;
-    if (cantProduccion > 0 && cantProduccion < 999)
+    if (cantProduccion > 0 && cantProduccion <= 999)
       ret = true;
     return ret;
   }

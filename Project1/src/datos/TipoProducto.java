@@ -62,6 +62,11 @@ public class TipoProducto
     return codigoProducto;
   }
 
+  public String getDescripcion()
+  {
+    return descripcion;
+  }
+
   /**Metodo que otorga un String con una descripcion breve del producto
    * @return String
    */
