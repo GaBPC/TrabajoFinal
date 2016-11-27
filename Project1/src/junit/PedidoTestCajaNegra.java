@@ -144,7 +144,7 @@ public class PedidoTestCajaNegra
   }
 
   @Test
-  public void testAgregarObservacion()
+  public void testAgregarObservacion_1()
   {
     this.setUp_2();
     Calendar fechaObservacion = GregorianCalendar.getInstance();
@@ -156,7 +156,23 @@ public class PedidoTestCajaNegra
     }
     catch (StateException e)
     {
-      fail("No se agrego la observacion correctamente");
+      fail("No se agrego la observacion correctamente_1");
+    }
+  }
+  
+  @Test
+  public void testAgregarObservacion_2()
+  {
+    this.setUp_2();
+    Calendar fechaObservacion = GregorianCalendar.getInstance();
+    Observacion obs = new Observacion("prueba", fechaObservacion, "LEG000000", "es una observacion");
+    try
+    {
+      this.ped.agregarObservacion(obs);
+      fail("Deberia haber fallado, estado != Evaluacion_2");
+    }
+    catch (StateException e)
+    {
     }
   }
 

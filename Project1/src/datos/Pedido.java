@@ -221,6 +221,21 @@ public class Pedido
     return listaObservaciones;
   }
 
+  public void setFechaPropuestaProduccion(Calendar fechaPropuestaProduccion)
+  {
+    this.fechaPropuestaProduccion = fechaPropuestaProduccion;
+  }
+
+  public void setFechaDefinitiva(Calendar fechaDefinitiva)
+  {
+    this.fechaDefinitiva = fechaDefinitiva;
+  }
+
+  public void setFechaPedidoAceptado(Calendar fechaPedidoAceptado)
+  {
+    this.fechaPedidoAceptado = fechaPedidoAceptado;
+  }
+
   /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para
    * que actualice
    * @param estadoActual

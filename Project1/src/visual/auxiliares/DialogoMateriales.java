@@ -53,7 +53,7 @@ public class DialogoMateriales
     this.setLayout(new BorderLayout());
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setModal(true);
-    this.setTitle("Materiales necesarios para generar el lote");
+    this.setTitle("Materiales necesarios para aceptar el pedido");
     this.setMinimumSize(new Dimension(400, 300));
     this.initComponents();
     this.setVisible(true);
@@ -139,8 +139,7 @@ public class DialogoMateriales
       String tipo = this.control
                         .getPedidoActual()
                         .getCodigoMaquina();
-      ListaMateriales lista;
-      lista = this.control.verificaExistencias(tipo);
+      ListaMateriales lista = this.control.verificaExistencias(tipo);
       this.control.actualizarExistencias(this.control.getProductoActual());
       materiales.append(lista.detalles());
       this.aceptarLote.setEnabled(true);

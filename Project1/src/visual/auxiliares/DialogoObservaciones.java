@@ -116,6 +116,7 @@ public class DialogoObservaciones
                                      .getPedidoActual()
                                      .agregarObservacion(nueva);
             DialogoObservaciones.this.actualizarLista(listModel);
+            JOptionPane.showMessageDialog(DialogoObservaciones.this, "Observacion agregada");
             DialogoObservaciones.this.dispose();
           }
         }

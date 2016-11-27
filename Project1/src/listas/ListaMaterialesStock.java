@@ -18,16 +18,16 @@ public class ListaMaterialesStock
 {
 
 
-  private static final String COD_MADERA = "MAT00000";
+  public static final String COD_MADERA = "MAT00000";
   private static final String DES_MADERA = "Madera de pino pulida";
 
-  private static final String COD_VIDRIO = "MAT00001";
+  public static final String COD_VIDRIO = "MAT00001";
   private static final String DES_VIDRIO = "Vidrio de 5mm.";
 
-  private static final String COD_METAL = "MAT00002";
+  public static final String COD_METAL = "MAT00002";
   private static final String DES_METAL = "Metal liso anti oxidante";
 
-  private static final String COD_PLASTICO = "MAT00003";
+  public static final String COD_PLASTICO = "MAT00003";
   private static final String DES_PLASTICO = "PVC negro liso";
 
 
@@ -101,10 +101,10 @@ public class ListaMaterialesStock
 
     this.codigoProd = new HashMap<>();
 
-    codigoProd.put(FLIPPER, flipper.getCodigoProducto());
-    codigoProd.put(CONSOLA_IND, consolaIndividual.getCodigoProducto());
-    codigoProd.put(CONSOLA_GRUPAL, consolaGrupal.getCodigoProducto());
-    codigoProd.put(SIMULADOR, simulador.getCodigoProducto());
+    codigoProd.put(FLIPPER, "TIP000001");
+    codigoProd.put(CONSOLA_IND, "TIP000002");
+    codigoProd.put(CONSOLA_GRUPAL, "TIP000003");
+    codigoProd.put(SIMULADOR, "TIP000004");
 
     return recetas;
   }
@@ -210,6 +210,16 @@ public class ListaMaterialesStock
   public HashMap<String, String> getCodigoProd()
   {
     return this.codigoProd;
+  }
+
+  public HashMap<String, TipoProducto> getRecetas()
+  {
+    return recetas;
+  }
+
+  public ListaMateriales getListaExistencias()
+  {
+    return listaExistencias;
   }
 
 

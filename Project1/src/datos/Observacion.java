@@ -41,7 +41,7 @@ public class Observacion
 
     assert tema != null: "El tema es null";
     assert fechaObservacion != null: "La fecha de observacion es null";
-    assert legajoEmpleado != null: "El legajo del empleado es null";
+    assert Verificaciones.verificaNumeroLegajo(legajoEmpleado) : "El legajo del empleado es null";
     assert Verificaciones.verificaTexto(texto): "El texto no cumple las condiciones";
 
     this.tema = tema;
