@@ -78,7 +78,6 @@ public class ListaMateriales
       Material mat = new Material(codigo, descripcion, cantidad);
       this.lista.put(mat.getCodigo(), mat);
     }
-
     else
     {
       Material mat = lista.get(codigo);

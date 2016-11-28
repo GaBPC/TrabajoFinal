@@ -81,8 +81,9 @@
       <hash n="runConfigurationDefinitions">
          <hash n="Default">
             <value n="custom" v="false"/>
-            <value n="javaOptions" v="-ea"/>
+            <value n="javaOptions" v=""/>
             <value n="name" v="Default"/>
+            <url n="runDirectoryURL" path="."/>
             <url n="targetURL" path="src/visual/Test.java"/>
          </hash>
       </hash>
