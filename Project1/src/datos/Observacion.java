@@ -102,4 +102,21 @@ public class Observacion
     assert this.tema != null: "El tema es nulo";
     assert Verificaciones.verificaNumeroLegajo(this.legajoEmpleado): "El legajo del empleado no cumple las condiciones";
   }
+
+
+    public String getTema() {
+        return tema;
+    }
+
+    public Calendar getFechaObservacion() {
+        return fechaObservacion;
+    }
+
+    public String getLegajoEmpleado() {
+        return legajoEmpleado;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
 }

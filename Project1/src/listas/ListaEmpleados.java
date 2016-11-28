@@ -25,7 +25,7 @@ public class ListaEmpleados
     empleados.put("LEG456789", new Empleado("LEG456789", "Colautti Bruno", PRODUCCION));
     empleados.put("LEG111111", new Empleado("LEG111111", "Coppes Lucia", PRODUCCION));
     empleados.put("LEG333333", new Empleado("LEG333333", "Ruiz Gonzalo", CONTABILIDAD));
-    empleados.put("LEG888888", new Empleado("LEG888888", "Khun Franco", INSPECCION));
+    empleados.put("LEG999999", new Empleado("LEG999999", "Khun Franco", INSPECCION));
 
   }
 
