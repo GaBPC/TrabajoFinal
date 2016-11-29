@@ -41,7 +41,7 @@ public class Observacion
 
     assert tema != null: "El tema es null";
     assert fechaObservacion != null: "La fecha de observacion es null";
-    assert Verificaciones.verificaNumeroLegajo(legajoEmpleado) : "El legajo del empleado es null";
+    assert Verificaciones.verificaNumeroLegajo(legajoEmpleado): "El legajo del empleado es null";
     assert Verificaciones.verificaTexto(texto): "El texto no cumple las condiciones";
 
     this.tema = tema;
@@ -58,7 +58,8 @@ public class Observacion
    */
   public boolean verificacion()
   {
-    return (this.tema != null && this.fechaObservacion != null && Verificaciones.verificaNumeroLegajo(this.legajoEmpleado) && this.texto != null);
+    return (this.tema != null && this.fechaObservacion != null &&
+            Verificaciones.verificaNumeroLegajo(this.legajoEmpleado) && this.texto != null);
   }
 
   /**Metodo que devuelve los datos de la instancia de clase en forma de String
@@ -104,19 +105,28 @@ public class Observacion
   }
 
 
-    public String getTema() {
-        return tema;
-    }
+  public String getTema()
+  {
+    return tema;
+  }
 
-    public Calendar getFechaObservacion() {
-        return fechaObservacion;
-    }
+  public Calendar getFechaObservacion()
+  {
+    return fechaObservacion;
+  }
 
-    public String getLegajoEmpleado() {
-        return legajoEmpleado;
-    }
+  public String getLegajoEmpleado()
+  {
+    return legajoEmpleado;
+  }
 
-    public String getTexto() {
-        return texto;
-    }
+  public String getTexto()
+  {
+    return texto;
+  }
+
+  public void setLegajoEmpleado(String legajoEmpleado)
+  {
+    this.legajoEmpleado = legajoEmpleado;
+  }
 }

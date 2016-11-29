@@ -236,6 +236,21 @@ public class Pedido
     this.fechaPedidoAceptado = fechaPedidoAceptado;
   }
 
+  public Calendar getFechaPropuestaProduccion()
+  {
+    return fechaPropuestaProduccion;
+  }
+
+  public Calendar getFechaDefinitiva()
+  {
+    return fechaDefinitiva;
+  }
+
+  public Calendar getFechaPedidoAceptado()
+  {
+    return fechaPedidoAceptado;
+  }
+
   /**Metodo que establece el estado actual, cuando se modifica el atributo estadoActual, se le avisa a la ventana para
    * que actualice
    * @param estadoActual
