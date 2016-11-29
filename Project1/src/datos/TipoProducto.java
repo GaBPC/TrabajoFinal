@@ -37,10 +37,6 @@ public class TipoProducto
     
     this.verificarInvariantes();
   }
-  
-  public static void setNumeroProd(int numero){
-      numeroProd = numero;
-  }
 
   /**Metodo que genera el codigoProducto automaticamente basandose en un contador estatico de la clase
    * post: se genera el valor del atributo codigoProducto
