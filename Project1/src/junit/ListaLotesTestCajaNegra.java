@@ -38,6 +38,7 @@ public class ListaLotesTestCajaNegra
   public void tearDown()
   {
     this.lista = null;
+    this.lote = null;
   }
   
   @Test

@@ -40,6 +40,7 @@ public class EvaluacionTestCajaNegra
   public void tearDown()
   {
     this.ev = null;
+    this.ped = null;
   }
   
   @Test

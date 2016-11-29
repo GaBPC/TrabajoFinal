@@ -67,6 +67,16 @@ public class TipoProducto
     return descripcion;
   }
 
+  public static void setNumeroProd(int numeroProd)
+  {
+    TipoProducto.numeroProd = numeroProd;
+  }
+
+  public void setListaMat(ListaMateriales listaMat)
+  {
+    this.listaMat = listaMat;
+  }
+
   /**Metodo que otorga un String con una descripcion breve del producto
    * @return String
    */
