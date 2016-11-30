@@ -83,6 +83,14 @@ public class Controlador {
         else
             throw new Exception("El lote es incorrecto");
     }
+    
+    /* Solo para usar en testeo, no se utiliza en la logica del programa, por eso no se prueba*/
+    public Empleado getEmpleadoActual() throws Exception {
+        if (this.empleadoActual != null)
+            return this.empleadoActual;
+        else
+            throw new Exception("El empleado es incorrecto");
+    }
 
     public void setLoteActual(Lote loteActual) {
         assert loteActual != null : "El parametro es null";
